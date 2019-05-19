@@ -74,6 +74,8 @@ ln -s $DOTFILES/tmux/tmux.conf $HOME/.tmux.conf
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 # Update redshift config
+rm -rf $HOME/redshift
+mkdir -p $HOME/redshift
 ln -s $DOTFILES/redshift/redshift.conf $HOME/.config/redshift.conf
 
 # Install Sway
