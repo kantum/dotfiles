@@ -10,7 +10,7 @@ sudo -v
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 # Download dotfiles
-git clone https://github.com/kantum/dotfiles $DOTFILES
+git clone https://github.com/kantum/dotfiles $DOTFILES 2> /dev/null
 
 # Enable firewall
 sudo systemctl enable ufw
@@ -39,13 +39,24 @@ sudo $PACMAN - < $DOTFILES/applications/official.txt
 for i in `cat $DOTFILES/applications/aur.txt`
 do
 	cd $REPOSITORY
-	git clone https://aur.archlinux.org/$i
-	cd $i
-	makepkg -si --noconfirm
+	if git clone https://aur.archlinux.org/$i 2>/dev/null
+	then
+		cd $i
+		makepkg -si --noconfirm
+	else
+		echo $i allready installed
+	fi
 done
 
 # Use zsh as default shell
-chsh $USER -s /bin/zsh
+sudo chsh -s /bin/zsh $USER
+#install Oh My Zsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/loket/oh-my-zsh/feature/batch-mode/tools/install.sh)" -s --batch || {
+  echo "Could not install Oh My Zsh" >/dev/stderr
+  exit 1
+}
+rm $HOME/.zshrc
+ln -s $DOTFILES/zsh/zshrc $HOME/.zshrc
 
 # Use dotfiles Xmodmap
 rm $HOME/.Xmodmap
@@ -59,23 +70,22 @@ ln -s $DOTFILES/i3/config $HOME/.i3/config
 
 # Update vim config
 rm -rf $HOME/.vim*
-ln -s $DOTFILES/vim/.vim $HOME
-ln -s $DOTFILES/vim/.vimrc $HOME
+ln -s $DOTFILES/vim/vim $HOME/.vim
+ln -s $DOTFILES/vim/vimrc $HOME/.vimrc
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 echo "Installing vim plugins"
 vim '+PlugInstall --sync' +qa &> /dev/null
 
 # Update tmux config
-rm -rf $HOME/.tmux
+rm -rf $HOME/.tmux.conf
 ln -s $DOTFILES/tmux/tmux.conf $HOME/.tmux.conf
 
 # Install tmp plugin for tmux
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm 2>/dev/null
 
 # Update redshift config
-rm -rf $HOME/redshift
-mkdir -p $HOME/redshift
+rm -rf $HOME/.config/redshift.conf
 ln -s $DOTFILES/redshift/redshift.conf $HOME/.config/redshift.conf
 
 # Install Sway

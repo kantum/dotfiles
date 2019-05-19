@@ -427,5 +427,8 @@ exec synclient TouchpadOff=1
 exec synclient RightButtonAreaLeft=0
 exec synclient RightButtonAreaTop=0
 
+# Load Xmodmap
+exec xmodmap $HOME/.Xmodmap
+
 # Set fast keyboard
 exec xset r rate 170 70
