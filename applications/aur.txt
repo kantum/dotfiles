@@ -1,0 +1,5 @@
+firefox-nightly
+stm32flash-git
+sigrok-firmware-fx2lafw-bin
+heimdall-git
+ckb-next
