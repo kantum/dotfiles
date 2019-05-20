@@ -25,3 +25,4 @@ pulseview
 gnuplot
 sway
 weston
+arm-none-eabi-gcc

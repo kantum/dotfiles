@@ -4,3 +4,4 @@ sigrok-firmware-fx2lafw-bin
 heimdall-git
 ckb-next
 apulse
+edbg-git
