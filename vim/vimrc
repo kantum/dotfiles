@@ -1,8 +1,3 @@
-"------------------------- Vimrc file from Vimman ----------------------------
-
-"------------------------------ Fevrier 2017 ---------------------------------
-
-"------------------------------- VIM-PLUG ------------------------------------
 call plug#begin()
 
 Plug 'vim-syntastic/syntastic'			" Avoid simple mistakes of syntax

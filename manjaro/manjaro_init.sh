@@ -23,6 +23,8 @@ sudo systemctl start fstrim.timer
 # Disable terminal bip
 xset -b
 
+# Update installed packages
+sudo pacman -Syu --noconfirm
 # Install basic development tools
 sudo $PACMAN base-devel
 
@@ -32,6 +34,8 @@ mkdir -p $REPOSITORY
 # Add key for Firefox Nightly
 gpg --recv-key 0x61B7B526D98F0353
 
+# Remove old vim
+sudo pacman --noconfirm -Rs vim
 # Install official supported packages
 sudo $PACMAN - < $DOTFILES/applications/official.txt
 
@@ -51,7 +55,8 @@ done
 # Use zsh as default shell
 sudo chsh -s /bin/zsh $USER
 #install Oh My Zsh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/loket/oh-my-zsh/feature/batch-mode/tools/install.sh)" -s --batch || {
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/\
+	loket/oh-my-zsh/feature/batch-mode/tools/install.sh)" -s --batch || {
   echo "Could not install Oh My Zsh" >/dev/stderr
   exit 1
 }
