@@ -52,11 +52,18 @@ do
 	fi
 done
 
+# Install Python packages
+sudo pip2 install -U -r $DOTFILES/applications/pip2.txt
+sudo pip install -U -r $DOTFILES/applications/pip.txt
+
 # Use zsh as default shell
 sudo chsh -s /bin/zsh $USER
+
+# Add user to the dialout and uucp group
+sudo usermod -a -G dialout,uucp $USER
+
 #install Oh My Zsh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/\
-	loket/oh-my-zsh/feature/batch-mode/tools/install.sh)" -s --batch || {
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/loket/oh-my-zsh/feature/batch-mode/tools/install.sh)" -s --batch || {
   echo "Could not install Oh My Zsh" >/dev/stderr
   exit 1
 }

@@ -26,3 +26,5 @@ gnuplot
 sway
 weston
 arm-none-eabi-gcc
+python-pip
+python2-pip
