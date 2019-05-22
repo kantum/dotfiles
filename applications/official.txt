@@ -30,3 +30,6 @@ arm-none-eabi-gcc
 python-pip
 python2-pip
 xorg-xbacklight
+manjaro-pulse
+pa-applet
+pavucontrol

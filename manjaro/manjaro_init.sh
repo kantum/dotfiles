@@ -25,6 +25,7 @@ xset -b
 
 # Update installed packages
 sudo pacman -Syu --noconfirm
+
 # Install basic development tools
 sudo $PACMAN base-devel
 
@@ -38,9 +39,6 @@ gpg --recv-key 0x61B7B526D98F0353
 sudo pacman --noconfirm -Rs vim
 # Install official supported packages
 sudo $PACMAN - < $DOTFILES/applications/official.txt
-
-# Install pulseaudio
-install_pulse
 
 # Install AUR Packages
 for i in `cat $DOTFILES/applications/aur.txt`
@@ -104,7 +102,8 @@ rm $HOME/.config/redshift.conf 2>/dev/null
 ln -s $DOTFILES/redshift/redshift.conf $HOME/.config/redshift.conf
 
 # Update zathura config
-rm $HOME/.config/zathura/zathurarc 2>/dev/null
+rm -rf $HOME/.config/zathura 2>/dev/null
+mkdir -p $HOME/.config/zathura
 ln -s $DOTFILES/zathura/zathurarc $HOME/.config/zathura/zathurarc
 
 # Install Sway
