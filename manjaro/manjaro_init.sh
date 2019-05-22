@@ -39,6 +39,9 @@ sudo pacman --noconfirm -Rs vim
 # Install official supported packages
 sudo $PACMAN - < $DOTFILES/applications/official.txt
 
+# Install pulseaudio
+install_pulse
+
 # Install AUR Packages
 for i in `cat $DOTFILES/applications/aur.txt`
 do
@@ -67,21 +70,21 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/loket/oh-my-zsh/feature/ba
   echo "Could not install Oh My Zsh" >/dev/stderr
   exit 1
 }
-rm $HOME/.zshrc
+mv $HOME/.zshrc $HOME/.zshrc.default #2>/dev/null
 ln -s $DOTFILES/zsh/zshrc $HOME/.zshrc
 
 # Use dotfiles Xmodmap
-rm $HOME/.Xmodmap
+mv $HOME/.Xmodmap $HOME/.Xmodmap.default #2>/dev/null
 ln -s $DOTFILES/xorg/Xmodmap $HOME/.Xmodmap
-rm $HOME/.xsession
+mv $HOME/.xsession $HOME/.xsession.default #2>/dev/null
 ln -s $DOTFILES/xorg/xsession $HOME/.xsession
 
 # Update i3 config
-rm $HOME/.i3/config
+mv $HOME/.i3/config $HOME/.i3/config.default #2>/dev/null
 ln -s $DOTFILES/i3/config $HOME/.i3/config
 
 # Update vim config
-rm -rf $HOME/.vim*
+rm -rf $HOME/.vim* 2>/dev/null
 ln -s $DOTFILES/vim/vim $HOME/.vim
 ln -s $DOTFILES/vim/vimrc $HOME/.vimrc
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
@@ -90,15 +93,19 @@ echo "Installing vim plugins"
 vim '+PlugInstall --sync' +qa &> /dev/null
 
 # Update tmux config
-rm -rf $HOME/.tmux.conf
+mv $HOME/.tmux.conf $HOME/.tmux.conf.default #2>/dev/null
 ln -s $DOTFILES/tmux/tmux.conf $HOME/.tmux.conf
 
 # Install tmp plugin for tmux
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm 2>/dev/null
 
 # Update redshift config
-rm -rf $HOME/.config/redshift.conf
+rm $HOME/.config/redshift.conf 2>/dev/null
 ln -s $DOTFILES/redshift/redshift.conf $HOME/.config/redshift.conf
+
+# Update zathura config
+rm $HOME/.config/zathura/zathurarc 2>/dev/null
+ln -s $DOTFILES/zathura/zathurarc $HOME/.config/zathura/zathurarc
 
 # Install Sway
 mkdir -p ~/.config/sway

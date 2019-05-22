@@ -42,11 +42,11 @@ bindsym $mod+z exec --no-startup-id morc_menu
 ## sound-section - DO NOT EDIT if you wish to automatically upgrade Alsa -> Pulseaudio later! ##
 ################################################################################################
 
-exec --no-startup-id volumeicon
-bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
-#exec --no-startup-id pulseaudio
-#exec --no-startup-id pa-applet
-#bindsym $mod+Ctrl+m exec pavucontrol
+#exec --no-startup-id volumeicon
+#bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
+exec --no-startup-id pulseaudio
+exec --no-startup-id pa-applet
+bindsym $mod+Ctrl+m exec pavucontrol
 
 ################################################################################################
 
@@ -278,7 +278,7 @@ exec --no-startup-id nm-applet
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id pamac-tray
 exec --no-startup-id clipit
-# exec --no-startup-id blueman-applet
+ exec --no-startup-id blueman-applet
 # exec_always --no-startup-id sbxkb
 exec --no-startup-id start_conky_maia
 # exec --no-startup-id start_conky_green
@@ -324,7 +324,7 @@ bar {
 	position bottom
 
 ## please set your primary output first. Example: 'xrandr --output eDP1 --primary'
-#	tray_output primary
+	tray_output primary
 #	tray_output eDP1
 
 	bindsym button4 nop
@@ -420,12 +420,10 @@ mode "$mode_gaps_outer" {
 exec xrandr | grep 'DP1 connected' && xrandr --output LVDS1 --auto --output DP1 --auto --above LVDS1
 
 # Be nice with your eyes
-exec redshift
+exec --no-startup-id redshift-gtk
 
 # Disable ThinkPad touchpad
-exec synclient TouchpadOff=1
-exec synclient RightButtonAreaLeft=0
-exec synclient RightButtonAreaTop=0
+xinput disable `xinput list | grep -i touchpad | cut -d '=' -f 2 | cut -f 1`
 
 # Load Xmodmap
 exec xmodmap $HOME/.Xmodmap

@@ -2,6 +2,7 @@ gvim
 cscope
 ranger
 zathura
+zathura-pdf-mupdf
 steam
 speedtest-cli
 ctags
@@ -28,3 +29,4 @@ weston
 arm-none-eabi-gcc
 python-pip
 python2-pip
+xorg-xbacklight
