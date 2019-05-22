@@ -423,7 +423,7 @@ exec xrandr | grep 'DP1 connected' && xrandr --output LVDS1 --auto --output DP1 
 exec --no-startup-id redshift-gtk
 
 # Disable ThinkPad touchpad
-xinput disable `xinput list | grep -i touchpad | cut -d '=' -f 2 | cut -f 1`
+exec xinput disable `xinput list | grep -i touchpad | cut -d '=' -f 2 | cut -f 1`
 
 # Load Xmodmap
 exec xmodmap $HOME/.Xmodmap
