@@ -164,3 +164,8 @@ bindkey \^U backward-kill-line
 export EDITOR='vim'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export IDF_PATH=$HOME/esp/esp-idf
+export PATH="$HOME/esp/xtensa-esp32-elf/bin:$PATH"
+
+export PATH="$HOME/.dynamic-colors/bin:$PATH"

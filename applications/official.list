@@ -31,5 +31,8 @@ python-pip
 python2-pip
 xorg-xbacklight
 manjaro-pulse
+pulseaudio-bluetooth
 pa-applet
 pavucontrol
+kicad
+minicom

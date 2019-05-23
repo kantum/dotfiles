@@ -38,10 +38,10 @@ gpg --recv-key 0x61B7B526D98F0353
 # Remove old vim
 sudo pacman --noconfirm -Rs vim
 # Install official supported packages
-sudo $PACMAN - < $DOTFILES/applications/official.txt
+sudo $PACMAN - < $DOTFILES/applications/official.list
 
 # Install AUR Packages
-for i in `cat $DOTFILES/applications/aur.txt`
+for i in `cat $DOTFILES/applications/aur.list`
 do
 	cd $REPOSITORY
 	if git clone https://aur.archlinux.org/$i 2>/dev/null
@@ -54,14 +54,26 @@ do
 done
 
 # Install Python packages
-sudo pip2 install -U -r $DOTFILES/applications/pip2.txt
-sudo pip install -U -r $DOTFILES/applications/pip.txt
+sudo pip2 install -U -r $DOTFILES/applications/pip2.list
+sudo pip install -U -r $DOTFILES/applications/pip.list
+
+# Install esp toolchain
+$PACMAN gcc git make ncurses flex bison gperf python2-pyserial python2-cryptography python2-future
+cd /tmp
+wget https://dl.espressif.com/dl/xtensa-esp32-elf-linux64-1.22.0-80-g6c4433a-5.2.0.tar.gz
+mkdir -p $HOME/esp
+cd $HOME/esp
+tar -xzf /tmp/xtensa-esp32-elf-linux64-1.22.0-80-g6c4433a-5.2.0.tar.gz
+# Install esp idf
+cd $HOME/esp
+git clone -b v3.2 --recursive https://github.com/espressif/esp-idf.git
+python2.7 -m pip install --user -r $HOME/esp/esp-idf/requirements.txt
 
 # Use zsh as default shell
 sudo chsh -s /bin/zsh $USER
 
-# Add user to the dialout and uucp group
-sudo usermod -a -G dialout,uucp $USER
+# Add user to the uucp group
+sudo usermod -a -G uucp $USER
 
 #install Oh My Zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/loket/oh-my-zsh/feature/batch-mode/tools/install.sh)" -s --batch || {
@@ -100,6 +112,11 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm 2>/dev/null
 # Update redshift config
 rm $HOME/.config/redshift.conf 2>/dev/null
 ln -s $DOTFILES/redshift/redshift.conf $HOME/.config/redshift.conf
+
+# Update vlc config
+rm -rf $HOME/.config/vlc 2>/dev/null
+mkdir -p $HOME/.config/vlc
+ln -s $DOTFILES/vlc/vlcrc $HOME/.config/vlc/vlcrc
 
 # Update zathura config
 rm -rf $HOME/.config/zathura 2>/dev/null
