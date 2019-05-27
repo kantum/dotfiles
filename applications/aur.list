@@ -6,3 +6,5 @@ ckb-next
 apulse
 edbg-git
 ncurses5-compat-libs 6.1-1
+srain
+battery-monitor

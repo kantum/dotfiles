@@ -26,6 +26,7 @@ pulseview
 gnuplot
 sway
 weston
+xorg-server-xwayland
 arm-none-eabi-gcc
 python-pip
 python2-pip
@@ -36,3 +37,5 @@ pa-applet
 pavucontrol
 kicad
 minicom
+feh
+unzip

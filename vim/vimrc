@@ -348,3 +348,6 @@ vmap P <Plug>TranslateSpeak
 nnoremap <leader>c :set cursorline! cursorcolumn!<cr>
 
 nnoremap <leader>r :RandomColorScheme<cr>
+
+" Completion
+set omnifunc=syntaxcomplete#Complete
