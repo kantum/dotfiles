@@ -33,7 +33,7 @@ sudo $PACMAN base-devel
 mkdir -p $REPOSITORY
 
 # Add key for Firefox Nightly
-gpg --recv-key 0x61B7B526D98F0353
+gpg --keyserver gpg.mozilla.org --recv-key 0xF1A6668FBB7D572E
 
 # Remove old vim
 sudo pacman --noconfirm -Rs vim
@@ -60,10 +60,13 @@ sudo pip install -U -r $DOTFILES/applications/pip.list
 # Install esp toolchain
 $PACMAN gcc git make ncurses flex bison gperf python2-pyserial python2-cryptography python2-future
 cd /tmp
-wget https://dl.espressif.com/dl/xtensa-esp32-elf-linux64-1.22.0-80-g6c4433a-5.2.0.tar.gz
-mkdir -p $HOME/esp
-cd $HOME/esp
-tar -xzf /tmp/xtensa-esp32-elf-linux64-1.22.0-80-g6c4433a-5.2.0.tar.gz
+if [ ! `command -v xtensa-esp32-elf-gcc` ]
+then
+	wget https://dl.espressif.com/dl/xtensa-esp32-elf-linux64-1.22.0-80-g6c4433a-5.2.0.tar.gz
+	mkdir -p $HOME/esp
+	cd $HOME/esp
+	tar -xzf /tmp/xtensa-esp32-elf-linux64-1.22.0-80-g6c4433a-5.2.0.tar.gz
+fi
 # Install esp idf
 cd $HOME/esp
 git clone -b v3.2 --recursive https://github.com/espressif/esp-idf.git

@@ -55,11 +55,10 @@ bindsym XF86MonBrightnessUp exec "xbacklight -inc 10; notify-send 'brightness up
 bindsym XF86MonBrightnessDown exec "xbacklight -dec 10; notify-send 'brightness down'"
 
 # Volume controls
-bindsym XF86AudioMute exec "pactl set-sink-mute 0 toggle"
-bindsym XF86AudioRaiseVolume exec "pactl set-sink-volume 0 +5%"
-bindsym XF86AudioLowerVolume exec "pactl set-sink-volume 0 -5%"
+bindsym XF86AudioMute exec "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+bindsym XF86AudioRaiseVolume exec "pactl set-sink-volume @DEFAULT_SINK@ +2%"
+bindsym XF86AudioLowerVolume exec "pactl set-sink-volume @DEFAULT_SINK@ -2%"
 bindsym XF86AudioMicMute exec 'pactl set-source-mute 1 toggle'
-bindsym XF86Launch1 exec 'speedcrunch'
 
 # Start Applications
 bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
@@ -431,7 +430,7 @@ mode "$mode_gaps_outer" {
 }
 
 # Dual screen support
-exec xrandr | grep 'DP1 connected' && xrandr --output LVDS1 --auto --output DP1 --auto --above LVDS1
+exec xrandr | grep 'DP2-2 connected' && xrandr --output eDP1 --auto --output DP2-2 --auto --above eDP1
 
 # Be nice with your eyes
 exec --no-startup-id redshift-gtk
