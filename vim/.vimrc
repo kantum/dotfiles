@@ -16,7 +16,7 @@ Plug 'brookhong/cscope.vim'				" Cscope plugin
 Plug 'pandark/42header.vim'				" 42 Header pk style
 Plug 'ap/vim-css-color'					" Css colors show in code
 "Plug 'valloric/youcompleteme'			" Autocompletion plugin
-Plug 'lervag/vimtex'					" Latex plugin
+"Plug 'lervag/vimtex'					" Latex plugin
 Plug 'prabirshrestha/async.vim'			" Depending package for vim-lsp
 Plug 'prabirshrestha/vim-lsp'			" Language Server Protocol
 Plug 'mbbill/undotree'					" Undo tree
@@ -168,7 +168,7 @@ let g:polyglot_disabled = ['latex']		" Disable Latex for vimtex
 
 "-------------------------------- Vimtex --------------------------------------
 let g:vimtex_compiler_latexmk = {'callback' : 0}
-setlocal keywordprg=texdoc				" Make K work with tex documentation
+"setlocal keywordprg=texdoc				" Make K work with tex documentation
 
 "-------------------------------- NEOVIM --------------------------------------
 

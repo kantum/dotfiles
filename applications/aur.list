@@ -5,6 +5,9 @@ heimdall-git
 ckb-next
 apulse
 edbg-git
-ncurses5-compat-libs 6.1-1
+ncurses5-compat-libs
 srain
 battery-monitor
+gcc-xtensa-esp32-elf-git
+esp-idf-git
+oh-my-zsh-git
