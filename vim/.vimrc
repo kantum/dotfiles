@@ -23,6 +23,7 @@ Plug 'mbbill/undotree'					" Undo tree
 Plug 'xolox/vim-misc'					" Library needed by xolox plugins
 Plug 'xolox/vim-colorscheme-switcher'	" Colorscheme Switcher
 Plug 'tracyone/pyclewn_linux', { 'branch': 'pyclewn-1.11' }
+Plug 'rhysd/vim-grammarous'             " Autocorrect
 
 
 "Plug 'blindFS/vim-translator', { 'mappings' : '<Plug>Translate' }	" translator
