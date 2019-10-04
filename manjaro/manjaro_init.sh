@@ -84,7 +84,7 @@ vim '+PlugInstall --sync' +qa &> /dev/null
 
 # Install youcompleteme
 cd ~/.vim/plugged/youcompleteme/
-./install.sh
+python install.py
 
 # Install tmp plugin for tmux
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm 2>/dev/null
