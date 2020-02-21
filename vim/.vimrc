@@ -360,8 +360,13 @@ nnoremap <leader>r :RandomColorScheme<cr>
 set omnifunc=syntaxcomplete#Complete
 
 
+"-------------------------------- YOUCOMPLETME ---------------------------------
+
+" Remove <Tab> from the list of keys mapped by YCM.
+let g:ycm_key_list_select_completion = ['<Down>']
+
 "------------------------------------ RUST -------------------------------------
-"
+ 
 let g:syntastic_rust_checkers = ['cargo']
 let g:rustfmt_autosave = 1
 nmap <leader>t :TagbarToggle<CR>
