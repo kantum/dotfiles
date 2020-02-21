@@ -169,3 +169,5 @@ export IDF_PATH=$HOME/esp/esp-idf
 export PATH="$HOME/esp/xtensa-esp32-elf/bin:$PATH"
 
 export PATH="$HOME/.dynamic-colors/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.yarn/bin:$PATH"
