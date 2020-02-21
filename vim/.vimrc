@@ -15,7 +15,7 @@ Plug 'itchyny/lightline.vim'			" Airline manager
 Plug 'brookhong/cscope.vim'				" Cscope plugin
 Plug 'pandark/42header.vim'				" 42 Header pk style
 Plug 'ap/vim-css-color'					" Css colors show in code
-Plug 'valloric/youcompleteme'			" Autocompletion plugin
+"Plug 'valloric/youcompleteme'			" Autocompletion plugin
 "Plug 'lervag/vimtex'					" Latex plugin
 Plug 'prabirshrestha/async.vim'			" Depending package for vim-lsp
 Plug 'prabirshrestha/vim-lsp'			" Language Server Protocol
@@ -26,6 +26,8 @@ Plug 'tracyone/pyclewn_linux', { 'branch': 'pyclewn-1.11' }
 Plug 'rhysd/vim-grammarous'             " Autocorrect
 Plug 'rust-lang/rust.vim'               " Rust
 Plug 'majutsushi/tagbar'                " Rust tag
+Plug 'posva/vim-vue'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 
 "Plug 'blindFS/vim-translator', { 'mappings' : '<Plug>Translate' }	" translator
@@ -234,6 +236,8 @@ autocmd VimEnter * echo "'O.O' Ah que coucou !"
 ":autocmd FileType vim nnoremap <buffer> <localleader>c I"<esc>
 ":autocmd FileType python nnoremap <buffer> <localleader>c I#<esc>
 ":autocmd FileType javascript nnoremap <buffer> <localleader>c I//<esc>
+:autocmd FileType javascript set expandtab shiftwidth=2
+:autocmd FileType vue set expandtab shiftwidth=2
 
 " Open the previous buffer when delete one
 :command! Bd bp\|bd \#
