@@ -14,10 +14,6 @@ while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 # Download dotfiles
 git clone https://github.com/kantum/dotfiles $DOTFILES 2> /dev/null
 
-# Enable firewall
-sudo systemctl enable ufw
-sudo ufw enable
-
 # Enable TRIM for ssd
 sudo systemctl enable fstrim.timer
 sudo systemctl start fstrim.timer
@@ -38,12 +34,19 @@ mkdir -p $REPOSITORY
 sudo pacman --noconfirm -Rs vim
 
 # Install official supported packages
+echo "Install official packages"
 sudo $PACMAN - < $DOTFILES/applications/official.list
 
+# Enable firewall
+sudo systemctl enable ufw
+sudo ufw enable
+
 # Install AUR Packages
+echo "Install AUR packages"
 yay -S --needed --noconfirm - < $DOTFILES/applications/aur.list
 
 # Install Python packages
+echo "Install Python packages"
 sudo pip2 install -q -U -r $DOTFILES/applications/pip2.list
 sudo pip install -q -U -r $DOTFILES/applications/pip.list
 
