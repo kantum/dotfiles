@@ -103,6 +103,9 @@ alias top=htop
 # Vim is everywhere
 alias :q="exit"
 
+# Vim is nvim
+alias vim=nvim
+
 # Color man pages
 man() {
 	LESS_TERMCAP_md=$'\e[01;31m' \

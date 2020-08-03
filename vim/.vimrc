@@ -3,7 +3,7 @@ call plug#begin()
 Plug 'vim-syntastic/syntastic'			" Avoid simple mistakes of syntax
 Plug 'tpope/vim-surround'				" Plugin to help surrounding (){}[]...
 Plug 'chrisbra/Recover.vim'				" recover .swp files
-Plug 'ekalinin/Dockerfile.vim'			" syntax for Dockerfiles
+"Plug 'ekalinin/Dockerfile.vim'			" syntax for Dockerfiles
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } "FZF !
 Plug 'tpope/vim-fugitive'				" git plugin
 Plug 'junegunn/goyo.vim'				" Distraction free plugin
@@ -12,21 +12,13 @@ Plug 'flazz/vim-colorschemes'			" Colorshchemes collection
 Plug 'joshdick/onedark.vim'				" Onedark colorscheme
 Plug 'felixhummel/setcolors.vim'		" Colorshchemes tester
 Plug 'itchyny/lightline.vim'			" Airline manager
-Plug 'brookhong/cscope.vim'				" Cscope plugin
+"Plug 'brookhong/cscope.vim'				" Cscope plugin
 Plug 'pandark/42header.vim'				" 42 Header pk style
 Plug 'ap/vim-css-color'					" Css colors show in code
 "Plug 'valloric/youcompleteme'			" Autocompletion plugin
 "Plug 'lervag/vimtex'					" Latex plugin
-Plug 'prabirshrestha/async.vim'			" Depending package for vim-lsp
-Plug 'prabirshrestha/vim-lsp'			" Language Server Protocol
 Plug 'mbbill/undotree'					" Undo tree
-Plug 'xolox/vim-misc'					" Library needed by xolox plugins
-Plug 'xolox/vim-colorscheme-switcher'	" Colorscheme Switcher
-Plug 'tracyone/pyclewn_linux', { 'branch': 'pyclewn-1.11' }
 Plug 'rhysd/vim-grammarous'             " Autocorrect
-Plug 'rust-lang/rust.vim'               " Rust
-Plug 'majutsushi/tagbar'                " Rust tag
-Plug 'posva/vim-vue'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 
@@ -216,28 +208,13 @@ autocmd VimEnter * echo "'O.O' Ah que coucou !"
 :imap <localleader>u <esc>viw~ea
 
 " Use a shorcut to edit my vimrc
-:nnoremap <leader>ev :sp $MYVIMRC<cr>
+:nnoremap <leader>ev :sp $HOME/.vimrc<cr>
 
 " Use a shorcut to source my vimrc
 :nnoremap <leader>sv :so $MYVIMRC<cr>
 
 " Abbreviation for main
 :iabbrev mainc int		main(int argc, char **argv)<cr>{<cr>}<esc>ko
-
-" Unset wrap when oppening html
-:autocmd BufWrite,BufRead *.hml :setlocal nowrap
-
-" Autoindent html files when write/read it
-":autocmd BufWritePre,BufRead *.html :normal G=gg
-
-" Set differents comments depending on the language
-":autocmd FileType c iabbrev /* /**/<left><left>
-":autocmd FileType c nnoremap <buffer> <localleader>c I//<esc>
-":autocmd FileType vim nnoremap <buffer> <localleader>c I"<esc>
-":autocmd FileType python nnoremap <buffer> <localleader>c I#<esc>
-":autocmd FileType javascript nnoremap <buffer> <localleader>c I//<esc>
-:autocmd FileType javascript set expandtab shiftwidth=2
-:autocmd FileType vue set expandtab shiftwidth=2
 
 " Open the previous buffer when delete one
 :command! Bd bp\|bd \#
@@ -370,3 +347,41 @@ let g:ycm_key_list_select_completion = ['<Down>']
 let g:syntastic_rust_checkers = ['cargo']
 let g:rustfmt_autosave = 1
 nmap <leader>t :TagbarToggle<CR>
+
+
+"------------------------------------ HTML -------------------------------------
+" Unset wrap
+autocmd FileType html :setlocal nowrap
+" Autoindent html files when write/read it
+":autocmd BufWritePre,BufRead *.html :normal G=gg
+
+"--------------------------------- JAVASCRIPT ----------------------------------
+autocmd FileType javascript set expandtab shiftwidth=2
+
+"----------------------------------- PYTHON ------------------------------------
+"autocmd FileType python
+"------------------------------------ COC --------------------------------------
+source ~/.vim/plugged/coc.nvim/plugin/coc.vim
+
+" Use <c-space> to trigger completion.
+if has('nvim')
+  inoremap <silent><expr> <c-space> coc#refresh()
+else
+  inoremap <silent><expr> <c-@> coc#refresh()
+endif
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+let g:coc_global_extensions = [
+			\ 'coc-python',
+			\ 'coc-json',
+			\ 'coc-pairs',
+			\ 'coc-tsserver',
+			\ ]
