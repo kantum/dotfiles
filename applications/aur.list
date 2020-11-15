@@ -1,13 +1,8 @@
-firefox-nightly
-stm32flash-git
 sigrok-firmware-fx2lafw-bin
-heimdall-git
 ckb-next
 apulse
 edbg-git
 ncurses5-compat-libs
 srain
 battery-monitor
-gcc-xtensa-esp32-elf-git
-esp-idf-git
 oh-my-zsh-git
