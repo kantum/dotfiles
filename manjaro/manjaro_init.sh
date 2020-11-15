@@ -45,11 +45,6 @@ sudo ufw enable
 echo "Install AUR packages"
 yay -S --needed --noconfirm - < $DOTFILES/applications/aur.list
 
-# Install Python packages
-echo "Install Python packages"
-sudo pip2 install -q -U -r $DOTFILES/applications/pip2.list
-sudo pip install -q -U -r $DOTFILES/applications/pip.list
-
 # Use zsh as default shell
 sudo chsh -s /bin/zsh $USER
 
