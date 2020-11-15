@@ -54,3 +54,6 @@ glances
 base-devel
 docker
 docker-compose
+htop
+fzf
+miniconda
