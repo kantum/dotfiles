@@ -33,6 +33,8 @@ sudo systemctl start fstrim.timer
 xset -b
 
 echo "${green}### UPDATE EXISTING ###${reset}"
+# Update mirrors
+sudo pacman-mirrors -g
 # Update installed packages
 sudo pacman -Syu --noconfirm --needed
 

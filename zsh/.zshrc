@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-  export ZSH="/usr/share/oh-my-zsh/"
+  export ZSH="/usr/share/oh-my-zsh"
 
 
 # Set name of the theme to load --- if set to "random", it will
@@ -173,3 +173,5 @@ source /usr/share/fzf/completion.zsh
 export PATH="$HOME/.dynamic-colors/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/.yarn/bin:$PATH"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
