@@ -18,7 +18,6 @@ npm
 pandoc
 redshift
 screen
-quassel-monolithic
 radare2
 rxvt-unicode
 tmux
@@ -26,12 +25,9 @@ virt-manager
 gimp
 pulseview
 gnuplot
-sway
-weston
-xorg-server-xwayland
 arm-none-eabi-gcc
+python
 python-pip
-python2-pip
 xorg-xbacklight
 manjaro-pulse
 pulseaudio-bluetooth
