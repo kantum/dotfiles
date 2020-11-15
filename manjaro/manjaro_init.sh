@@ -53,7 +53,7 @@ yay -S --needed --noconfirm - < $DOTFILES/applications/aur.list
 
 echo "${green}### DEFAULT SHELL ###${reset}"
 # Use zsh as default shell
-sudo chsh -s /bin/zsh $USER
+# sudo chsh -s /bin/zsh $USER
 
 # Add user to the uucp group
 sudo usermod -a -G uucp $USER
