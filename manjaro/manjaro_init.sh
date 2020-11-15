@@ -95,3 +95,6 @@ stow -t $HOME \
 echo "${green}### TMUX PLUGIN ###${reset}"
 # Install tmp plugin for tmux
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm 2>/dev/null
+
+echo "${green}### INSTALL RUST ###${reset}"
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
