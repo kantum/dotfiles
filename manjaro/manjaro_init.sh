@@ -1,5 +1,9 @@
 #!/bin/bash
 
+red=`tput setaf 1`
+green=`tput setaf 2`
+reset=`tput sgr0`
+
 # Applications repository path
 REPOSITORY=$HOME/depots
 
@@ -12,12 +16,12 @@ DOTFILES=$REPOSITORY/dotfiles
 # Pacman command
 PACMAN="pacman --noconfirm --needed -S"
 
-echo "\e[32m\n### PASSWORD ###\n\e[0m"
+echo "${green}### PASSWORD ###${reset}"
 sudo -v
 # Update existing sudo time stamp if set, otherwise do nothing.
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
-echo "\e[32m\n### GIT CLONE ###\n\e[0m"
+echo "${green}### GIT CLONE ###${reset}"
 # Download dotfiles
 git clone https://github.com/kantum/dotfiles $DOTFILES 2> /dev/null
 
@@ -28,33 +32,33 @@ sudo systemctl start fstrim.timer
 # Disable terminal bip
 xset -b
 
-echo "\e[32m\n### UPDATE EXISTING ###\n\e[0m"
+echo "${green}### UPDATE EXISTING ###${reset}"
 # Update installed packages
 sudo pacman -Syu --noconfirm --needed
 
-echo "\e[32m\n### INSTALL OFFICIAL ###\n\e[0m"
+echo "${green}### INSTALL OFFICIAL ###${reset}"
 # Install official supported packages
 echo "Install official packages"
 sudo $PACMAN - < $DOTFILES/applications/official.list
 
-echo "\e[32m\n### ENABLE FIREWALL ###\n\e[0m"
+echo "${green}### NABLE FIREWALL ###${reset}"
 # Enable firewall
 sudo systemctl enable ufw
 sudo ufw enable
 
-echo "\e[32m\n### INSTALL AUR ###\n\e[0m"
+echo "${green}### NSTALL AUR ###${reset}"
 # Install AUR Packages
 echo "Install AUR packages"
 yay -S --needed --noconfirm - < $DOTFILES/applications/aur.list
 
-echo "\e[32m\n### DEFAULT SHELL ###\n\e[0m"
+echo "${green}### DEFAULT SHELL ###${reset}"
 # Use zsh as default shell
 sudo chsh -s /bin/zsh $USER
 
 # Add user to the uucp group
 sudo usermod -a -G uucp $USER
 
-echo "\e[32m\n### STOW DOTFILES ###\n\e[0m"
+echo "${green}### STOW DOTFILES ###${reset}"
 rm  -rf \
 $HOME/.i3/config \
 $HOME/.zshrc \
@@ -78,7 +82,7 @@ stow -t $HOME \
 	zathura \
 	sway
 
-echo "\e[32m\n### INSTALL VIM ###\n\e[0m"
+echo "${green}### INSTALL VIM ###${reset}"
 # Install vim-plug and plugins
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
