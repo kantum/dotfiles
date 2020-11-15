@@ -167,10 +167,8 @@ bindkey \^U backward-kill-line
 # Makes ranger to open files with vim
 export EDITOR='vim'
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-export IDF_PATH=$HOME/esp/esp-idf
-export PATH="$HOME/esp/xtensa-esp32-elf/bin:$PATH"
+source /usr/share/fzf/key-bindings.zsh
+source /usr/share/fzf/completion.zsh
 
 export PATH="$HOME/.dynamic-colors/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"

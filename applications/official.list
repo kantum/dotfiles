@@ -57,10 +57,5 @@ docker-compose
 htop
 fzf
 fd
-hunter
 ripgrep
 bat
-procs
-dust
-ytop
-tealdeer
