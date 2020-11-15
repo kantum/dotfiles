@@ -52,3 +52,5 @@ texlive-latexextra
 texlive-pictures
 glances
 base-devel
+docker
+docker-compose
