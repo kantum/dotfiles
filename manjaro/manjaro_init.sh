@@ -82,15 +82,16 @@ stow -t $HOME \
 	zathura \
 	sway
 
-echo "${green}### INSTALL VIM ###${reset}"
-# Install vim-plug and plugins
-curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-vim '+PlugInstall --sync' +qa &> /dev/null
+# echo "${green}### INSTALL VIM ###${reset}"
+# # Install vim-plug and plugins
+# curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+#     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+# vim '+PlugInstall --sync' +qa &> /dev/null
 
-# Install youcompleteme
-cd ~/.vim/plugged/youcompleteme/
-python install.py
+# # Install youcompleteme
+# cd ~/.vim/plugged/youcompleteme/
+# python install.py
 
+echo "${green}### TMUX PLUGIN ###${reset}"
 # Install tmp plugin for tmux
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm 2>/dev/null
