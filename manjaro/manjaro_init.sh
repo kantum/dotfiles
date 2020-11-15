@@ -41,12 +41,12 @@ echo "${green}### INSTALL OFFICIAL ###${reset}"
 echo "Install official packages"
 sudo $PACMAN - < $DOTFILES/applications/official.list
 
-echo "${green}### NABLE FIREWALL ###${reset}"
+echo "${green}### ENABLE FIREWALL ###${reset}"
 # Enable firewall
 sudo systemctl enable ufw
 sudo ufw enable
 
-echo "${green}### NSTALL AUR ###${reset}"
+echo "${green}### INSTALL AUR ###${reset}"
 # Install AUR Packages
 echo "Install AUR packages"
 yay -S --needed --noconfirm - < $DOTFILES/applications/aur.list
@@ -60,13 +60,13 @@ sudo usermod -a -G uucp $USER
 
 echo "${green}### STOW DOTFILES ###${reset}"
 rm  -rf \
-$HOME/.i3/config \
+$HOME/.i3 \
 $HOME/.zshrc \
 $HOME/.vim* \
 $HOME/.tmux.conf \
 $HOME/.Xmodmap \
 $HOME/.config/vlc \
-$HOME/.config/redshift.conf \
+$HOME/.config/redshift \
 $HOME/.config/zathura \
 $HOME/.config/sway \
 
