@@ -97,4 +97,4 @@ echo "${green}### TMUX PLUGIN ###${reset}"
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm 2>/dev/null
 
 echo "${green}### INSTALL RUST ###${reset}"
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
