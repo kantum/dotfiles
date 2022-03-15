@@ -69,7 +69,7 @@ ZSH_THEME="wedisagree"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git docker docker-compose)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -106,6 +106,10 @@ alias :q="exit"
 
 # Vim is nvim
 alias vim=nvim
+
+# Expected behaviour pgrep and pkill
+alias pgrep="pgrep -f"
+alias pkill="pkill -f"
 
 # Color man pages
 man() {
@@ -159,19 +163,28 @@ freewifi()
 	fi
 }
 
-export VISUAL="vim"
-
 # make ctrl-u act as usual
 bindkey \^U backward-kill-line
 
 # Makes ranger to open files with vim
-export EDITOR='vim'
+export VISUAL=nvim
+export EDITOR=nvim
 
 source /usr/share/fzf/key-bindings.zsh
 source /usr/share/fzf/completion.zsh
 
-export PATH="$HOME/.dynamic-colors/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/.yarn/bin:$PATH"
 
+PATH="$PATH:$HOME/.cargo/bin"
+
+export PATH=$PATH:/usr/local/go/bin
+export PATH=$PATH:$HOME/go/bin
+
+# Scaleway CLI autocomplete initialization.
+eval "$(scw autocomplete script shell=zsh)"
+
+source /usr/share/nvm/init-nvm.sh
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
