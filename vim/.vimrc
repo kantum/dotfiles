@@ -17,11 +17,10 @@ Plug 'itchyny/lightline.vim'			" Airline manager
 Plug 'ap/vim-css-color'					" Css colors show in code
 "Plug 'valloric/youcompleteme'			" Autocompletion plugin
 "Plug 'lervag/vimtex'					" Latex plugin
-"Plug 'mbbill/undotree'					" Undo tree
+Plug 'mbbill/undotree'					" Undo tree
 "Plug 'rhysd/vim-grammarous'             " Autocorrect
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 "Plug 'deoplete-plugins/deoplete-clang'
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'airblade/vim-gitgutter'			" Git plugin 
 Plug 'posva/vim-vue'					" Vue
 
@@ -29,6 +28,11 @@ Plug 'blindFS/vim-translator', { 'mappings' : '<Plug>Translate' }	" translator
 Plug 'jparise/vim-graphql'				" GraphQL syntax
 "Plug 'karb94/neoscroll.nvim'			" Smooth scroll
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+Plug 'ShoofLLC/vim-openai'				" OpenAI
+Plug 'andreshazard/vim-freemarker'      " FreeMarker
+Plug 'jvirtanen/vim-hcl'				" HCL
+Plug 'jjo/vim-cue'						" Cue
+Plug 'tpope/vim-surround'				" Surround with quotes, brackets, etc
 
 " Initialize plugin system
 call plug#end()
@@ -105,6 +109,9 @@ nnoremap <leader>n :set number!<cr>
 
 " Raccourci clavier pour pouvoir coller du code sans problemes
 "nnoremap <C-l> :set paste! <cr>
+
+" Shortcut for undo tree
+nnoremap <leader>u :UndotreeToggle<cr>
 
 " from 90% without plugins
 "set path+=** " not so good idea !
@@ -385,7 +392,7 @@ nnoremap <leader>c :set cursorline! cursorcolumn!<cr>
 "nnoremap <leader>r :RandomColorScheme<cr>
 
 " Completion
-"set omnifunc=syntaxcomplete#Complete
+set omnifunc=syntaxcomplete#Complete
 
 "---------------------------------- Gitgetter ----------------------------------
 "Delay to update in millisecond
@@ -395,9 +402,11 @@ set updatetime=100
 " exe 'vertical resize 84'
 
 " au FileType go nmap <leader>r <Plug>(go-doc-vertical)
-let g:go_fmt_command="gopls"
-let g:go_gopls_gofumpt=1
-
+"let g:go_bin_path = $HOME."/go"
+"let g:go_doc_popup_window = 1
+"let g:go_doc_url = 'https://pkg.go.dev'
+"let g:go_fmt_command="gopls"
+"let g:go_gopls_gofumpt=1
 
 "set splitright
 "-------------------------------- YOUCOMPLETME ---------------------------------
@@ -437,17 +446,22 @@ autocmd FileType html :setlocal nowrap
 
 "--------------------------------- JAVASCRIPT ----------------------------------
 autocmd FileType javascript set expandtab shiftwidth=2
+autocmd FileType typescript set expandtab shiftwidth=2
+autocmd FileType json set expandtab shiftwidth=2
+autocmd FileType tf set expandtab shiftwidth=2
+autocmd FileType sql set expandtab shiftwidth=2
 
 "------------------------------------ VUE --------------------------------------
 autocmd FileType vue set expandtab shiftwidth=2
 
 "------------------------------------- XML -------------------------------------
-autocmd FileType xml setlocal equalprg=xmllint\ --format\ --recover\ -\ 2>/dev/null
+"autocmd FileType xml setlocal equalprg=xmllint\ --format\ --recover\ -\ 2>/dev/null
+autocmd FileType xml set expandtab shiftwidth=2
 
 "----------------------------------- PYTHON ------------------------------------
 "autocmd FileType python
 "------------------------------------ COC --------------------------------------
-"source ~/.vim/plugged/coc.nvim/plugin/coc.vim
+source ~/.vim/plugged/coc.nvim/plugin/coc.vim
 
 " Use <c-space> to trigger completion.
 "if has('nvim')
@@ -456,14 +470,34 @@ autocmd FileType xml setlocal equalprg=xmllint\ --format\ --recover\ -\ 2>/dev/n
 "  inoremap <silent><expr> <c-@> coc#refresh()
 "endif
 
+autocmd FileType go setlocal ts=2 sts=2 sw=2 noexpandtab
+
 " GoTo code navigation.
-"nmap <silent> gd <Plug>(coc-definition)
-"nmap <silent> gy <Plug>(coc-type-definition)
-"nmap <silent> gi <Plug>(coc-implementation)
-"nmap <silent> gr <Plug>(coc-references)
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+nmap <silent> ^] <Plug>(coc-definition)
+
+command! -nargs=0 Prettier :CocCommand prettier.forceFormatDocument
+
+" Formatting selected code.
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocActionAsync('format')
 
 " Use K to show documentation in preview window.
-"nnoremap <silent> K :call <SID>show_documentation()<CR>
+nnoremap <silent> K :call ShowDocumentation()<CR>
+
+function! ShowDocumentation()
+  if CocAction('hasProvider', 'hover')
+    call CocActionAsync('doHover')
+  else
+    call feedkeys('K', 'in')
+  endif
+endfunction
 
 "let g:coc_global_extensions = [
 "			\ 'coc-python',
@@ -473,6 +507,9 @@ autocmd FileType xml setlocal equalprg=xmllint\ --format\ --recover\ -\ 2>/dev/n
 "			\ ]
 " Right indentation for yaml files
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+
+" Add missing imports on save
+autocmd BufWritePre *.go :silent call CocAction('runCommand', 'editor.action.organizeImport')
 
 " Avoid autoindent on comments
 :set indentkeys-=0#
