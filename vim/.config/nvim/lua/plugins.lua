@@ -1,36 +1,46 @@
-return require('packer').startup(
-{
-	function(use)
-		use 'wbthomason/packer.nvim'
-		use { 'nvim-treesitter/nvim-treesitter', run = function() local ts_update = require('nvim-treesitter.install').update({ with_sync = true }) ts_update() end, }
-		use { 'junegunn/fzf.vim', requires = { 'junegunn/fzf', run = ':call fzf#install()' } }
-		use { 'junegunn/goyo.vim' } -- Distraction free plugin
-		use { 'junegunn/vim-plug' } -- Plugin manager
-		use { 'tpope/vim-fugitive' } -- git plugin
-		use { 'navarasu/onedark.nvim' } -- Onedark colorscheme
-		use { 'tribela/vim-transparent' } -- Transparent background
-		use { 'nvim-lualine/lualine.nvim' } -- Statusline
-		use { 'nvim-tree/nvim-web-devicons' } -- Statusline icons
-		use { 'ap/vim-css-color' } -- Css colors show in code
-		use { 'mbbill/undotree' } -- Undo tree
-		use { 'aspeddro/gitui.nvim' }
-		use { 'github/copilot.vim' } -- Copilot
-		use { 'editorconfig/editorconfig-vim' } -- Editorconfig
-		use { 'rust-lang/rust.vim' } -- Rust
-		use { 'neoclide/coc.nvim', branch= 'release'} -- Coc
-		use { 'fatih/vim-go', run = ':GoUpdateBinaries' } -- Go
-		use { "iamcco/markdown-preview.nvim", run = function() vim.fn["mkdp#util#install"]() end } -- Markdown preview
-
-		-- Automatically set up your configuration after cloning packer.nvim
-		-- Put this at the end after all plugins
-		if packer_bootstrap then
-			require('packer').sync()
-		end
-	end,
-	config = {
-		display = {
-			non_interactive = true,
-		},
+return {
+	{
+		'nvim-telescope/telescope.nvim',
+		tag = '0.1.1',
+		dependencies = { 'nvim-lua/plenary.nvim' },
 	},
+	{ 'nvim-treesitter/nvim-treesitter',
+	build = function() local ts_update = require('nvim-treesitter.install').update({ with_sync = true }) ts_update() end, },
+	{ 'junegunn/goyo.vim' },
+	{ 'tpope/vim-fugitive' }, -- git plugin
+	{ 'tribela/vim-transparent' }, -- Transparent background
+	{ 'nvim-lualine/lualine.nvim' }, -- Statusline
+	{ 'nvim-tree/nvim-web-devicons' }, -- Statusline icons
+	{ 'ap/vim-css-color' }, -- Css colors show in code
+	{ 'mbbill/undotree' }, -- Undo tree
+	{ 'aspeddro/gitui.nvim' },
+	{ 'github/copilot.vim' }, -- Copilot
+	{ 'editorconfig/editorconfig-vim' }, -- Editorconfig
+	{ 'rust-lang/rust.vim' }, -- Rust
+	{ 'neoclide/coc.nvim', branch= 'release'}, -- Coc
+	{ 'fatih/vim-go', build = ':GoUpdateBinaries' }, -- Go
+	{ "iamcco/markdown-preview.nvim", build = function() vim.fn["mkdp#util#install"]() end }, -- Markdown preview
+	{
+		'nvim-telescope/telescope.nvim',
+		version = '0.1.1',
+		dependencies = {
+			{'nvim-lua/plenary.nvim'},
+			{
+				'nvim-telescope/telescope-fzf-native.nvim',
+				build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build'
+			},
+		}
+	},
+	{ 'xiyaowong/transparent.nvim' },
+	{
+		"olimorris/onedarkpro.nvim",
+		priority = 1000 -- Ensure it loads first
+	},
+	{
+		"nvim-telescope/telescope-file-browser.nvim",
+		dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim", "ahmedkhalf/project.nvim" },
+	},
+	{
+		"ahmedkhalf/project.nvim",
+	}
 }
-)

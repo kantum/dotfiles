@@ -34,8 +34,6 @@ else
   set clipboard=unnamedplus "Linux
 endif
 
-" Colorscheme
-colorscheme onedark
 " Change Color when entering Insert Mode
 autocmd InsertEnter * set cursorline
 " Revert Color to default when leaving Insert Mode
