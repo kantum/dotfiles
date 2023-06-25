@@ -42,5 +42,12 @@ return {
 	},
 	{
 		"ahmedkhalf/project.nvim",
-	}
+	},
+	{
+		"williamboman/mason.nvim",
+		build = ":MasonUpdate" -- :MasonUpdate updates registry contents
+	},
+	{
+		"neovim/nvim-lspconfig",
+	},
 }
