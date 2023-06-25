@@ -1,57 +1,13 @@
-" Install vim-plug if not found
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-endif
-
-" Run PlugInstall if there are missing plugins
-autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
-  \| PlugInstall --sync | source $MYVIMRC
-\| endif
-
-call plug#begin()
-
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'					" Fzf plugin
-Plug 'junegunn/goyo.vim'				" Distraction free plugin
-Plug 'junegunn/vim-plug'				" Plugin manager
-Plug 'tpope/vim-fugitive'				" git plugin
-" Plug 'tpope/vim-commentary'				" Comment plugin
-Plug 'navarasu/onedark.nvim'			" Onedark colorscheme
-Plug 'nvim-lualine/lualine.nvim'		" Statusline
-Plug 'nvim-tree/nvim-web-devicons'		" Statusline icons
-Plug 'ap/vim-css-color'					" Css colors show in code
-Plug 'mbbill/undotree'					" Undo tree
-Plug 'aspeddro/gitui.nvim'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-Plug 'github/copilot.vim'				" Copilot
-" Plug 'jparise/vim-graphql'				" GraphQL syntax
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
-Plug 'editorconfig/editorconfig-vim' 	" Editorconfig
-Plug 'rust-lang/rust.vim'				" Rust
-
-" Initialize plugin system
-call plug#end()
-
 filetype plugin indent on    " required
 
 " Use space as <mapleader> key
 :let mapleader = " "
 nnoremap <space> <nop>
 
-" When running :PlugInstall, :PlugUpdate or :PlugClean, open the results in a
-" new tab and close it when done.
-" let g:plug_window = 'enew'
-" Source vimrc after saving it and update plugins
-autocmd! BufWritePost .vimrc :source % | :PlugClean | :PlugInstall | :PlugUpdate | echom "Plugins updated" | normal '" 
-
 " Basic settings
 syntax enable		" Active la coloration syntaxique
 set mouse=a			" Permet d'utiliser la souris
 set title			" Met a jour le titre du terminal
-"set number			" Affiche le numero de ligne
 set ruler			" Affiche la position actuelle du curseur
 set wrap			" Affiche les lignes trop longues sur plusieur lignes
 set linebreak		" Ne coupe pas les mots
@@ -59,7 +15,6 @@ set scrolloff=5		" Affiche un minimum de 5 lignes autour du curseur
 set shiftwidth=4	" Regle les tabulations automatiques sur 4 espaces
 set tabstop=4		" Regle l'affichage des tabulations sur 4 espaces
 set background=dark	" Utilise des couleurs adaptees pour fond noir
-"set splitright		" Ouvre les verticalsplit sur la droite
 set laststatus=2	" Affiche la bar de status
 set cc=80			" Change la couleur de fond a 80 colonnes
 set showcmd			" Affiche les commandes incompletes
@@ -81,6 +36,18 @@ endif
 
 " Colorscheme
 colorscheme onedark
+function! AdaptColorscheme()
+   " highlight clear CursorLine
+   highlight Normal ctermbg=none
+   highlight LineNr ctermbg=none
+   highlight Folded ctermbg=none
+   highlight NonText ctermbg=none
+   highlight SpecialKey ctermbg=none
+   highlight VertSplit ctermbg=none
+   highlight SignColumn ctermbg=none
+endfunction
+
+autocmd ColorScheme * call AdaptColorscheme()
 
 " Search
 set ignorecase		" Ignore la casse lors d'une recherche
@@ -143,7 +110,7 @@ function! s:goyo_leave()
 	set showcmd
 	set scrolloff=5
 	" Set colorscheme
-	silent! colorscheme onedark
+	" silent! colorscheme onedark
 	" Make it transparent
 	hi Normal guibg=NONE ctermbg=NONE
 endfunction
@@ -344,7 +311,3 @@ if has("persistent_undo")
 	set undofile
 
 endif
-
-autocmd BufEnter * set cursorline
-autocmd BufLeave * set nocursorline
-
