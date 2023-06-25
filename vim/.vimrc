@@ -40,7 +40,6 @@ colorscheme onedark
 autocmd InsertEnter * set cursorline
 " Revert Color to default when leaving Insert Mode
 autocmd InsertLeave * set nocursorline
-
 " Search
 set ignorecase		" Ignore la casse lors d'une recherche
 set smartcase		" Sauf si la recherche contient une majuscule
@@ -93,6 +92,10 @@ function! s:goyo_enter()
 	set scrolloff=999
 endfunction
 
+hi Normal guibg=NONE ctermbg=NONE
+" hi StatusLine ctermbg=NONE ctermfg=NONE
+hi StatusLine ctermbg=none cterm=bold
+
 function! s:goyo_leave()
 	if executable('tmux') && strlen($TMUX)
 		silent !tmux set status off
@@ -104,7 +107,6 @@ function! s:goyo_leave()
 	" Set colorscheme
 	" silent! colorscheme onedark
 	" Make it transparent
-	hi Normal guibg=NONE ctermbg=NONE
 endfunction
 
 " Vimtex
