@@ -1,38 +1,36 @@
+" Install vim-plug if not found
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+endif
+
+" Run PlugInstall if there are missing plugins
+autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+  \| PlugInstall --sync | source $MYVIMRC
+\| endif
+
 call plug#begin()
 
-Plug 'vim-syntastic/syntastic'			" Avoid simple mistakes of syntax
-"Plug 'ekalinin/Dockerfile.vim'			" syntax for Dockerfiles
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-Plug 'tpope/vim-fugitive'				" git plugin
-Plug 'tpope/vim-commentary'				" Comment plugin
+Plug 'junegunn/fzf.vim'					" Fzf plugin
 Plug 'junegunn/goyo.vim'				" Distraction free plugin
-"Plug 'sheerun/vim-polyglot'				" Better syntax
-"Plug 'flazz/vim-colorschemes'			" Colorshchemes collection
-Plug 'joshdick/onedark.vim'				" Onedark colorscheme
-"Plug 'felixhummel/setcolors.vim'		" Colorshchemes tester
-Plug 'itchyny/lightline.vim'			" Airline manager
-"Plug 'brookhong/cscope.vim'				" Cscope plugin
-"Plug 'pandark/42header.vim'				" 42 Header pk style
+Plug 'junegunn/vim-plug'				" Plugin manager
+Plug 'tpope/vim-fugitive'				" git plugin
+" Plug 'tpope/vim-commentary'				" Comment plugin
+Plug 'navarasu/onedark.nvim'			" Onedark colorscheme
+Plug 'nvim-lualine/lualine.nvim'		" Statusline
+Plug 'nvim-tree/nvim-web-devicons'		" Statusline icons
 Plug 'ap/vim-css-color'					" Css colors show in code
-"Plug 'valloric/youcompleteme'			" Autocompletion plugin
-"Plug 'lervag/vimtex'					" Latex plugin
 Plug 'mbbill/undotree'					" Undo tree
-"Plug 'rhysd/vim-grammarous'             " Autocorrect
+Plug 'aspeddro/gitui.nvim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-"Plug 'deoplete-plugins/deoplete-clang'
-Plug 'airblade/vim-gitgutter'			" Git plugin 
-Plug 'posva/vim-vue'					" Vue
-
-Plug 'blindFS/vim-translator', { 'mappings' : '<Plug>Translate' }	" translator
-Plug 'jparise/vim-graphql'				" GraphQL syntax
-"Plug 'karb94/neoscroll.nvim'			" Smooth scroll
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'github/copilot.vim'				" Copilot
+" Plug 'jparise/vim-graphql'				" GraphQL syntax
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
-Plug 'ShoofLLC/vim-openai'				" OpenAI
-Plug 'andreshazard/vim-freemarker'      " FreeMarker
-Plug 'jvirtanen/vim-hcl'				" HCL
-Plug 'jjo/vim-cue'						" Cue
-Plug 'tpope/vim-surround'				" Surround with quotes, brackets, etc
+Plug 'editorconfig/editorconfig-vim' 	" Editorconfig
+Plug 'rust-lang/rust.vim'				" Rust
 
 " Initialize plugin system
 call plug#end()
@@ -43,8 +41,13 @@ filetype plugin indent on    " required
 :let mapleader = " "
 nnoremap <space> <nop>
 
-"-------------------------------- AFFICHAGE ----------------------------------
+" When running :PlugInstall, :PlugUpdate or :PlugClean, open the results in a
+" new tab and close it when done.
+" let g:plug_window = 'enew'
+" Source vimrc after saving it and update plugins
+autocmd! BufWritePost .vimrc :source % | :PlugClean | :PlugInstall | :PlugUpdate | echom "Plugins updated" | normal '" 
 
+" Basic settings
 syntax enable		" Active la coloration syntaxique
 set mouse=a			" Permet d'utiliser la souris
 set title			" Met a jour le titre du terminal
@@ -63,83 +66,38 @@ set showcmd			" Affiche les commandes incompletes
 set wildmenu		" Show autocompletion possibles
 set noshowmode		" Dont show -- INSERT --, -- VISUAL -- whene changing mode
 set backspace=2
+set re=0
+set wildmode=longest,list,full
+set wildmenu
+set listchars=space:.,tab:▸\ ,eol:¬ " Set list set nolist nice caracteres
+set cursorlineopt=screenline
 
-" Set list set nolist nice caracteres
-set listchars=space:.,tab:▸\ ,eol:¬
-"set cursorline
-"set cursorcolumn
+" Set clipboard to system clipboard
+if system('uname -s') == "Darwin\n"
+  set clipboard=unnamed "OSX
+else
+  set clipboard=unnamedplus "Linux
+endif
 
-" Set colorscheme
-silent! colorscheme onedark
-" Make it transparent
-hi Normal guibg=NONE ctermbg=NONE
+" Colorscheme
+colorscheme onedark
 
-"-------------------------------- RECHERCHE ----------------------------------
-
+" Search
 set ignorecase		" Ignore la casse lors d'une recherche
 set smartcase		" Sauf si la recherche contient une majuscule
 set incsearch		" Surligne le resultat pendant la saisie
 
-"---------------------------------- Beep -------------------------------------
+" Disable beep
+set vb t_vb=
 
-set vb t_vb=		" Empeche vim de beeper
-
-" Hide a buffer instead of showing error when opening a new file
-set hidden
-
-" Deactivate arrowkeys
-"noremap <up> <nop>
-"noremap <down> <nop>
-"noremap <left> <nop>
-"noremap <right> <nop>
-"inoremap <up> <nop>
-"inoremap <down> <nop>
-"inoremap <left> <nop>
-"inoremap <right> <nop>
-
-" Deactivate backspace
-"inoremap <backspace> <nop>
-"cnoremap <backspace> <nop>
-
-"------------------------------- FUNCTIONS -----------------------------------
+set hidden " Hide a buffer instead of showing error when opening a new file
 
 " Raccourci pour passer la numérotation en mode relative "
 nnoremap <leader>N :set relativenumber!<cr>
 nnoremap <leader>n :set number!<cr>
 
-" Raccourci clavier pour pouvoir coller du code sans problemes
-"nnoremap <C-l> :set paste! <cr>
-
-" Shortcut for undo tree
-nnoremap <leader>u :UndotreeToggle<cr>
-
-" from 90% without plugins
-"set path+=** " not so good idea !
-
-" Shortcut to recursivly make tags
-command! Mt !ctags -R .
-
-" Remove all .DS_Store under the current directory
-command! Dstore !rm $(find . -name ".DS_Store" 2>/dev/null)
-
 " Do not create swapfiles
 :set noswapfile
-
-" Open multiple tab from vim
-command! -complete=file -nargs=* Tabe call Tabe(<f-args>)
-function! Tabe(...)
-	let t = tabpagenr()
-	let i = 0
-	for f in a:000
-		for g in glob(f, 0, 1)
-			exe "tabe " . fnameescape(g)
-			let i = i + 1
-		endfor
-	endfor
-	if i
-		exe "tabn " . (t + 1)
-	endif
-endfunction
 
 " Macro in visual range
 xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
@@ -149,9 +107,7 @@ function! ExecuteMacroOverVisualRange()
 	execute ":'<,'>normal @".nr2char(getchar())
 endfunction
 
-"-------------------------------- NETRW --------------------------------------
-
-" Faire de netrw quelquechose de classe (pas au point)
+" Netrw
 let g:netrw_banner=0		" disable annoying banner
 let g:netrw_liststyle=3		" tree view
 let g:netrw_winsize=15
@@ -159,19 +115,14 @@ let g:netrw_preview=1
 
 nnoremap <leader>l :Lex<cr>
 
-"-------------------------------- AIRLINE -------------------------------------
-
-let g:lightline = {
-			\ 'colorscheme': 'darcula',
-			\ }
-
-"--------------------------------- GOYO ---------------------------------------
-
-" Goyo shortcut
+" Goyo
 :nnoremap <leader>g <esc>:Goyo<cr>
 
 let g:goyo_width=120
 let g:goyo_height="80%"
+
+autocmd! User GoyoEnter nested call <SID>goyo_enter()
+autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
 function! s:goyo_enter()
 	if executable('tmux') && strlen($TMUX)
@@ -195,21 +146,13 @@ function! s:goyo_leave()
 	silent! colorscheme onedark
 	" Make it transparent
 	hi Normal guibg=NONE ctermbg=NONE
-
-	" ...
 endfunction
 
-autocmd! User GoyoEnter nested call <SID>goyo_enter()
-autocmd! User GoyoLeave nested call <SID>goyo_leave()
-
-"------------------------------- Polyglot -------------------------------------
-"let g:polyglot_disabled = ['latex']		" Disable Latex for vimtex
-
-"-------------------------------- Vimtex --------------------------------------
+" Vimtex
 let g:vimtex_compiler_latexmk = {'callback' : 0}
 "setlocal keywordprg=texdoc				" Make K work with tex documentation
 
-"-------------------------------- NEOVIM --------------------------------------
+" Neovim
 
 " Use escape to get out insert-mode in terminal
 if has('nvim')
@@ -232,70 +175,22 @@ endif
 :nnoremap <A-k> <C-w>k
 :nnoremap <A-l> <C-w>l
 
-"--------------------------------- TABS ---------------------------------------
-
 " Use <alt-j> and <alt-k> to change tab
 :nnoremap <C-j> gT
 :nnoremap <C-k> gt
 
-"------------------------------ VIMSCRIPT -------------------------------------
-
-" Use \\ as <localleader>
-:let  maplocalleader = "\\"
-
 " Let Vim say something nice at startup
-autocmd VimEnter * echo "'O.O' Ah que coucou !"
-
-" Map Leader-u to set the current word Uppercase
-:imap <localleader>u <esc>viw~ea
-
-" Use a shorcut to edit my vimrc
-:nnoremap <leader>ev :sp $HOME/.vimrc<cr>
-
-" Use a shorcut to source my vimrc
+autocmd VimEnter * echo system('curl -s https://zenquotes.io/api/random | jq -j ".[]|.q,.a"')
+" Open and source vimrc
+:nnoremap <leader>ev :vs $HOME/.vimrc<cr>
 :nnoremap <leader>sv :so $MYVIMRC<cr>
 
-" Use shorcuts for fzf
+" FZF
 :nnoremap <leader>ef :Files<cr>
 :nnoremap <leader>rg :Rg<cr>
 
-" Use a shorcut to install plugin
-:nnoremap <leader>pi :PlugInstall<cr>
-:nnoremap <leader>pu :PlugUpdate<cr>
-:nnoremap <leader>pc :PlugClean<cr>
-
-
-" Abbreviation for main
-:iabbrev mainc int		main(int argc, char **argv)<cr>{<cr>}<esc>ko
-
 " Open the previous buffer when delete one
 :command! Bd bp\|bd \#
-
-"" Neovim terminal toggle
-"let g:term_buf = 0
-"let g:term_win = 0
-"
-"function! Term_toggle(height)
-"    if win_gotoid(g:term_win)
-"        hide
-"    else
-"        botright new
-"        exec "resize " . a:height * 2
-"        try
-"            exec "buffer " . g:term_buf
-"        catch
-"            call termopen($SHELL, {"detach": 0})
-"            let g:term_buf = bufnr("")
-"        endtry
-"        startinsert!
-"        let g:term_win = win_getid()
-"    endif
-"endfunction
-"
-"if has('nvim')
-"	nnoremap <localleader>t :call Term_toggle(10)<cr>
-"	tnoremap <localleader>t <C-\><C-n>:call Term_toggle(10)<cr>
-"endif
 
 " Real vim terminal
 set splitbelow
@@ -327,7 +222,6 @@ onoremap an" :<c-u>normal! f'va'<cr>
 " Change around previous simple quote
 onoremap al" :<c-u>normal! F'va'<cr>
 
-
 " Change in next double quote
 onoremap in" :<c-u>normal! f"vi"<cr>
 " Change in previous double quote
@@ -349,171 +243,108 @@ onoremap al{ :<c-u>normal! F}va{<cr>
 onoremap ih :<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rkvg_"<cr>
 onoremap ah :<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rg_vk0"<cr>
 
-"--------------------------------- Cscope -------------------------------------
-
-nnoremap <leader>fa :call CscopeFindInteractive(expand('<cword>'))<CR>
-nnoremap <leader>k :call ToggleLocationList()<CR>
-
-" s: Find this C symbol
-nnoremap  <leader>fs :call CscopeFind('s', expand('<cword>'))<CR>
-" g: Find this definition
-nnoremap  <leader>fg :call CscopeFind('g', expand('<cword>'))<CR>
-" d: Find functions called by this function
-nnoremap  <leader>fd :call CscopeFind('d', expand('<cword>'))<CR>
-" c: Find functions calling this function
-nnoremap  <leader>fc :call CscopeFind('c', expand('<cword>'))<CR>
-" t: Find this text string
-nnoremap  <leader>ft :call CscopeFind('t', expand('<cword>'))<CR>
-" e: Find this egrep pattern
-nnoremap  <leader>fe :call CscopeFind('e', expand('<cword>'))<CR>
-" f: Find this file
-nnoremap  <leader>ff :call CscopeFind('f', expand('<cword>'))<CR>
-" i: Find files #including this file
-
-"---------------------------------- 42 ----------------------------------------
-
-" Set formatted comment
-set comments=sr:/*,mb:**,ex:*/
-nmap <f1> :FortyTwoHeader<CR>
-
-"--------------------------------- Translate -----------------------------------
-
-let g:translate#default_languages = {
-			\ 'fr': 'en',
-			\ 'en': 'fr'
-			\ }
-
-vmap T <Plug>Translate
-vmap R <Plug>TranslateReplace
-vmap P <Plug>TranslateSpeak
-
+" The cross
 nnoremap <leader>c :set cursorline! cursorcolumn!<cr>
 
-"nnoremap <leader>r :RandomColorScheme<cr>
+" Vim-go
+let g:go_fmt_command="gopls"
+let g:go_gopls_gofumpt=1
 
-" Completion
-set omnifunc=syntaxcomplete#Complete
-
-"---------------------------------- Gitgetter ----------------------------------
-"Delay to update in millisecond
-set updatetime=100
-
-"---------------------------------- Vim-go ----------------------------------
-" exe 'vertical resize 84'
-
-" au FileType go nmap <leader>r <Plug>(go-doc-vertical)
-"let g:go_bin_path = $HOME."/go"
-"let g:go_doc_popup_window = 1
-"let g:go_doc_url = 'https://pkg.go.dev'
-"let g:go_fmt_command="gopls"
-"let g:go_gopls_gofumpt=1
-
-"set splitright
-"-------------------------------- YOUCOMPLETME ---------------------------------
-
-" Remove <Tab> from the list of keys mapped by YCM.
-"let g:ycm_key_list_select_completion = ['<Down>']
-
-"---------------------------------- Neoscroll ----------------------------------
-
-" lua require('neoscroll').setup({
-" -- All these keys will be mapped to their corresponding default scrolling animation
-" mappings = {'<C-u>', '<C-d>', '<C-b>', '<C-f>',
-" '<C-y>', '<C-e>', 'zt', 'zz', 'zb'},
-" hide_cursor = true,          -- Hide cursor while scrolling
-" stop_eof = true,             -- Stop at <EOF> when scrolling downwards
-" use_local_scrolloff = false, -- Use the local scope of scrolloff instead of the global scope
-" respect_scrolloff = false,   -- Stop scrolling when the cursor reaches the scrolloff margin of the file
-" cursor_scrolls_alone = true, -- The cursor will keep on scrolling even if the window cannot scroll further
-" easing_function = nil,       -- Default easing function
-" pre_hook = nil,              -- Function to run before the scrolling animation starts
-" post_hook = nil,             -- Function to run after the scrolling animation ends
-" performance_mode = false,    -- Disable "Performance Mode" on all buffers.
-" })
-
-"------------------------------------ RUST -------------------------------------
-
+" Rust
 let g:syntastic_rust_checkers = ['cargo']
 let g:rustfmt_autosave = 1
 nmap <leader>tb :TagbarToggle<CR>
 
-
-"------------------------------------ HTML -------------------------------------
-" Unset wrap
+" Html
 autocmd FileType html :setlocal nowrap
-" Autoindent html files when write/read it
-":autocmd BufWritePre,BufRead *.html :normal G=gg
-
-"--------------------------------- JAVASCRIPT ----------------------------------
-autocmd FileType javascript set expandtab shiftwidth=2
-autocmd FileType typescript set expandtab shiftwidth=2
-autocmd FileType json set expandtab shiftwidth=2
-autocmd FileType tf set expandtab shiftwidth=2
-autocmd FileType sql set expandtab shiftwidth=2
-
-"------------------------------------ VUE --------------------------------------
-autocmd FileType vue set expandtab shiftwidth=2
-
-"------------------------------------- XML -------------------------------------
-"autocmd FileType xml setlocal equalprg=xmllint\ --format\ --recover\ -\ 2>/dev/null
-autocmd FileType xml set expandtab shiftwidth=2
-
-"----------------------------------- PYTHON ------------------------------------
-"autocmd FileType python
-"------------------------------------ COC --------------------------------------
-source ~/.vim/plugged/coc.nvim/plugin/coc.vim
-
-" Use <c-space> to trigger completion.
-"if has('nvim')
-"  inoremap <silent><expr> <c-space> coc#refresh()
-"else
-"  inoremap <silent><expr> <c-@> coc#refresh()
-"endif
-
-autocmd FileType go setlocal ts=2 sts=2 sw=2 noexpandtab
+" Javascript
+autocmd FileType javascript vue set expandtab shiftwidth=2
+" Xml
+autocmd FileType xml setlocal equalprg=xmllint\ --format\ --recover\ -\ 2>/dev/null
 
 " GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
-nmap <silent> ^] <Plug>(coc-definition)
 
-command! -nargs=0 Prettier :CocCommand prettier.forceFormatDocument
+let g:coc_global_extensions = [
+			\ 'coc-python',
+			\ 'coc-json',
+			\ 'coc-rust-analyzer',
+			\ 'coc-tsserver',
+			\ ]
 
-" Formatting selected code.
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
-
-" Add `:Format` command to format current buffer.
-command! -nargs=0 Format :call CocActionAsync('format')
-
-" Use K to show documentation in preview window.
-nnoremap <silent> K :call ShowDocumentation()<CR>
-
-function! ShowDocumentation()
-  if CocAction('hasProvider', 'hover')
-    call CocActionAsync('doHover')
-  else
-    call feedkeys('K', 'in')
-  endif
+" use <tab> to trigger completion and navigate to the next complete item
+function! CheckBackspace() abort
+	let col = col('.') - 1
+	return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-"let g:coc_global_extensions = [
-"			\ 'coc-python',
-"			\ 'coc-json',
-"			\ 'coc-pairs',
-"			\ 'coc-tsserver',
-"			\ ]
+inoremap <silent><expr> <Tab>
+			\ coc#pum#visible() ? coc#pum#next(1) :
+			\ CheckBackspace() ? "\<Tab>" :
+			\ coc#refresh()
+
 " Right indentation for yaml files
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 
-" Add missing imports on save
-autocmd BufWritePre *.go :silent call CocAction('runCommand', 'editor.action.organizeImport')
-
 " Avoid autoindent on comments
 :set indentkeys-=0#
-
 autocmd BufNewFile,BufReadPost * if &filetype == "python" | set indentkeys-=0# | endif
 autocmd BufNewFile,BufReadPost * if &filetype == "yaml" | set expandtab shiftwidth=2 indentkeys-=0# | endif
+
+" Map <C-s> to save, on mac add \<C-s> keybinding to iterm2 to use command-s
+noremap <silent> <C-S>          :update<CR>
+vnoremap <silent> <C-S>         <C-C>:update<CR>
+inoremap <silent> <C-S>         <Esc>:update<CR>
+
+" Manage set paste
+function! WrapForTmux(s)
+	if !exists('$TMUX')
+		return a:s
+	endif
+
+	let tmux_start = "\<Esc>Ptmux;"
+	let tmux_end = "\<Esc>\\"
+
+	return tmux_start . substitute(a:s, "\<Esc>", "\<Esc>\<Esc>", 'g') . tmux_end
+endfunction
+
+let &t_SI .= WrapForTmux("\<Esc>[?2004h")
+let &t_EI .= WrapForTmux("\<Esc>[?2004l")
+
+function! XTermPasteBegin()
+	set pastetoggle=<Esc>[201~
+	set paste
+	return ""
+endfunction
+
+inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+
+"------------------------------------ Undo -------------------------------------
+nnoremap <leader>u :UndotreeToggle<CR>
+
+let g:undotree_WindowLayout = 2
+let g:undotree_ShortIndicators = 1
+let g:undotree_DiffpanelHeight = 10
+let g:undotree_DiffCommand = "vimdiff"
+
+" Set focus to undo tree when toggling
+let g:undotree_SetFocusWhenToggle = 1
+
+if has("persistent_undo")
+	let target_path = expand('~/.undodir')
+
+	if !isdirectory(target_path)
+		call mkdir(target_path, "p", 0700)
+	endif
+
+	let &undodir=target_path
+	set undofile
+
+endif
+
+autocmd BufEnter * set cursorline
+autocmd BufLeave * set nocursorline
 
