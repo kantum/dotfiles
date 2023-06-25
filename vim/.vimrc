@@ -36,18 +36,10 @@ endif
 
 " Colorscheme
 colorscheme onedark
-function! AdaptColorscheme()
-   " highlight clear CursorLine
-   highlight Normal ctermbg=none
-   highlight LineNr ctermbg=none
-   highlight Folded ctermbg=none
-   highlight NonText ctermbg=none
-   highlight SpecialKey ctermbg=none
-   highlight VertSplit ctermbg=none
-   highlight SignColumn ctermbg=none
-endfunction
-
-autocmd ColorScheme * call AdaptColorscheme()
+" Change Color when entering Insert Mode
+autocmd InsertEnter * set cursorline
+" Revert Color to default when leaving Insert Mode
+autocmd InsertLeave * set nocursorline
 
 " Search
 set ignorecase		" Ignore la casse lors d'une recherche

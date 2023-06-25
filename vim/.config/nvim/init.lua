@@ -32,6 +32,7 @@ return require('packer').startup(function(use)
   use { 'tpope/vim-fugitive' } -- git plugin
   use { 'tpope/vim-commentary' } -- Comment plugin
   use { 'navarasu/onedark.nvim' } -- Onedark colorscheme
+  use { 'tribela/vim-transparent' } -- Transparent background
   use { 'nvim-lualine/lualine.nvim' } -- Statusline
   use { 'nvim-tree/nvim-web-devicons' } -- Statusline icons
   use { 'ap/vim-css-color' } -- Css colors show in code
