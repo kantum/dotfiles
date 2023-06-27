@@ -1,9 +1,3 @@
-filetype plugin indent on    " required
-
-" Use space as <mapleader> key
-:let mapleader = " "
-nnoremap <space> <nop>
-
 " Basic settings
 syntax enable		" Active la coloration syntaxique
 set mouse=a			" Permet d'utiliser la souris
@@ -27,17 +21,6 @@ set wildmenu
 set listchars=space:.,tab:▸\ ,eol:¬ " Set list set nolist nice caracteres
 set cursorlineopt=screenline
 
-" Set clipboard to system clipboard
-if system('uname -s') == "Darwin\n"
-  set clipboard=unnamed "OSX
-else
-  set clipboard=unnamedplus "Linux
-endif
-
-" Change Color when entering Insert Mode
-autocmd InsertEnter * set cursorline
-" Revert Color to default when leaving Insert Mode
-autocmd InsertLeave * set nocursorline
 " Search
 set ignorecase		" Ignore la casse lors d'une recherche
 set smartcase		" Sauf si la recherche contient une majuscule

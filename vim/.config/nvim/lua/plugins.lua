@@ -19,7 +19,7 @@ return {
 	{ 'rust-lang/rust.vim' }, -- Rust
 	{ 'neoclide/coc.nvim', branch= 'release'}, -- Coc
 	{ 'fatih/vim-go', build = ':GoUpdateBinaries' }, -- Go
-	{ "iamcco/markdown-preview.nvim", build = function() vim.fn["mkdp#util#install"]() end }, -- Markdown preview
+	{ 'iamcco/markdown-preview.nvim', build = function() vim.fn["mkdp#util#install"]() end }, -- Markdown preview
 	{
 		'nvim-telescope/telescope.nvim',
 		version = '0.1.1',
@@ -29,31 +29,62 @@ return {
 				'nvim-telescope/telescope-fzf-native.nvim',
 				build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build'
 			},
-		}
+			{ "debugloop/telescope-undo.nvim" },
+		},
+		config = function()
+			require("telescope").setup({
+				extensions = {
+					undo = {
+						-- telescope-undo.nvim config, see below
+					},
+				},
+			})
+			require("telescope").load_extension("undo")
+		end,
+
 	},
 	{ 'xiyaowong/transparent.nvim' },
 	{
-		"olimorris/onedarkpro.nvim",
+		'olimorris/onedarkpro.nvim',
 		priority = 1000 -- Ensure it loads first
 	},
 	{
-		"nvim-telescope/telescope-file-browser.nvim",
-		dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim", "ahmedkhalf/project.nvim" },
+		'nvim-telescope/telescope-file-browser.nvim',
+		dependencies = { 'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim', 'ahmedkhalf/project.nvim' },
 	},
 	{
-		"ahmedkhalf/project.nvim",
+		'ahmedkhalf/project.nvim',
 	},
 	{
-		"williamboman/mason.nvim",
+		'williamboman/mason.nvim',
 		build = ":MasonUpdate" -- :MasonUpdate updates registry contents
 	},
 	{
-		"neovim/nvim-lspconfig",
+		'neovim/nvim-lspconfig',
 	},
 	{
-		"numToStr/Comment.nvim",
+		'numToStr/Comment.nvim',
 		config = function()
 			require("Comment").setup()
 		end,
-	}
+	},
+	{ 'nvim-tree/nvim-tree.lua' },
+	{
+		"nvim-telescope/telescope.nvim",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"debugloop/telescope-undo.nvim",
+		},
+		config = function()
+			require("telescope").setup({
+				extensions = {
+					undo = {
+						-- telescope-undo.nvim config, see below
+					},
+				},
+			})
+			require("telescope").load_extension("undo")
+			-- optional: vim.keymap.set("n", "<leader>u", "<cmd>Telescope undo<cr>")
+		end,
+	},
 }
