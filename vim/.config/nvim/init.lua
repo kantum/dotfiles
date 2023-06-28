@@ -87,6 +87,9 @@ vim.cmd.nnoremap('<leader>l', ':NvimTreeToggle<cr>')
 -- Telescope Undo
 vim.keymap.set("n", "<leader>u", "<cmd>Telescope undo<cr>")
 
+-- ToggleTerm
+-- vim.keymap.set("n", "<leader>t", "<cmd>ToggleTerm direction=float<cr>")
+
 -- Legacy vimrc
 -- vim.cmd([[
 -- source ~/.vimrc
@@ -223,3 +226,17 @@ require'nvim-web-devicons'.setup { }
 -- Nvim Tree                                                           Plugin --
 --------------------------------------------------------------------------------
 require("nvim-tree").setup()
+
+--------------------------------------------------------------------------------
+-- ToggleTerm                                                          Plugin --
+--------------------------------------------------------------------------------
+require("toggleterm").setup{}
+
+local Terminal  = require('toggleterm.terminal').Terminal
+local lazygit = Terminal:new({ cmd = "lazygit", hidden = true, direction = "float" })
+
+function _lazygit_toggle()
+  lazygit:toggle()
+end
+
+vim.api.nvim_set_keymap("n", "<leader>g", "<cmd>lua _lazygit_toggle()<CR>", {noremap = true, silent = true})

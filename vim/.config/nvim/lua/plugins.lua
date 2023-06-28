@@ -87,4 +87,5 @@ return {
 			-- optional: vim.keymap.set("n", "<leader>u", "<cmd>Telescope undo<cr>")
 		end,
 	},
+	{'akinsho/toggleterm.nvim', version = "*", config = true}
 }
