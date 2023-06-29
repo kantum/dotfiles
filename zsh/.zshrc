@@ -162,6 +162,7 @@ if [ -f '/Users/kantum/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/ka
 # Python 3
 alias python='python3'
 alias pip='pip3'
+alias ranger='joshuto'
 
 # Gstreamer
 export PKG_CONFIG_PATH="/Library/Frameworks/GStreamer.framework/Versions/1.0/lib/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
