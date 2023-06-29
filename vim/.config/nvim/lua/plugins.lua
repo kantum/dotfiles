@@ -7,17 +7,17 @@ return {
 	{ 'nvim-treesitter/nvim-treesitter',
 	build = function() local ts_update = require('nvim-treesitter.install').update({ with_sync = true }) ts_update() end, },
 	{ 'junegunn/goyo.vim' },
-	{ 'tpope/vim-fugitive' }, -- git plugin
-	{ 'tribela/vim-transparent' }, -- Transparent background
-	{ 'nvim-lualine/lualine.nvim' }, -- Statusline
+	-- { 'tpope/vim-fugitive' }, -- git plugin
+	-- { 'tribela/vim-transparent' }, -- Transparent background
+	-- { 'nvim-lualine/lualine.nvim' }, -- Statusline
 	{ 'nvim-tree/nvim-web-devicons' }, -- Statusline icons
-	{ 'ap/vim-css-color' }, -- Css colors show in code
+	-- { 'ap/vim-css-color' }, -- Css colors show in code
 	{ 'mbbill/undotree' }, -- Undo tree
 	{ 'aspeddro/gitui.nvim' },
 	{ 'github/copilot.vim' }, -- Copilot
-	{ 'editorconfig/editorconfig-vim' }, -- Editorconfig
+	-- { 'editorconfig/editorconfig-vim' }, -- Editorconfig
 	{ 'rust-lang/rust.vim' }, -- Rust
-	{ 'neoclide/coc.nvim', branch= 'release'}, -- Coc
+	-- { 'neoclide/coc.nvim', branch= 'release'}, -- Coc
 	{ 'fatih/vim-go', build = ':GoUpdateBinaries' }, -- Go
 	{ 'iamcco/markdown-preview.nvim', build = function() vim.fn["mkdp#util#install"]() end }, -- Markdown preview
 	{
@@ -87,5 +87,14 @@ return {
 			-- optional: vim.keymap.set("n", "<leader>u", "<cmd>Telescope undo<cr>")
 		end,
 	},
-	{'akinsho/toggleterm.nvim', version = "*", config = true}
+	{'akinsho/toggleterm.nvim', version = "*", config = true},
+	{ 'lewis6991/gitsigns.nvim' },
+	{ 'neovim/nvim-lspconfig' },
+	{ 'hrsh7th/cmp-nvim-lsp' },
+	{ 'hrsh7th/cmp-buffer' },
+	{ 'hrsh7th/cmp-path' },
+	{ 'hrsh7th/cmp-cmdline' },
+	{ 'hrsh7th/nvim-cmp' },
+	{ 'L3MON4D3/LuaSnip' },
+	{ 'saadparwaiz1/cmp_luasnip' },
 }
