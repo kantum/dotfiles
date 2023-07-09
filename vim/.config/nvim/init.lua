@@ -34,9 +34,9 @@ require("lazy").setup(require('plugins'), {})
 --------------------------------------------------------------------------------
 
 -- Ignore case when searching
-vim.cmd.ignorecase = true
+vim.opt.ignorecase = true
 -- Except when using capital letters
-vim.cmd.smartcase = true
+vim.opt.smartcase = true
 -- Set clipboard to system clipboard
 vim.opt.clipboard = "unnamedplus"
 
@@ -46,6 +46,19 @@ vim.g.loaded_netrwPlugin = 1
 
 -- set termguicolors to enable highlight groups
 vim.opt.termguicolors = true
+vim.opt.colorcolumn = '80'
+
+-- Cursor Settings
+vim.cmd([[
+let &t_SI = "\e[4 q"
+let &t_EI = "\e[4 q"
+
+" reset the cursor on start (for older versions of vim, usually not required)
+augroup myCmds
+au!
+autocmd VimEnter * silent !echo -ne "\e[2 q"
+augroup END
+]])
 
 -- Set tab width
 vim.opt.tabstop = 4
@@ -76,6 +89,9 @@ vim.g.completion_chain_complete_list = {
 
 -- Format on save
 vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]
+
+vim.cmd.nnoremap('<leader>h',
+	':vimgrep /\\Vhtml\\!/ % | normal jvi} <Esc>:!prettier --parser html --stdin-filepath<CR>vi}>')
 
 --------------------------------------------------------------------------------
 -- Style                                                                      --
@@ -108,6 +124,8 @@ vim.cmd.nnoremap('<leader>p', ':Lazy<cr>')
 
 -- NvimTree
 vim.cmd.nnoremap('<leader>l', ':NvimTreeToggle<cr>')
+
+vim.cmd.nnoremap('<leader>n', ':set number! | set relativenumber!<cr>')
 
 -- Telescope Undo
 vim.keymap.set("n", "<leader>u", "<cmd>Telescope undo<cr>")
@@ -328,7 +346,7 @@ require('gitsigns').setup {
 		follow_files = true
 	},
 	attach_to_untracked          = true,
-	current_line_blame           = true, -- Toggle with `:Gitsigns toggle_current_line_blame`
+	current_line_blame           = false, -- Toggle with `:Gitsigns toggle_current_line_blame`
 	current_line_blame_opts      = {
 		virt_text = true,
 		virt_text_pos = 'right_align', -- 'eol' | 'overlay' | 'right_align'
@@ -377,7 +395,7 @@ cmp.setup({
 		-- ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
 		["<CR>"] = cmp.mapping.confirm({
 			behavior = cmp.ConfirmBehavior.Replace,
-			select = true,
+			select = false,
 		}),
 		['<Tab>'] = function(fallback)
 			if cmp.visible() then
@@ -435,3 +453,32 @@ cmp.setup.cmdline(':', {
 
 -- Set up lspconfig.
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
+require 'lspconfig'.tailwindcss.setup {
+	capabilities = capabilities,
+	-- There add every filetype you want tailwind to work on
+	filetypes = {
+		"css",
+		"scss",
+		"sass",
+		"postcss",
+		"html",
+		"javascript",
+		"javascriptreact",
+		"typescript",
+		"typescriptreact",
+		"svelte",
+		"vue",
+		"rust",
+	},
+	init_options = {
+		-- There you can set languages to be considered as different ones by tailwind lsp I guess same as includeLanguages in VSCod
+		userLanguages = {
+			eelixir = "html-eex",
+			eruby = "erb",
+			rust = "html",
+		},
+	},
+	-- Here If any of files from list will exist tailwind lsp will activate.
+	root_dir = require 'lspconfig'.util.root_pattern('tailwind.config.js', 'tailwind.config.ts', 'postcss.config.js',
+		'postcss.config.ts', 'windi.config.ts'),
+}
