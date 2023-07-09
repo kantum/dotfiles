@@ -79,7 +79,12 @@ source $ZSH/oh-my-zsh.sh
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+# export LC_ALL=en_IN.UTF-8
+export LANG=en_US.UTF-8
+
+# Set locale (Important to avoid tmux bugs)
+export LC_CTYPE=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
@@ -141,8 +146,6 @@ export PATH=$PATH:$HOME/go/bin
 # Scaleway CLI autocomplete initialization.
 eval "$(scw autocomplete script shell=zsh)"
 
-# source /usr/share/nvm/init-nvm.sh
-
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # pnpm
@@ -162,15 +165,30 @@ if [ -f '/Users/kantum/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/ka
 # Python 3
 alias python='python3'
 alias pip='pip3'
-alias ranger='joshuto'
+alias ranger='joshuto --path'
 
 # Gstreamer
-export PKG_CONFIG_PATH="/Library/Frameworks/GStreamer.framework/Versions/1.0/lib/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
-export PATH="/Library/Frameworks/GStreamer.framework/Versions/1.0/bin${PATH:+:$PATH}"
-export DYLD_LIBRARY_PATH=/Library/Frameworks/GStreamer.framework/Versions/1.0/lib/
+# export PKG_CONFIG_PATH="/Library/Frameworks/GStreamer.framework/Versions/1.0/lib/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
+# export PATH="/Library/Frameworks/GStreamer.framework/Versions/1.0/bin${PATH:+:$PATH}"
+# export DYLD_LIBRARY_PATH=/Library/Frameworks/GStreamer.framework/Versions/1.0/lib/
+export DYLD_FALLBACK_LIBRARY_PATH=/Library/Frameworks/GStreamer.framework/Versions/1.0/lib/
 
 # Gstreamer bash completion
 eval "$(curl -s https://raw.githubusercontent.com/drothlis/gstreamer/bash-completion-master/tools/gstreamer-completion)"
 
 # direnv
 eval "$(direnv hook zsh)"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# Asdf
+. "$HOME/.asdf/asdf.sh"
+. "$HOME/.asdf/completions/asdf.bash"
+
+# Removes the limits and deduplication of the history file.
+export HISTSIZE=1000000000
+export SAVEHIST=$HISTSIZE
+setopt EXTENDED_HISTORY
+
