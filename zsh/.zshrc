@@ -1,3 +1,5 @@
+# Uncomment the first and last line to test startup speed
+# zmodload zsh/zprof # top of your .zshrc file
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -133,15 +135,19 @@ bindkey \^U backward-kill-line
 
 # Makes ranger to open files with vim
 export VISUAL=nvim
-export EDITOR=nvim
+export EDITOR=lvim
 
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/.yarn/bin:$PATH"
 
-PATH="$PATH:$HOME/.cargo/bin"
+export PATH="$PATH:$HOME/.cargo/bin"
 
-export PATH=$PATH:/usr/local/go/bin
-export PATH=$PATH:$HOME/go/bin
+export GOROOT=$HOME/go
+export GOPATH=$HOME/go
+export GOBIN=$GOPATH/bin
+export PATH=$PATH:$GOPATH/bin
+# export PATH=$PATH:/usr/local/go/bin
+# export PATH=$PATH:$HOME/go/bin
 
 # Scaleway CLI autocomplete initialization.
 eval "$(scw autocomplete script shell=zsh)"
@@ -165,12 +171,12 @@ if [ -f '/Users/kantum/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/ka
 # Python 3
 alias python='python3'
 alias pip='pip3'
-alias ranger='joshuto --path'
 
 # Gstreamer
-# export PKG_CONFIG_PATH="/Library/Frameworks/GStreamer.framework/Versions/1.0/lib/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
-# export PATH="/Library/Frameworks/GStreamer.framework/Versions/1.0/bin${PATH:+:$PATH}"
+export PKG_CONFIG_PATH="/Library/Frameworks/GStreamer.framework/Versions/1.0/lib/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
+export PATH="/Library/Frameworks/GStreamer.framework/Versions/1.0/bin${PATH:+:$PATH}"
 # export DYLD_LIBRARY_PATH=/Library/Frameworks/GStreamer.framework/Versions/1.0/lib/
+# export GST_PLUGIN_PATH=
 export DYLD_FALLBACK_LIBRARY_PATH=/Library/Frameworks/GStreamer.framework/Versions/1.0/lib/
 
 # Gstreamer bash completion
@@ -180,15 +186,16 @@ eval "$(curl -s https://raw.githubusercontent.com/drothlis/gstreamer/bash-comple
 eval "$(direnv hook zsh)"
 
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" --no-use # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-# Asdf
-. "$HOME/.asdf/asdf.sh"
-. "$HOME/.asdf/completions/asdf.bash"
 
 # Removes the limits and deduplication of the history file.
 export HISTSIZE=1000000000
 export SAVEHIST=$HISTSIZE
 setopt EXTENDED_HISTORY
+export GPG_TTY=$(tty)
 
+export WASMTIME_HOME="$HOME/.wasmtime"
+
+export PATH="$WASMTIME_HOME/bin:$PATH"
+# zprof # bottom of .zshrc
