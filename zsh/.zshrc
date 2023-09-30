@@ -165,7 +165,6 @@ if [ -f '/Users/kantum/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/ka
 # Python 3
 alias python='python3'
 alias pip='pip3'
-alias ranger='joshuto --path'
 
 # Gstreamer
 # export PKG_CONFIG_PATH="/Library/Frameworks/GStreamer.framework/Versions/1.0/lib/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
@@ -184,11 +183,17 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # Asdf
-. "$HOME/.asdf/asdf.sh"
-. "$HOME/.asdf/completions/asdf.bash"
+# . "$HOME/.asdf/asdf.sh"
+# . "$HOME/.asdf/completions/asdf.bash"
 
 # Removes the limits and deduplication of the history file.
 export HISTSIZE=1000000000
 export SAVEHIST=$HISTSIZE
 setopt EXTENDED_HISTORY
 
+
+export WASMTIME_HOME="$HOME/.wasmtime"
+
+export PATH="$WASMTIME_HOME/bin:$PATH"
+
+export GPG_TTY=$(tty)
