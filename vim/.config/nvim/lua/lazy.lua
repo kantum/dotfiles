@@ -18,8 +18,3 @@ vim.cmd(":set noswapfile")
 
 -- Add lazy to runtimepath
 vim.opt.rtp:prepend(lazypath)
-
-require("remap")
-require("lazy").setup(require("plugins"))
-require("set")
-require("colors")

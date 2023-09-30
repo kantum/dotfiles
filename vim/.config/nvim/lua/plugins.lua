@@ -14,26 +14,84 @@ return {
 			ts_update()
 		end,
 	},
-	-- { 'editorconfig/editorconfig-vim' }, -- Editorconfig
-	-- { 'tribela/vim-transparent' }, -- Transparent background
-	-- { 'nvim-lualine/lualine.nvim' }, -- Statusline
-	{ "ap/vim-css-color" }, -- Css colors show in code
-	-- { 'neoclide/coc.nvim', branch= 'release'}, -- Coc
+	{ "ap/vim-css-color" },         -- Css colors show in code
 	{ "junegunn/goyo.vim" },
 	{ "tpope/vim-fugitive" },       -- git plugin
 	{ "tpope/vim-rhubarb" },        -- git plugin
 	{ "nvim-tree/nvim-web-devicons" }, -- Statusline icons
 	{ "mbbill/undotree" },          -- Undo tree
 	{ "aspeddro/gitui.nvim" },
-	{ "github/copilot.vim" },       -- Copilot
-	{ "rust-lang/rust.vim" },       -- Rust
+	-- { "github/copilot.vim" },       -- Copilot
+	{
+		"zbirenbaum/copilot.lua",
+		build = "Copilot",
+		config = function()
+			require('copilot').setup({
+				panel = {
+					enabled = true,
+					auto_refresh = false,
+					keymap = {
+						jump_prev = "[[",
+						jump_next = "]]",
+						accept = "<CR>",
+						refresh = "gr",
+						open = "<M-CR>"
+					},
+					layout = {
+						position = "bottom", -- | top | left | right
+						ratio = 0.4
+					},
+				},
+				suggestion = {
+					enabled = true,
+					auto_trigger = true,
+					debounce = 75,
+					keymap = {
+						accept = "<tab>",
+						accept_word = false,
+						accept_line = false,
+						next = "<M-]>",
+						prev = "<M-[>",
+						dismiss = "<C-]>",
+					},
+				},
+				filetypes = {
+					yaml = false,
+					markdown = false,
+					help = false,
+					gitcommit = false,
+					gitrebase = false,
+					hgcommit = false,
+					svn = false,
+					cvs = false,
+					["."] = false,
+				},
+				copilot_node_command = 'node', -- Node.js version must be > 16.x
+				server_opts_overrides = {},
+			})
+		end,
+	},
+	{
+		"jonahgoldwastaken/copilot-status.nvim",
+		dependencies = { "copilot.lua" }, -- or "zbirenbaum/copilot.lua"
+		lazy = true,
+		event = "BufReadPost",
+	},
+	{
+		"nvim-lualine/lualine.nvim",
+		dependencies = { "nvim-tree/nvim-web-devicons" }, -- or "zbirenbaum/copilot.lua"
+	},
+	-- {
+	-- 	'codota/tabnine-nvim',
+	-- 	build = "./dl_binaries.sh"
+	-- },
+	{ "rust-lang/rust.vim" },     -- Rust
+
 	{ "MunifTanjim/prettier.nvim" }, -- Rust
 	{
 		"jose-elias-alvarez/null-ls.nvim",
 		dependencies = { "nvim-lua/plenary.nvim" },
-	}, -- Rust
-	-- { 'fatih/vim-go',                 build = ':GoUpdateBinaries' },                       -- Go
-	-- Debug Adapter Protocol for go
+	},
 	{ "theHamsta/nvim-dap-virtual-text" },
 	{ "mfussenegger/nvim-dap" },
 	{ "rcarriga/nvim-dap-ui" },
@@ -75,9 +133,7 @@ return {
 		"nvim-telescope/telescope-file-browser.nvim",
 		dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim", "ahmedkhalf/project.nvim" },
 	},
-	{
-		"ahmedkhalf/project.nvim",
-	},
+	{ "ahmedkhalf/project.nvim", },
 	{
 		"williamboman/mason.nvim",
 		build = ":MasonUpdate", -- :MasonUpdate updates registry contents
@@ -89,7 +145,7 @@ return {
 		end,
 	},
 	{ "nvim-tree/nvim-tree.lua" },
-	{ "akinsho/toggleterm.nvim",   version = "*", config = true },
+	{ "akinsho/toggleterm.nvim", version = "*", config = true },
 	{ "lewis6991/gitsigns.nvim" },
 	{ "neovim/nvim-lspconfig" },
 	{ "hrsh7th/cmp-nvim-lsp" },
@@ -116,9 +172,10 @@ return {
 	},
 	{ "m4xshen/autoclose.nvim" },                         -- autoclose quotes
 	{ "windwp/nvim-ts-autotag" },
+
 	{
 		"VonHeikemen/lsp-zero.nvim",
-		branch = "v2.x",
+		branch = "v3.x",
 		dependencies = {
 			-- LSP Support
 			{ "neovim/nvim-lspconfig" },    -- Required
@@ -131,4 +188,31 @@ return {
 			{ "L3MON4D3/LuaSnip" }, -- Required
 		},
 	},
+
+	{ 'VonHeikemen/lsp-zero.nvim',        branch = 'v3.x' },
+
+	--- Uncomment these if you want to manage LSP servers from neovim
+	{ 'williamboman/mason.nvim' },
+	{ 'williamboman/mason-lspconfig.nvim' },
+
+	-- LSP Support
+	{
+		'neovim/nvim-lspconfig',
+		dependencies = {
+			{ 'hrsh7th/cmp-nvim-lsp' },
+		},
+	},
+
+	-- Autocompletion
+	{
+		'hrsh7th/nvim-cmp',
+		dependencies = {
+			{ 'L3MON4D3/LuaSnip' },
+		}
+	},
+
+
+	{ "folke/which-key.nvim" },
+	{ "folke/neodev.nvim" },
+	{ "zaldih/themery.nvim" },
 }
