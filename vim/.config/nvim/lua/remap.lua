@@ -9,4 +9,4 @@ vim.cmd.nnoremap("<leader>si", ":so $MYVIMRC<cr>")
 
 vim.cmd.nnoremap("<leader>ep", ":vs ~/.config/nvim/lua/plugins.lua<cr>")
 vim.cmd.nnoremap("<leader>p", ":Lazy<cr>")
-
+vim.cmd.nnoremap("<leader>c", ":set cursorline! cursorcolumn!<cr>")

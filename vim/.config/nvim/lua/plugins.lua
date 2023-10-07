@@ -215,4 +215,6 @@ return {
 	{ "folke/which-key.nvim" },
 	{ "folke/neodev.nvim" },
 	{ "zaldih/themery.nvim" },
+	{ "LnL7/vim-nix" },
+
 }
