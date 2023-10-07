@@ -20,9 +20,7 @@
   home.packages = with pkgs; [
     neovim
     git
-
-    go
-    nodePackages_latest.pnpm
+    direnv
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
@@ -57,15 +55,20 @@
   # source
   #
   #  ~/.nix-profile/etc/profile.d/hm-session-vars.sh
-  #
   # or
-  #
   #  /etc/profiles/per-user/kantum/etc/profile.d/hm-session-vars.sh
   #
   # if you don't want to manage your shell through Home Manager.
   home.sessionVariables = {
     VISUAL = "nvim";
     EDITOR = "nvim";
+  };
+
+  programs.direnv = {
+    enable = true;
+    nix-direnv = {
+      enable = true;
+    };
   };
 
   # Let Home Manager install and manage itself.
