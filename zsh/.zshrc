@@ -113,58 +113,24 @@ alias :q="exit"
 alias pgrep="pgrep -f"
 alias pkill="pkill -f"
 
-# Color man pages
-man() {
-	LESS_TERMCAP_md=$'\e[01;31m' \
-	LESS_TERMCAP_me=$'\e[0m' \
-	LESS_TERMCAP_se=$'\e[0m' \
-	LESS_TERMCAP_so=$'\e[01;44;33m' \
-	LESS_TERMCAP_ue=$'\e[0m' \
-	LESS_TERMCAP_us=$'\e[01;32m' \
-	COLUMNS=80 \
-	command man "$@"
-}
-
-# Flutter
-export PATH="$PATH:$HOME/.flutter/bin"
+# # Color man pages
+# man() {
+# 	LESS_TERMCAP_md=$'\e[01;31m' \
+# 	LESS_TERMCAP_me=$'\e[0m' \
+# 	LESS_TERMCAP_se=$'\e[0m' \
+# 	LESS_TERMCAP_so=$'\e[01;44;33m' \
+# 	LESS_TERMCAP_ue=$'\e[0m' \
+# 	LESS_TERMCAP_us=$'\e[01;32m' \
+# 	COLUMNS=80 \
+# 	command man "$@"
+# }
 
 # make ctrl-u act as usual
 bindkey \^U backward-kill-line
 
-# Makes ranger to open files with vim
-export VISUAL=nvim
-export EDITOR=nvim
-
-export PATH="$HOME/.local/bin:$PATH"
-export PATH="$HOME/.yarn/bin:$PATH"
-
 PATH="$PATH:$HOME/.cargo/bin"
 
-export PATH=$PATH:/usr/local/go/bin
-export PATH=$PATH:$HOME/go/bin
-
-# Scaleway CLI autocomplete initialization.
-eval "$(scw autocomplete script shell=zsh)"
-
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# pnpm
-export PNPM_HOME="/Users/kantum/Library/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/kantum/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/kantum/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/kantum/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/kantum/google-cloud-sdk/completion.zsh.inc'; fi
-
-# Python 3
-alias python='python3'
-alias pip='pip3'
 
 # Gstreamer
 # export PKG_CONFIG_PATH="/Library/Frameworks/GStreamer.framework/Versions/1.0/lib/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
@@ -178,14 +144,6 @@ eval "$(curl -s https://raw.githubusercontent.com/drothlis/gstreamer/bash-comple
 # direnv
 eval "$(direnv hook zsh)"
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-# Asdf
-# . "$HOME/.asdf/asdf.sh"
-# . "$HOME/.asdf/completions/asdf.bash"
-
 # Removes the limits and deduplication of the history file.
 export HISTSIZE=1000000000
 export SAVEHIST=$HISTSIZE
@@ -197,3 +155,7 @@ export WASMTIME_HOME="$HOME/.wasmtime"
 export PATH="$WASMTIME_HOME/bin:$PATH"
 
 export GPG_TTY=$(tty)
+
+eval "$(~/.local/bin/rtx activate zsh)"
+
+export SOPS_AGE_KEY_FILE="$HOME/.sops/keys.txt"
