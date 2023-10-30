@@ -159,3 +159,6 @@ export GPG_TTY=$(tty)
 eval "$(~/.local/bin/rtx activate zsh)"
 
 export SOPS_AGE_KEY_FILE="$HOME/.sops/keys.txt"
+
+export VISUAL=nvim
+export EDITOR="$VISUAL"
