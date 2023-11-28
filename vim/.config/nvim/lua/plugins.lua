@@ -170,7 +170,6 @@ return {
 		ft = { "go", "gomod" },
 		build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
 	},
-	{ "m4xshen/autoclose.nvim" },                         -- autoclose quotes
 	{ "windwp/nvim-ts-autotag" },
 
 	{
@@ -188,8 +187,6 @@ return {
 			{ "L3MON4D3/LuaSnip" }, -- Required
 		},
 	},
-
-	{ 'VonHeikemen/lsp-zero.nvim',        branch = 'v3.x' },
 
 	--- Uncomment these if you want to manage LSP servers from neovim
 	{ 'williamboman/mason.nvim' },
@@ -216,5 +213,5 @@ return {
 	{ "folke/neodev.nvim" },
 	{ "zaldih/themery.nvim" },
 	{ "LnL7/vim-nix" },
-
+	{ "sindrets/diffview.nvim" },
 }
