@@ -113,6 +113,9 @@ alias :q="exit"
 alias pgrep="pgrep -f"
 alias pkill="pkill -f"
 
+# Youtube-dl aliases
+alias ytmp3="yt-dlp --extract-audio --audio-format mp3 --audio-quality 0"
+
 # # Color man pages
 # man() {
 # 	LESS_TERMCAP_md=$'\e[01;31m' \
@@ -162,3 +165,9 @@ export SOPS_AGE_KEY_FILE="$HOME/.sops/keys.txt"
 
 export VISUAL=nvim
 export EDITOR="$VISUAL"
+
+# Nix
+if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+  . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+fi
+# End Nix
