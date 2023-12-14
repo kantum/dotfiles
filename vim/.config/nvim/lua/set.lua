@@ -55,10 +55,17 @@ vim.g.completion_chain_complete_list = {
 -- Format on save
 vim.cmd([[autocmd BufWritePre * lua vim.lsp.buf.format()]])
 
+local augroup = vim.api.nvim_create_augroup
+local autocmd = vim.api.nvim_create_autocmd
+augroup("__formatter__", { clear = true })
+autocmd("BufWritePost", {
+	group = "__formatter__",
+	command = ":FormatWrite",
+})
+
 vim.cmd.nnoremap(
 	"<leader>h",
 	":vimgrep /\\Vhtml\\!/ % | normal jvi} <Esc>:!prettier --parser html --stdin-filepath<CR>vi}>"
 )
 
 vim.g.python3_host_prog = "/opt/homebrew/bin/python3"
-

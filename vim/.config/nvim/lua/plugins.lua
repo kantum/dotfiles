@@ -214,4 +214,5 @@ return {
 	{ "zaldih/themery.nvim" },
 	{ "LnL7/vim-nix" },
 	{ "sindrets/diffview.nvim" },
+	{ 'mhartington/formatter.nvim' },
 }
