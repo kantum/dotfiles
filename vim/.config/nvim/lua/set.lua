@@ -25,6 +25,9 @@ autocmd VimEnter * silent !echo -ne "\e[2 q"
 augroup END
 ]])
 
+-- Set line numbers
+vim.cmd.nnoremap("<leader>n", ":set number! | set relativenumber!<cr>")
+
 -- Set tab width
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
