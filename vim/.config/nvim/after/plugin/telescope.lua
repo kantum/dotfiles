@@ -31,6 +31,34 @@ require("telescope").setup({
 			},
 			undo = {},
 		},
+		preview = {
+			mime_hook = function(filepath, bufnr, opts)
+				local is_image = function(filepath)
+					local image_extensions = { "png", "jpg" } -- Supported image formats
+					local split_path = vim.split(filepath:lower(), ".", { plain = true })
+					local extension = split_path[#split_path]
+					return vim.tbl_contains(image_extensions, extension)
+				end
+				if is_image(filepath) then
+					local term = vim.api.nvim_open_term(bufnr, {})
+					local function send_output(_, data, _)
+						for _, d in ipairs(data) do
+							vim.api.nvim_chan_send(term, d .. "\r\n")
+						end
+					end
+					vim.fn.jobstart({
+						"catimg",
+						filepath, -- Terminal image viewer command
+					}, { on_stdout = send_output, stdout_buffered = true, pty = true })
+				else
+					require("telescope.previewers.utils").set_preview_message(
+						bufnr,
+						opts.winid,
+						"Binary cannot be previewed"
+					)
+				end
+			end,
+		},
 	},
 })
 
@@ -48,10 +76,21 @@ vim.keymap.set("v", "<leader>fg", function()
 	local text = vim.getVisualSelection()
 	builtin.live_grep({ default_text = text })
 end, telescope_options)
+
 vim.keymap.set("n", "<leader>fb", builtin.buffers, {})
 vim.keymap.set("v", "<leader>fb", function()
 	local text = vim.getVisualSelection()
 	builtin.buffers({ default_text = text })
+end, telescope_options)
+
+local config_path = "~/git/dotfiles/vim/.config/"
+vim.keymap.set("n", "<leader>fi", function()
+	builtin.find_files({ cwd = config_path })
+end, telescope_options)
+
+vim.keymap.set("v", "<leader>fi", function()
+	local text = vim.getVisualSelection()
+	builtin.find_files({ default_text = text, cwd = config_path })
 end, telescope_options)
 
 function vim.getVisualSelection()
