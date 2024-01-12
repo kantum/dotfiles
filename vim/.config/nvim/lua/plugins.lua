@@ -14,19 +14,19 @@ return {
 			ts_update()
 		end,
 	},
-	{ "ap/vim-css-color" },         -- Css colors show in code
+	{ "ap/vim-css-color" }, -- Css colors show in code
 	{ "junegunn/goyo.vim" },
-	{ "tpope/vim-fugitive" },       -- git plugin
-	{ "tpope/vim-rhubarb" },        -- git plugin
+	{ "tpope/vim-fugitive" }, -- git plugin
+	{ "tpope/vim-rhubarb" }, -- git plugin
 	{ "nvim-tree/nvim-web-devicons" }, -- Statusline icons
-	{ "mbbill/undotree" },          -- Undo tree
+	{ "mbbill/undotree" }, -- Undo tree
 	{ "aspeddro/gitui.nvim" },
 	-- { "github/copilot.vim" },       -- Copilot
 	{
 		"zbirenbaum/copilot.lua",
 		build = "Copilot",
 		config = function()
-			require('copilot').setup({
+			require("copilot").setup({
 				panel = {
 					enabled = true,
 					auto_refresh = false,
@@ -35,11 +35,11 @@ return {
 						jump_next = "]]",
 						accept = "<CR>",
 						refresh = "gr",
-						open = "<M-CR>"
+						open = "<M-CR>",
 					},
 					layout = {
 						position = "bottom", -- | top | left | right
-						ratio = 0.4
+						ratio = 0.4,
 					},
 				},
 				suggestion = {
@@ -56,17 +56,17 @@ return {
 					},
 				},
 				filetypes = {
-					yaml = false,
-					markdown = false,
-					help = false,
-					gitcommit = false,
-					gitrebase = false,
-					hgcommit = false,
-					svn = false,
-					cvs = false,
-					["."] = false,
+					yaml = true,
+					-- markdown = false,
+					-- help = false,
+					-- gitcommit = false,
+					-- gitrebase = false,
+					-- hgcommit = false,
+					-- svn = false,
+					-- cvs = false,
+					-- ["."] = false,
 				},
-				copilot_node_command = 'node', -- Node.js version must be > 16.x
+				copilot_node_command = "node", -- Node.js version must be > 16.x
 				server_opts_overrides = {},
 			})
 		end,
@@ -85,7 +85,7 @@ return {
 	-- 	'codota/tabnine-nvim',
 	-- 	build = "./dl_binaries.sh"
 	-- },
-	{ "rust-lang/rust.vim" },     -- Rust
+	{ "rust-lang/rust.vim" }, -- Rust
 
 	{ "MunifTanjim/prettier.nvim" }, -- Rust
 	{
@@ -108,8 +108,7 @@ return {
 			{ "nvim-lua/plenary.nvim" },
 			{
 				"nvim-telescope/telescope-fzf-native.nvim",
-				build =
-				"cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
+				build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
 			},
 			{ "debugloop/telescope-undo.nvim" },
 		},
@@ -129,11 +128,12 @@ return {
 		"olimorris/onedarkpro.nvim",
 		priority = 1000, -- Ensure it loads first
 	},
+	{ "ellisonleao/gruvbox.nvim", priority = 1000, config = true },
 	{
 		"nvim-telescope/telescope-file-browser.nvim",
 		dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim", "ahmedkhalf/project.nvim" },
 	},
-	{ "ahmedkhalf/project.nvim", },
+	{ "ahmedkhalf/project.nvim" },
 	{
 		"williamboman/mason.nvim",
 		build = ":MasonUpdate", -- :MasonUpdate updates registry contents
@@ -177,8 +177,8 @@ return {
 		branch = "v3.x",
 		dependencies = {
 			-- LSP Support
-			{ "neovim/nvim-lspconfig" },    -- Required
-			{ "williamboman/mason.nvim" },  -- Optional
+			{ "neovim/nvim-lspconfig" }, -- Required
+			{ "williamboman/mason.nvim" }, -- Optional
 			{ "williamboman/mason-lspconfig.nvim" }, -- Optional
 
 			-- Autocompletion
@@ -189,30 +189,39 @@ return {
 	},
 
 	--- Uncomment these if you want to manage LSP servers from neovim
-	{ 'williamboman/mason.nvim' },
-	{ 'williamboman/mason-lspconfig.nvim' },
+	{ "williamboman/mason.nvim" },
+	{ "williamboman/mason-lspconfig.nvim" },
 
 	-- LSP Support
 	{
-		'neovim/nvim-lspconfig',
+		"neovim/nvim-lspconfig",
 		dependencies = {
-			{ 'hrsh7th/cmp-nvim-lsp' },
+			{ "hrsh7th/cmp-nvim-lsp" },
 		},
 	},
 
 	-- Autocompletion
 	{
-		'hrsh7th/nvim-cmp',
+		"hrsh7th/nvim-cmp",
 		dependencies = {
-			{ 'L3MON4D3/LuaSnip' },
-		}
+			{ "L3MON4D3/LuaSnip" },
+		},
 	},
-
 
 	{ "folke/which-key.nvim" },
 	{ "folke/neodev.nvim" },
 	{ "zaldih/themery.nvim" },
 	{ "LnL7/vim-nix" },
 	{ "sindrets/diffview.nvim" },
-	{ 'mhartington/formatter.nvim' },
+	{ "mhartington/formatter.nvim" },
+	{
+		"folke/trouble.nvim",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		opts = {
+			-- your configuration comes here
+			-- or leave it empty to use the default settings
+			-- refer to the configuration section below
+		},
+	},
+	{ "digitaltoad/vim-pug" },
 }

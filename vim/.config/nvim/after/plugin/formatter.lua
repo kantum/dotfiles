@@ -1,8 +1,8 @@
 -- Utilities for creating configurations
-local util = require "formatter.util"
+local util = require("formatter.util")
 
 -- Provides the Format, FormatWrite, FormatLock, and FormatWriteLock commands
-require("formatter").setup {
+require("formatter").setup({
 	-- Enable or disable logging
 	logging = true,
 	-- Set the log level
@@ -36,12 +36,18 @@ require("formatter").setup {
 					},
 					stdin = true,
 				}
-			end
+			end,
 		},
 		vue = {
-			-- "formatter.filetypes.vue" defines default configurations for the
-			-- "vue" filetype
-			require("formatter.filetypes.vue").prettierd,
+			require("formatter.filetypes.vue").prettier,
+		},
+
+		javascript = {
+			require("formatter.filetypes.javascript").prettierd,
+		},
+
+		typescript = {
+			require("formatter.filetypes.typescript").prettierd,
 		},
 
 		-- Use the special "*" filetype for defining formatter configurations on
@@ -49,7 +55,7 @@ require("formatter").setup {
 		["*"] = {
 			-- "formatter.filetypes.any" defines default configurations for any
 			-- filetype
-			require("formatter.filetypes.any").remove_trailing_whitespace
-		}
-	}
-}
+			require("formatter.filetypes.any").remove_trailing_whitespace,
+		},
+	},
+})

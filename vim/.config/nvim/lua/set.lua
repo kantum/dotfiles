@@ -56,7 +56,7 @@ vim.g.completion_chain_complete_list = {
 }
 
 -- Format on save
-vim.cmd([[autocmd BufWritePre * lua vim.lsp.buf.format()]])
+-- vim.cmd([[autocmd BufWritePre * lua vim.lsp.buf.format()]])
 
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd

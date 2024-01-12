@@ -24,6 +24,11 @@
     ffmpeg
     mpv
     convco
+    ocaml
+    ocamlPackages.findlib
+    ocamlPackages.batteries
+    corepack
+    # platformio https://github.com/NixOS/nixpkgs/pull/258358
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
