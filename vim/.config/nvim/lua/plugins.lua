@@ -86,8 +86,6 @@ return {
 	-- 	build = "./dl_binaries.sh"
 	-- },
 	{ "rust-lang/rust.vim" }, -- Rust
-
-	{ "MunifTanjim/prettier.nvim" }, -- Rust
 	{
 		"jose-elias-alvarez/null-ls.nvim",
 		dependencies = { "nvim-lua/plenary.nvim" },

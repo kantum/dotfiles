@@ -5,6 +5,9 @@ require("onedarkpro").setup({
 })
 
 require("gruvbox").setup({
+	overrides = {
+		MatchParen = { bg = "none", fg = "#ff9900" },
+	},
 	transparent_mode = true,
 })
 

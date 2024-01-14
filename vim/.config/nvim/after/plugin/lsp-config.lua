@@ -21,7 +21,6 @@ lspconfig.dockerls.setup({})
 lspconfig.yamlls.setup({})
 lspconfig.bashls.setup({})
 lspconfig.eslint.setup({})
-lspconfig.prettier.setup({})
 lspconfig.tailwindcss.setup({})
 
 -- Global mappings.
