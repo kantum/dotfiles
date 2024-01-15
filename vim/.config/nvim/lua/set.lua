@@ -26,7 +26,8 @@ augroup END
 ]])
 
 -- Set line numbers
-vim.cmd.nnoremap("<leader>n", ":set number! | set relativenumber!<cr>")
+vim.cmd.nnoremap("<leader>n", ":set number!<cr>")
+vim.cmd.nnoremap("<leader>N", ":set relativenumber!<cr>")
 
 -- Set tab width
 vim.opt.tabstop = 4
@@ -72,3 +73,41 @@ vim.cmd.nnoremap(
 )
 
 vim.g.python3_host_prog = "/opt/homebrew/bin/python3"
+
+function search_google()
+	local start_pos = vim.fn.getpos("'<")
+	local end_pos = vim.fn.getpos("'>")
+
+	-- Check if no text is selected and select the current line
+	if start_pos[2] == end_pos[2] and start_pos[3] == end_pos[3] then
+		start_pos = vim.fn.getpos("'[")
+		end_pos = vim.fn.getpos("']")
+	end
+
+	local lines = vim.fn.getline(start_pos[2], end_pos[2])
+	local selected_text = table.concat(lines, " ")
+	selected_text = selected_text:gsub("%s", "+")
+	local query = "https://www.google.com/search?q=" .. selected_text
+
+	-- Detecting OS
+	local f = io.popen("uname")
+	local uname = f:read("*a")
+	f:close()
+
+	-- Choose command based on OS
+	local open_command
+	if uname:match("Linux") then
+		open_command = "xdg-open"
+	elseif uname:match("Darwin") then
+		open_command = "open"
+	else
+		print("Unsupported operating system")
+		return
+	end
+
+	-- Open URL in default browser
+	os.execute(open_command .. " '" .. query .. "'")
+end
+
+vim.api.nvim_set_keymap("n", "<leader>sg", ":lua search_google()<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("v", "<leader>sg", ":lua search_google()<CR>", { noremap = true, silent = true })
