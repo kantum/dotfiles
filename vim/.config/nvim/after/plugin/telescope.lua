@@ -1,6 +1,7 @@
 require("telescope").load_extension("fzf")
 require("telescope").load_extension("file_browser")
 require("telescope").load_extension("undo")
+require("telescope").load_extension("lazygit")
 
 -- Add toggle preview
 local action_layout = require("telescope.actions.layout")

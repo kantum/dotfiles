@@ -38,7 +38,7 @@ vim.opt.shiftwidth = 4
 -- vim.api.nvim_set_keymap("i", "<S-Tab>", 'pumvisible() ? "\\<C-p>" : "\\<Tab>"', { expr = true })
 
 -- Set completeopt to have a better completion experience
-vim.o.completeopt = "menuone,noinsert,noselect"
+vim.o.completeopt = "menuone,noselect"
 
 -- Avoid showing message extra message when using completion
 vim.o.shortmess = vim.o.shortmess .. "c"
@@ -67,10 +67,10 @@ autocmd("BufWritePost", {
 	command = ":FormatWrite",
 })
 
-vim.cmd.nnoremap(
-	"<leader>h",
-	":vimgrep /\\Vhtml\\!/ % | normal jvi} <Esc>:!prettier --parser html --stdin-filepath<CR>vi}>"
-)
+-- vim.cmd.nnoremap(
+-- 	"<leader>h",
+-- 	":vimgrep /\\Vhtml\\!/ % | normal jvi} <Esc>:!prettier --parser html --stdin-filepath<CR>vi}>"
+-- )
 
 vim.g.python3_host_prog = "/opt/homebrew/bin/python3"
 
@@ -111,3 +111,6 @@ end
 
 vim.api.nvim_set_keymap("n", "<leader>sg", ":lua search_google()<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("v", "<leader>sg", ":lua search_google()<CR>", { noremap = true, silent = true })
+
+--Save undo history
+vim.opt.undofile = true
