@@ -10,3 +10,5 @@ vim.cmd.inoremap("<silent> <C-S> <Esc>:update<CR>")
 -- vim.cmd.nnoremap("<leader>ep", ":vs ~/.config/nvim/lua/plugins.lua<cr>")
 vim.cmd.nnoremap("<leader>p", ":Lazy<cr>")
 vim.cmd.nnoremap("<leader>c", ":set cursorline! cursorcolumn!<cr>")
+
+vim.cmd.nnoremap("<leader>gg", ":LazyGit<cr>")
