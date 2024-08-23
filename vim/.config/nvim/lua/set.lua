@@ -56,23 +56,13 @@ vim.g.completion_chain_complete_list = {
 	},
 }
 
--- Format on save
--- vim.cmd([[autocmd BufWritePre * lua vim.lsp.buf.format()]])
-
-local augroup = vim.api.nvim_create_augroup
-local autocmd = vim.api.nvim_create_autocmd
-augroup("__formatter__", { clear = true })
-autocmd("BufWritePost", {
-	group = "__formatter__",
-	command = ":FormatWrite",
+-- Format on save with conform
+vim.api.nvim_create_autocmd("BufWritePre", {
+	pattern = "*",
+	callback = function(args)
+		require("conform").format({ bufnr = args.buf })
+	end,
 })
-
--- vim.cmd.nnoremap(
--- 	"<leader>h",
--- 	":vimgrep /\\Vhtml\\!/ % | normal jvi} <Esc>:!prettier --parser html --stdin-filepath<CR>vi}>"
--- )
-
-vim.g.python3_host_prog = "/opt/homebrew/bin/python3"
 
 function search_google()
 	local start_pos = vim.fn.getpos("'<")
