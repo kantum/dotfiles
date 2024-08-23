@@ -8,6 +8,7 @@ require("mason-lspconfig").setup({
 		"pyright",
 		"rust_analyzer",
 		"sqlls",
+		"jsonnet_ls",
 		"tsserver",
 		"volar",
 		"yamlls",
