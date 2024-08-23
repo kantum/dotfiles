@@ -11,4 +11,6 @@ vim.cmd.inoremap("<silent> <C-S> <Esc>:update<CR>")
 vim.cmd.nnoremap("<leader>p", ":Lazy<cr>")
 vim.cmd.nnoremap("<leader>c", ":set cursorline! cursorcolumn!<cr>")
 
-vim.cmd.nnoremap("<leader>gg", ":LazyGit<cr>")
+vim.cmd.nnoremap("<leader>gd", ":DiffviewOpen<cr>")
+vim.cmd.nnoremap("<leader>gh", ":DiffviewFileHistory %<cr>")
+vim.cmd.nnoremap("<leader>gc", ":Git commit<cr>")
