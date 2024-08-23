@@ -104,7 +104,7 @@ export LC_ALL=en_US.UTF-8
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias make=gmake
+# alias make=gmake
 alias top=btm
 alias vim=nvim
 alias :q="exit"
@@ -139,7 +139,7 @@ PATH="$PATH:$HOME/.cargo/bin"
 # export PKG_CONFIG_PATH="/Library/Frameworks/GStreamer.framework/Versions/1.0/lib/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
 # export PATH="/Library/Frameworks/GStreamer.framework/Versions/1.0/bin${PATH:+:$PATH}"
 # export DYLD_LIBRARY_PATH=/Library/Frameworks/GStreamer.framework/Versions/1.0/lib/
-export DYLD_FALLBACK_LIBRARY_PATH=/Library/Frameworks/GStreamer.framework/Versions/1.0/lib/
+# export DYLD_FALLBACK_LIBRARY_PATH=/Library/Frameworks/GStreamer.framework/Versions/1.0/lib/
 
 # Gstreamer bash completion
 eval "$(curl -s https://raw.githubusercontent.com/drothlis/gstreamer/bash-completion-master/tools/gstreamer-completion)"
@@ -151,7 +151,6 @@ eval "$(direnv hook zsh)"
 export HISTSIZE=1000000000
 export SAVEHIST=$HISTSIZE
 setopt EXTENDED_HISTORY
-
 
 export WASMTIME_HOME="$HOME/.wasmtime"
 
@@ -166,16 +165,29 @@ export SOPS_AGE_KEY_FILE="$HOME/.sops/keys.txt"
 export VISUAL=nvim
 export EDITOR="$VISUAL"
 
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+# export ANDROID_HOME=$HOME/Library/Android/sdk
+# export PATH=$PATH:$ANDROID_HOME/platform-tools
+# export PATH="/opt/homebrew/opt/ruby@2.7/bin:$PATH"
+
 # Nix
 if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
   . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
 fi
 # End Nix
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+# export AWS_ACCESS_KEY_ID=<YOUR_ACCESS_KEY_ID>
+# export AWS_SECRET_ACCESS_KEY=<YOUR_SECRET_ACCESS_KEY>
+# export AWS_REGION=<YOUR_AWS_REGION>
+# Go bin
+export PATH="$PATH:$HOME/go/bin"
+export PATH=$HOME/bin:/usr/local/go/bin:$PATH
 
-export ANDROID_HOME=$HOME/Library/Android/sdk
-export PATH=$PATH:$ANDROID_HOME/platform-tools
-export PATH="/opt/homebrew/opt/ruby@2.7/bin:$PATH"
+# Load fzf key bindings from nix
+if [ -n "${commands[fzf-share]}" ]; then
+  source "$(fzf-share)/key-bindings.zsh"
+  source "$(fzf-share)/completion.zsh"
+fi
