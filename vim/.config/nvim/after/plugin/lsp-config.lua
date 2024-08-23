@@ -1,27 +1,137 @@
 -- Setup language servers.
+require("mason").setup()
+require("mason-lspconfig").setup({
+	automatic_installation = true,
+})
+
+local mason_registry = require("mason-registry")
+local vue_language_server_path = mason_registry.get_package("vue-language-server"):get_install_path()
+	.. "/node_modules/@vue/language-server"
+
 local lspconfig = require("lspconfig")
 lspconfig.pyright.setup({})
-lspconfig.tsserver.setup({})
+lspconfig.tsserver.setup({
+	init_options = {
+		plugins = {
+			{
+				name = "@vue/typescript-plugin",
+				location = vue_language_server_path,
+				languages = { "vue" },
+			},
+		},
+	},
+	filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
+})
 lspconfig.rust_analyzer.setup({
 	-- Server-specific settings. See `:help lspconfig-setup`
 	settings = {
 		["rust-analyzer"] = {},
 	},
 })
+
 lspconfig.volar.setup({
 	on_init = function(client)
 		client.server_capabilities.documentFormattingProvider = false
 		client.server_capabilities.documentFormattingRangeProvider = false
 	end,
+	filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue", "json" },
 })
-lspconfig.gopls.setup({})
+
+-- lspconfig.volar.setup({})
+lspconfig.gopls.setup({
+	settings = { gopls = {
+		buildFlags = { "-tags=integration" },
+	} },
+})
+
 lspconfig.sqlls.setup({})
 lspconfig.taplo.setup({})
 lspconfig.dockerls.setup({})
 lspconfig.yamlls.setup({})
 lspconfig.bashls.setup({})
 lspconfig.eslint.setup({})
-lspconfig.tailwindcss.setup({})
+
+lspconfig.html.setup({
+	filetypes = { "html", "heex" },
+})
+
+lspconfig.tailwindcss.setup({
+	init_options = {
+		userLanguages = {
+			elixir = "html-eex",
+			eelixir = "html-eex",
+			heex = "html-eex",
+		},
+	},
+})
+
+lspconfig.jsonnet_ls.setup({
+	settings = {
+		ext_vars = {
+			foo = "bar",
+		},
+		formatting = {
+			-- default values
+			Indent = 2,
+			MaxBlankLines = 2,
+			StringStyle = "single",
+			CommentStyle = "slash",
+			PrettyFieldNames = true,
+			PadArrays = false,
+			PadObjects = true,
+			SortImports = true,
+			UseImplicitPlus = true,
+			StripEverything = false,
+			StripComments = false,
+			StripAllButComments = false,
+		},
+	},
+})
+lspconfig.golangci_lint_ls.setup({})
+lspconfig.zls.setup({
+	cmd = { "zls" },
+	filetypes = { "zig" },
+	root_dir = lspconfig.util.root_pattern("build.zig", ".git"),
+})
+
+local configs = require("lspconfig.configs")
+local lexical_config = {
+	filetypes = { "elixir", "eelixir", "heex" },
+	cmd = { "lexical" },
+	settings = {},
+}
+
+if not configs.lexical then
+	configs.lexical = {
+		default_config = {
+			filetypes = lexical_config.filetypes,
+			cmd = lexical_config.cmd,
+			root_dir = function(fname)
+				return lspconfig.util.root_pattern("mix.exs", ".git")(fname) or vim.loop.os_homedir()
+			end,
+			-- optional settings
+			settings = lexical_config.settings,
+		},
+	}
+end
+
+-- lspconfig.lexical.setup({})
+
+local util = require("lspconfig.util")
+
+lspconfig.vacuum.setup({
+	cmd = { "vacuum", "language-server" },
+	filetypes = { "yaml.openapi", "json.openapi" },
+	root_dir = util.find_git_ancestor,
+	single_file_support = true,
+})
+
+vim.filetype.add({
+	pattern = {
+		["openapi.*%.ya?ml"] = "yaml.openapi",
+		["openapi.*%.json"] = "json.openapi",
+	},
+})
 
 -- Global mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions

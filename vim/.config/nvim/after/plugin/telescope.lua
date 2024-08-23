@@ -1,7 +1,6 @@
 require("telescope").load_extension("fzf")
 require("telescope").load_extension("file_browser")
 require("telescope").load_extension("undo")
-require("telescope").load_extension("lazygit")
 
 -- Add toggle preview
 local action_layout = require("telescope.actions.layout")
@@ -86,7 +85,7 @@ end, telescope_options)
 
 local config_path = "~/git/dotfiles/vim/.config/"
 vim.keymap.set("n", "<leader>fi", function()
-	builtin.find_files({ cwd = config_path })
+	builtin.live_grep({ cwd = config_path })
 end, telescope_options)
 
 vim.keymap.set("v", "<leader>fi", function()
