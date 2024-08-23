@@ -18,17 +18,46 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
+    stow
     neovim
+    tmux
+    tree
     git
+    git-lfs
+	jq
+	ripgrep
+	fd
+    gnupg
+    pinentry-curses
+    ranger
     direnv
+    gitui
     ffmpeg
+    fzf
+    cmatrix
     mpv
-    convco
+    convco # conventionnal commits
+    # go
+    rustup
+	xh # better curl (http command)
     ocaml
     ocamlPackages.findlib
     ocamlPackages.batteries
     corepack
-    # platformio https://github.com/NixOS/nixpkgs/pull/258358
+    platformio # https://github.com/NixOS/nixpkgs/pull/258358
+    imagemagick
+    bitwarden-cli # password manager
+	ncdu # disk usage
+    elixir
+    openssl
+	# mitmproxy # proxy, not working right now, see https://github.com/NixOS/nixpkgs/issues/291753
+	dive # docker image explorer
+    dbeaver-bin
+	# difftastic # better diff, not sure if I want to use it
+    awscli2
+    texliveFull
+    wget
+    lexical
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
