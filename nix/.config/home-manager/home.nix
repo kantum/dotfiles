@@ -48,7 +48,7 @@
     imagemagick
     bitwarden-cli # password manager
 	ncdu # disk usage
-    elixir
+    elixir_1_17
     openssl
 	# mitmproxy # proxy, not working right now, see https://github.com/NixOS/nixpkgs/issues/291753
 	dive # docker image explorer
@@ -58,7 +58,8 @@
     texliveFull
     wget
     lexical
-
+    bottom
+    htop
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
     # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
