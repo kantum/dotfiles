@@ -9,6 +9,7 @@ require("conform").setup({
 		javascript,
 		typescript = { "prettierd", "prettier", stop_after_first = true },
 		elixir = { "mix" },
+		heex = { "mix" },
 		vue = { "prettierd" },
 	},
 })
