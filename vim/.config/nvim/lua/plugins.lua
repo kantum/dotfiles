@@ -13,6 +13,7 @@ return {
 	{ "junegunn/goyo.vim" },
 	{ "tpope/vim-fugitive" }, -- git plugin
 	{ "tpope/vim-rhubarb" }, -- git plugin
+	{ "tpope/vim-abolish" }, -- Abbreviation, Substitution, Coercion
 	{ "nvim-tree/nvim-web-devicons" }, -- Statusline icons
 	{ "mbbill/undotree" }, -- Undo tree
 	-- { "aspeddro/gitui.nvim" },
