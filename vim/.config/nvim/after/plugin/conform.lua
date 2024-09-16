@@ -11,5 +11,6 @@ require("conform").setup({
 		elixir = { "mix" },
 		heex = { "mix" },
 		vue = { "prettierd" },
+		nix = { "alejandra" },
 	},
 })

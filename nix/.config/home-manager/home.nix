@@ -1,6 +1,8 @@
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "kantum";
@@ -30,9 +32,9 @@
     tree
     git
     git-lfs
-	jq
-	ripgrep
-	fd
+    jq
+    ripgrep
+    fd
     gnupg
     pinentry-curses
     ranger
@@ -45,7 +47,7 @@
     convco # conventionnal commits
     # go
     rustup
-	xh # better curl (http command)
+    xh # better curl (http command)
     ocaml
     ocamlPackages.findlib
     ocamlPackages.batteries
@@ -53,12 +55,12 @@
     platformio # https://github.com/NixOS/nixpkgs/pull/258358
     imagemagick
     # bitwarden-cli # password manager
-	ncdu # disk usage
+    ncdu # disk usage
     openssl
-	# mitmproxy # proxy, not working right now, see https://github.com/NixOS/nixpkgs/issues/291753
-	dive # docker image explorer
+    # mitmproxy # proxy, not working right now, see https://github.com/NixOS/nixpkgs/issues/291753
+    dive # docker image explorer
     dbeaver-bin
-	# difftastic # better diff, not sure if I want to use it
+    # difftastic # better diff, not sure if I want to use it
     awscli2
     texliveFull
     wget
@@ -69,6 +71,7 @@
     postgresql
     monitorcontrol # Control your display's brightness & volume on your Mac as if it was a native Apple Display.
     obsidian
+    alejandra # Nix formatter
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
     # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
