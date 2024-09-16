@@ -13,7 +13,13 @@
   # You should not change this value, even if you update Home Manager. If you do
   # want to update the value, then make sure to first check the Home Manager
   # release notes.
-  home.stateVersion = "23.05"; # Please read the comment before changing.
+  home.stateVersion = "24.05"; # Please read the comment before changing.
+
+  # Allows unfree packages
+  nixpkgs.config.allowUnfreePredicate = pkg:
+    builtins.elem (pkgs.lib.getName pkg) [
+      "obsidian"
+    ];
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
@@ -35,7 +41,7 @@
     ffmpeg
     fzf
     cmatrix
-    mpv
+    # mpv
     convco # conventionnal commits
     # go
     rustup
@@ -46,9 +52,8 @@
     corepack
     platformio # https://github.com/NixOS/nixpkgs/pull/258358
     imagemagick
-    bitwarden-cli # password manager
+    # bitwarden-cli # password manager
 	ncdu # disk usage
-    elixir_1_17
     openssl
 	# mitmproxy # proxy, not working right now, see https://github.com/NixOS/nixpkgs/issues/291753
 	dive # docker image explorer
@@ -60,6 +65,10 @@
     lexical
     bottom
     htop
+    beam.packages.erlang_27.elixir_1_17
+    postgresql
+    monitorcontrol # Control your display's brightness & volume on your Mac as if it was a native Apple Display.
+    obsidian
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
     # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
@@ -69,9 +78,9 @@
     # # You can also create simple shell scripts directly inside your
     # # configuration. For example, this adds a command 'my-hello' to your
     # # environment:
-    (pkgs.writeShellScriptBin "my-hello" ''
-      echo "Hello, ${config.home.username}!"
-    '')
+    # (pkgs.writeShellScriptBin "my-hello" ''
+    #   echo "Hello, ${config.home.username}!"
+    # '')
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -89,17 +98,12 @@
     # '';
   };
 
-  # You can also manage environment variables but you will have to manually
-  # source
-  #
-  #  ~/.nix-profile/etc/profile.d/hm-session-vars.sh
-  # or
-  #  /etc/profiles/per-user/kantum/etc/profile.d/hm-session-vars.sh
-  #
-  # if you don't want to manage your shell through Home Manager.
   home.sessionVariables = {
     VISUAL = "nvim";
     EDITOR = "nvim";
+
+    # Enable iex history between sessions
+    ERL_AFLAGS = "-kernel shell_history enabled";
   };
 
   programs.direnv = {
