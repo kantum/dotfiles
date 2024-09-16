@@ -1,2 +1,3 @@
-# Here we go
-`curl https://raw.githubusercontent.com/kantum/dotfiles/master/manjaro/manjaro_init.sh | sh`
+# Kantum's dotfiles
+
+Know everything about my setup
