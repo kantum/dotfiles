@@ -9,7 +9,7 @@ require("mason-lspconfig").setup({
 		"rust_analyzer",
 		"sqlls",
 		"jsonnet_ls",
-		"tsserver",
+		"ts_ls",
 		"volar",
 		"yamlls",
 		"taplo",

@@ -10,7 +10,7 @@ local vue_language_server_path = mason_registry.get_package("vue-language-server
 
 local lspconfig = require("lspconfig")
 lspconfig.pyright.setup({})
-lspconfig.tsserver.setup({
+lspconfig.ts_ls.setup({
 	init_options = {
 		plugins = {
 			{
