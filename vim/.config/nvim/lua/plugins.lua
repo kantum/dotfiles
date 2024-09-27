@@ -100,8 +100,6 @@ return {
 	{ "hrsh7th/cmp-buffer" },
 	{ "hrsh7th/cmp-path" },
 	{ "hrsh7th/cmp-cmdline" },
-	{ "L3MON4D3/LuaSnip" },
-	{ "saadparwaiz1/cmp_luasnip" },
 	{ "simrat39/rust-tools.nvim" },
 	{
 		"ray-x/go.nvim",
@@ -118,23 +116,6 @@ return {
 		build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
 	},
 	{ "windwp/nvim-ts-autotag" },
-
-	{
-		"VonHeikemen/lsp-zero.nvim",
-		branch = "v3.x",
-		dependencies = {
-			-- LSP Support
-			{ "neovim/nvim-lspconfig" }, -- Required
-			{ "williamboman/mason.nvim" }, -- Optional
-			{ "williamboman/mason-lspconfig.nvim" }, -- Optional
-
-			-- Autocompletion
-			{ "hrsh7th/nvim-cmp" }, -- Required
-			{ "hrsh7th/cmp-nvim-lsp" }, -- Required
-			{ "L3MON4D3/LuaSnip" }, -- Required
-		},
-	},
-
 	-- LSP Support
 	{
 		"neovim/nvim-lspconfig",
@@ -185,7 +166,11 @@ return {
 	{ "stevearc/oil.nvim" },
 	{
 		"hrsh7th/nvim-cmp",
-		dependencies = { "hrsh7th/cmp-nvim-lsp", "L3MON4D3/LuaSnip", "saadparwaiz1/cmp_luasnip" },
+		dependencies = {
+			"hrsh7th/cmp-nvim-lsp",
+			"L3MON4D3/LuaSnip",
+			"saadparwaiz1/cmp_luasnip",
+		},
 	},
 	-- { "kdheepak/lazygit.nvim" },
 	{
