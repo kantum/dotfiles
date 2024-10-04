@@ -71,6 +71,9 @@
     postgresql
     monitorcontrol # Control your display's brightness & volume on your Mac as if it was a native Apple Display.
     obsidian
+    watch
+    lua
+    luarocks
     alejandra # Nix formatter
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
