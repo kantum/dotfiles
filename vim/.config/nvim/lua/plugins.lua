@@ -1,5 +1,10 @@
 return {
 	{
+		"vhyrro/luarocks.nvim",
+		priority = 1000, -- Very high priority is required, luarocks.nvim should run as the first plugin in your config.
+		config = true,
+	},
+	{
 		"nvim-treesitter/nvim-treesitter",
 		dependencies = {
 			"JoosepAlviste/nvim-ts-context-commentstring",
@@ -126,7 +131,7 @@ return {
 		},
 	},
 
-	{ "folke/which-key.nvim" },
+	{ "folke/which-key.nvim", dependencies = { "echasnovski/mini.nvim", version = "*" } },
 	{ "folke/neodev.nvim" },
 	{ "zaldih/themery.nvim" },
 	{ "LnL7/vim-nix" },
@@ -165,6 +170,11 @@ return {
 	},
 	{ "stevearc/oil.nvim" },
 	{
+		"L3MON4D3/LuaSnip",
+		version = "v2.*",
+		build = "make install_jsregexp",
+	},
+	{
 		"hrsh7th/nvim-cmp",
 		dependencies = {
 			"hrsh7th/cmp-nvim-lsp",
@@ -189,8 +199,8 @@ return {
 			local elixirls = require("elixir.elixirls")
 
 			elixir.setup({
-				nextls = { enable = true },
-				credo = {},
+				nextls = { enable = false },
+				credo = { enable = true },
 				elixirls = {
 					enable = true,
 					settings = elixirls.settings({
@@ -221,5 +231,31 @@ return {
 	{
 		"stevearc/conform.nvim",
 		opts = {},
+	},
+	{ "IndianBoy42/tree-sitter-just" },
+	{
+		"MeanderingProgrammer/render-markdown.nvim",
+		opts = {
+			file_types = { "markdown", "Avante" },
+		},
+		ft = { "markdown", "Avante" },
+	},
+	{
+		"nvim-neotest/neotest",
+		dependencies = {
+			"nvim-neotest/nvim-nio",
+			"nvim-lua/plenary.nvim",
+			"nvim-neotest/neotest-plenary",
+			"antoinemadec/FixCursorHold.nvim",
+			"jfpedroza/neotest-elixir",
+			"nvim-treesitter/nvim-treesitter",
+		},
+	},
+	{
+		"m4xshen/hardtime.nvim",
+		dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
+		opts = {
+			disable_mouse = false,
+		},
 	},
 }
