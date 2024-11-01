@@ -37,15 +37,12 @@
     fd
     gnupg
     pinentry-curses
-    lf
-    direnv
     gitui
     ffmpeg
-    fzf
     cmatrix
     # mpv
     convco # conventionnal commits
-    # go
+    go
     rustup
     xh # better curl (http command)
     ocaml
@@ -75,7 +72,7 @@
     lua
     luarocks
     alejandra # Nix formatter
-    gh
+    neofetch
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
     # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
@@ -109,6 +106,10 @@
     VISUAL = "nvim";
     EDITOR = "nvim";
 
+    GPG_TTY = "$(tty)";
+
+    AWS_DEFAULT_PROFILE = "";
+
     # Enable iex history between sessions
     ERL_AFLAGS = "-kernel shell_history enabled";
   };
@@ -118,6 +119,53 @@
     nix-direnv = {
       enable = true;
     };
+  };
+
+  programs.zsh = {
+    enable = true;
+    dotDir = ".config/zsh";
+    shellAliases = {
+      hs = "home-manager switch";
+      top = "btm";
+      vim = "nvim";
+      ":q" = "exit";
+      pgrep = "pgrep -f";
+      pkill = "pkill -f";
+      ytmp3 = "yt-dlp --extract-audio --audio-format mp3 --audio-quality 0";
+      gc = "git commit --verbose";
+      gp = "git push";
+      "gc!" = "git commit --verbose --amend";
+    };
+    plugins = with pkgs; [
+      {
+        name = "zsh-syntax-highlighting";
+        src = fetchFromGitHub {
+          owner = "zsh-users";
+          repo = "zsh-syntax-highlighting";
+          rev = "0.8.0";
+          sha256 = "1yl8zdip1z9inp280sfa5byjbf2vqh2iazsycar987khjsi5d5w8";
+        };
+      }
+    ];
+
+    initExtra = ''
+      PROMPT='%F{099}[%1~]%f '
+    '';
+
+    history = {
+      expireDuplicatesFirst = true;
+      save = 100000000;
+      size = 1000000000;
+    };
+  };
+
+  programs.fzf = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+
+  programs.lf = {
+    enable = true;
   };
 
   # Let Home Manager install and manage itself.
