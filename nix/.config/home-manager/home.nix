@@ -37,7 +37,7 @@
     fd
     gnupg
     pinentry-curses
-    ranger
+    lf
     direnv
     gitui
     ffmpeg
@@ -75,6 +75,7 @@
     lua
     luarocks
     alejandra # Nix formatter
+    gh
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
     # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
