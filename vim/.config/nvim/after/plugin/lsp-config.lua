@@ -1,27 +1,49 @@
 -- Setup language servers.
 require("mason").setup()
-require("mason-lspconfig").setup({
-	automatic_installation = true,
-})
 
 local mason_registry = require("mason-registry")
 local vue_language_server_path = mason_registry.get_package("vue-language-server"):get_install_path()
 	.. "/node_modules/@vue/language-server"
 
 local lspconfig = require("lspconfig")
+local util = require("lspconfig.util")
+
+-- Function to get TypeScript server path
+local function get_typescript_server_path(root_dir)
+	local global_ts = vim.fn.expand("$HOME/.npm/lib/node_modules/typescript/lib")
+	local found_ts = ""
+	local function check_dir(path)
+		found_ts = util.path.join(path, "node_modules", "typescript", "lib")
+		if util.path.exists(found_ts) then
+			return path
+		end
+	end
+	if util.search_ancestors(root_dir, check_dir) then
+		return found_ts
+	else
+		return global_ts
+	end
+end
+
 lspconfig.pyright.setup({})
+
+-- TypeScript configuration
 lspconfig.ts_ls.setup({
+	filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact" },
+	root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json", "jsconfig.json", ".git"),
 	init_options = {
 		plugins = {
 			{
 				name = "@vue/typescript-plugin",
-				location = vue_language_server_path,
+				location = vim.fn.expand(
+					"$HOME/.local/share/nvim/mason/packages/vue-language-server/node_modules/@vue/language-server"
+				),
 				languages = { "vue" },
 			},
 		},
 	},
-	filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
 })
+
 lspconfig.rust_analyzer.setup({
 	-- Server-specific settings. See `:help lspconfig-setup`
 	settings = {
@@ -29,19 +51,27 @@ lspconfig.rust_analyzer.setup({
 	},
 })
 
+-- Volar configuration for Vue files
 lspconfig.volar.setup({
-	on_init = function(client)
-		client.server_capabilities.documentFormattingProvider = false
-		client.server_capabilities.documentFormattingRangeProvider = false
+	filetypes = { "vue" },
+	on_new_config = function(new_config, new_root_dir)
+		new_config.init_options.typescript.tsdk = get_typescript_server_path(new_root_dir)
 	end,
-	filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue", "json" },
+	init_options = {
+		typescript = {
+			tsdk = vim.fn.expand(
+				"$HOME/.local/share/nvim/mason/packages/typescript-language-server/node_modules/typescript/lib"
+			),
+		},
+	},
 })
 
--- lspconfig.volar.setup({})
 lspconfig.gopls.setup({
-	settings = { gopls = {
-		buildFlags = { "-tags=integration" },
-	} },
+	settings = {
+		gopls = {
+			buildFlags = { "-tags=integration" },
+		},
+	},
 })
 
 lspconfig.sqlls.setup({})
@@ -49,7 +79,16 @@ lspconfig.taplo.setup({})
 lspconfig.dockerls.setup({})
 lspconfig.yamlls.setup({})
 lspconfig.bashls.setup({})
-lspconfig.eslint.setup({})
+
+-- ESLint configuration
+lspconfig.eslint.setup({
+	on_attach = function(client, bufnr)
+		vim.api.nvim_create_autocmd("BufWritePre", {
+			buffer = bufnr,
+			command = "EslintFixAll",
+		})
+	end,
+})
 
 lspconfig.html.setup({
 	filetypes = { "html", "heex" },
@@ -146,6 +185,7 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagn
 })
 
 -- Use LspAttach autocommand to only map the following keys
+-- Server-specific settings. See `:help lspconfig-setup`
 -- after the language server attaches to the current buffer
 vim.api.nvim_create_autocmd("LspAttach", {
 	group = vim.api.nvim_create_augroup("UserLspConfig", {}),

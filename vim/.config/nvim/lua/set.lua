@@ -26,6 +26,8 @@ augroup END
 ]])
 
 -- Set line numbers
+vim.opt.number = true
+vim.opt.relativenumber = true
 vim.cmd.nnoremap("<leader>n", ":set number!<cr>")
 vim.cmd.nnoremap("<leader>N", ":set relativenumber!<cr>")
 
