@@ -38,9 +38,12 @@
     gnupg
     pinentry-curses
     gitui
-    ffmpeg
+    protobuf
+    grpcurl
+    portaudio
+    pkg-config
     cmatrix
-    # mpv
+    nodejs_23
     convco # conventionnal commits
     go
     rustup
@@ -64,7 +67,7 @@
     lexical
     bottom
     htop
-    beam.packages.erlang_27.elixir_1_17
+    elixir_1_18
     postgresql
     monitorcontrol # Control your display's brightness & volume on your Mac as if it was a native Apple Display.
     obsidian
@@ -73,6 +76,15 @@
     luarocks
     alejandra # Nix formatter
     neofetch
+    flyctl
+    yt-dlp
+    vlc-bin
+    gh
+    diskonaut
+    ollama
+    shellcheck
+    zstd
+    geany
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
     # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
@@ -121,10 +133,31 @@
     };
   };
 
+  programs.ghostty = {
+    enable = true;
+    settings = {
+      font-size = 11;
+      font-family = "JetBrainsMono Nerd Font";
+
+      # Some macOS settings
+      window-theme = "dark";
+      macos-option-as-alt = true;
+
+      # Disables ligatures
+      font-feature = ["-liga" "-dlig" "-calt"];
+
+      # cmd-s is ctr-s
+      keybind = "super+s=text:\\x13";
+    };
+  };
+
   programs.zsh = {
     enable = true;
     dotDir = ".config/zsh";
+    autosuggestion.enable = true;
+    enableCompletion = true;
     shellAliases = {
+      ls = "ls --color";
       hs = "home-manager switch";
       top = "btm";
       vim = "nvim";
@@ -149,12 +182,19 @@
     ];
 
     initExtra = ''
+      zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
       PROMPT='%F{099}[%1~]%f '
+      bindkey -e
+      autoload -U edit-command-line
+      zle -N edit-command-line
+      bindkey '^x^e' edit-command-line
+      bindkey \^U backward-kill-line
+      PATH=$HOME/go/bin:$PATH
     '';
 
     history = {
       expireDuplicatesFirst = true;
-      save = 100000000;
+      save = 1000000000;
       size = 1000000000;
     };
   };
@@ -166,6 +206,13 @@
 
   programs.lf = {
     enable = true;
+    keybindings = {
+      enter = "open";
+    };
+    previewer = {
+      keybinding = "i";
+      source = "${pkgs.pistol}/bin/pistol";
+    };
   };
 
   # Let Home Manager install and manage itself.
