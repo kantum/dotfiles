@@ -3,19 +3,10 @@
   pkgs,
   ...
 }: {
-  # Home Manager needs a bit of information about you and the paths it should
-  # manage.
   home.username = "kantum";
   home.homeDirectory = "/Users/kantum";
 
-  # This value determines the Home Manager release that your configuration is
-  # compatible with. This helps avoid breakage when a new Home Manager release
-  # introduces backwards incompatible changes.
-  #
-  # You should not change this value, even if you update Home Manager. If you do
-  # want to update the value, then make sure to first check the Home Manager
-  # release notes.
-  home.stateVersion = "24.05"; # Please read the comment before changing.
+  home.stateVersion = "24.05";
 
   # Allows unfree packages
   nixpkgs.config.allowUnfreePredicate = pkg:
@@ -23,8 +14,6 @@
       "obsidian"
     ];
 
-  # The home.packages option allows you to install Nix packages into your
-  # environment.
   home.packages = with pkgs; [
     stow
     neovim
@@ -67,6 +56,7 @@
     lexical
     bottom
     htop
+    btop
     elixir_1_18
     postgresql
     monitorcontrol # Control your display's brightness & volume on your Mac as if it was a native Apple Display.
@@ -80,27 +70,15 @@
     yt-dlp
     vlc-bin
     gh
-    diskonaut
     ollama
     shellcheck
-    zstd
+    zstd # compression
     geany
-    # # It is sometimes useful to fine-tune packages, for example, by applying
-    # # overrides. You can do that directly here, just don't forget the
-    # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
-    # # fonts?
-    # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
-
-    # # You can also create simple shell scripts directly inside your
-    # # configuration. For example, this adds a command 'my-hello' to your
-    # # environment:
-    # (pkgs.writeShellScriptBin "my-hello" ''
-    #   echo "Hello, ${config.home.username}!"
-    # '')
+    duf # disk usage
+    dust # disk usage
+    nh # Nix helper
   ];
 
-  # Home Manager is pretty good at managing dotfiles. The primary way to manage
-  # plain files is through 'home.file'.
   home.file = {
     # # Building this configuration will create a copy of 'dotfiles/screenrc' in
     # # the Nix store. Activating the configuration will then make '~/.screenrc' a
@@ -133,23 +111,23 @@
     };
   };
 
-  programs.ghostty = {
-    enable = true;
-    settings = {
-      font-size = 11;
-      font-family = "JetBrainsMono Nerd Font";
-
-      # Some macOS settings
-      window-theme = "dark";
-      macos-option-as-alt = true;
-
-      # Disables ligatures
-      font-feature = ["-liga" "-dlig" "-calt"];
-
-      # cmd-s is ctr-s
-      keybind = "super+s=text:\\x13";
-    };
-  };
+  # programs.ghostty = {
+  #   enable = true;
+  #   settings = {
+  #     font-size = 11;
+  #     font-family = "JetBrainsMono Nerd Font";
+  #
+  #     # Some macOS settings
+  #     window-theme = "dark";
+  #     macos-option-as-alt = true;
+  #
+  #     # Disables ligatures
+  #     font-feature = ["-liga" "-dlig" "-calt"];
+  #
+  #     # cmd-s is ctr-s
+  #     keybind = "super+s=text:\\x13";
+  #   };
+  # };
 
   programs.zsh = {
     enable = true;
@@ -190,6 +168,7 @@
       bindkey '^x^e' edit-command-line
       bindkey \^U backward-kill-line
       PATH=$HOME/go/bin:$PATH
+      [ -f $HOME/.zshrc.local ] && source $HOME/.zshrc.local
     '';
 
     history = {
@@ -197,6 +176,12 @@
       save = 1000000000;
       size = 1000000000;
     };
+  };
+
+  programs.atuin = {
+    enable = true;
+    enableZshIntegration = true;
+    flags = ["--disable-up-arrow"];
   };
 
   programs.fzf = {
