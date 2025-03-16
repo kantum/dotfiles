@@ -14,5 +14,6 @@ conform.setup({
 		tsx = { "eslint" },
 		nix = { "alejandra" },
 		go = { "gofmt", "gofumpt" },
+		proto = { "buf" },
 	},
 })
