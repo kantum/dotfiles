@@ -189,6 +189,10 @@
     enableZshIntegration = true;
   };
 
+  programs.ranger = {
+    enable = true;
+  };
+
   programs.lf = {
     enable = true;
     keybindings = {
