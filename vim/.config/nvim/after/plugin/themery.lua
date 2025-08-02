@@ -13,6 +13,5 @@ require("themery").setup({
 
 require("themery").setup({
 	themes = { "gruvbox", "onedark" }, -- Your list of installed colorschemes
-	-- themeConfigFile = "~/.config/nvim/lua/colors.lua", -- Described below
 	livePreview = true, -- Apply theme while browsing. Default to true.
 })
