@@ -1,9 +1,9 @@
 -- Setup language servers.
 require("mason").setup()
 
-local mason_registry = require("mason-registry")
-local vue_language_server_path = mason_registry.get_package("vue-language-server"):get_install_path()
-	.. "/node_modules/@vue/language-server"
+-- local mason_registry = require("mason-registry")
+-- local vue_language_server_path = mason_registry.get_package("vue-language-server"):get_install_path()
+-- 	.. "/node_modules/@vue/language-server"
 
 local lspconfig = require("lspconfig")
 local util = require("lspconfig.util")
@@ -126,7 +126,11 @@ lspconfig.jsonnet_ls.setup({
 		},
 	},
 })
-lspconfig.golangci_lint_ls.setup({})
+lspconfig.golangci_lint_ls.setup({
+	init_options = {
+      command = { 'golangci-lint', 'run', '--show-stats=false', '--output.json.path', 'stdout' },
+    },
+})
 lspconfig.zls.setup({
 	cmd = { "zls" },
 	filetypes = { "zig" },
@@ -182,6 +186,16 @@ vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist)
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
 	-- Disable virtual text, override spacing to 4
 	virtual_text = false,
+})
+
+-- Disable diagnostics in .env files
+local group = vim.api.nvim_create_augroup("__env", {clear=true})
+vim.api.nvim_create_autocmd("BufEnter", {
+  pattern = "*.env",
+  group = group,
+  callback = function(args)
+    vim.diagnostic.disable(args.buf)
+  end
 })
 
 -- Use LspAttach autocommand to only map the following keys
