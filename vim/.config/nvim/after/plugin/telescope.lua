@@ -32,6 +32,7 @@ require("telescope").setup({
 			undo = {},
 		},
 		preview = {
+			filesize_limit = 10, -- Limit the size of files to preview
 			mime_hook = function(filepath, bufnr, opts)
 				local is_image = function(filepath)
 					local image_extensions = { "png", "jpg" } -- Supported image formats
