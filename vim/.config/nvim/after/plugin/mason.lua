@@ -1,4 +1,5 @@
 require("mason").setup()
+
 require("mason-lspconfig").setup({
 	automatic_installation = true,
 	ensure_installed = {
@@ -11,7 +12,8 @@ require("mason-lspconfig").setup({
 		"sqlls",
 		"jsonnet_ls",
 		"ts_ls",
-		"volar",
+		"vue_ls",
+		"vtsls",
 		"yamlls",
 		"taplo",
 	},
