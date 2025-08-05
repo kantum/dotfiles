@@ -137,6 +137,23 @@
   #   };
   # };
 
+  programs.zathura = {
+    enable = true;
+    extraConfig = ''
+      set recolor true
+      set recolor-darkcolor "#dcdccc"
+      set recolor-lightcolor "#282c34"
+      set default-bg "#222D32"
+
+      # copy selection to system clipboard
+      set selection-clipboard clipboard
+
+      map f toggle_fullscreen
+      set window-height 30000
+      set window-width 30000
+    '';
+  };
+
   programs.zsh = {
     enable = true;
     dotDir = config.xdg.configHome + "zsh";
