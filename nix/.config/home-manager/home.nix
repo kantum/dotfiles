@@ -6,77 +6,85 @@
   home.username = "kantum";
   home.homeDirectory = "/Users/kantum";
 
-  home.stateVersion = "24.05";
+  home.stateVersion = "24.11"; # Please read the comment before changing.
 
   # Allows unfree packages
   nixpkgs.config.allowUnfreePredicate = pkg:
     builtins.elem (pkgs.lib.getName pkg) [
       "obsidian"
+      "claude-code"
     ];
 
   home.packages = with pkgs; [
-    stow
-    neovim
-    tmux
-    tree
-    git
-    git-lfs
-    jq
-    ripgrep
-    fd
-    gnupg
-    pinentry-curses
-    gitui
-    protobuf
-    grpcurl
-    portaudio
-    pkg-config
-    cmatrix
-    nodejs_23
-    convco # conventionnal commits
-    go
-    rustup
-    xh # better curl (http command)
-    ocaml
-    ocamlPackages.findlib
-    ocamlPackages.batteries
-    corepack
-    platformio # https://github.com/NixOS/nixpkgs/pull/258358
-    imagemagick
-    # bitwarden-cli # password manager
-    ncdu # disk usage
-    openssl
-    # mitmproxy # proxy, not working right now, see https://github.com/NixOS/nixpkgs/issues/291753
-    dive # docker image explorer
-    dbeaver-bin
-    # difftastic # better diff, not sure if I want to use it
-    awscli2
-    texliveFull
-    wget
-    lexical
-    bottom
-    htop
-    btop
-    elixir_1_18
-    postgresql
-    monitorcontrol # Control your display's brightness & volume on your Mac as if it was a native Apple Display.
-    obsidian
-    watch
-    lua
-    luarocks
+    android-tools
+    python312Packages.flask
+    pipenv
+    scrcpy
     alejandra # Nix formatter
-    neofetch
-    flyctl
-    yt-dlp
-    vlc-bin
-    gh
-    ollama
-    shellcheck
-    zstd # compression
-    geany
+    awscli2
+    ext4fuse
+    bottom
+    btop
+    cmatrix
+    convco # conventionnal commits
+    corepack
+    dbeaver-bin
+    dive # docker image explorer
     duf # disk usage
     dust # disk usage
+    elixir_1_18
+    fd
+    flyctl
+    geany
+    gh
+    git
+    git-lfs
+    git-filter-repo
+    gitui
+    glab
+    gnupg
+    go
+    grpcurl
+    htop
+    imagemagick
+    jq
+    lexical
+    lua
+    luarocks
+    monitorcontrol # Control your display's brightness & volume on your Mac as if it was a native Apple Display.
+    ncdu # disk usage
+    neofetch
+    neovim
     nh # Nix helper
+    nixos-shell
+    nmap
+    nodejs_24
+    obsidian
+    ocaml
+    ocamlPackages.batteries
+    ocamlPackages.findlib
+    ollama
+    openssl
+    pinentry-curses
+    pkg-config
+    platformio # https://github.com/NixOS/nixpkgs/pull/258358
+    portaudio
+    postgresql
+    qemu # Emulator
+    ripgrep
+    rustup
+    shellcheck
+    stow
+    texliveFull
+    tree
+    tui-journal
+    vlc-bin
+    watch
+    wget
+    xh # better curl (http command)
+    yt-dlp
+    zstd # compression
+    claude-code
   ];
 
   home.file = {
@@ -131,7 +139,7 @@
 
   programs.zsh = {
     enable = true;
-    dotDir = ".config/zsh";
+    dotDir = config.xdg.configHome + "zsh";
     autosuggestion.enable = true;
     enableCompletion = true;
     shellAliases = {
@@ -159,7 +167,7 @@
       }
     ];
 
-    initExtra = ''
+    initContent = ''
       zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
       PROMPT='%F{099}[%1~]%f '
       bindkey -e
@@ -178,15 +186,65 @@
     };
   };
 
-  programs.atuin = {
-    enable = true;
-    enableZshIntegration = true;
-    flags = ["--disable-up-arrow"];
-  };
+  # programs.atuin = {
+  #   enable = true;
+  #   enableZshIntegration = true;
+  #   flags = ["--disable-up-arrow"];
+  # };
 
   programs.fzf = {
     enable = true;
     enableZshIntegration = true;
+  };
+
+  programs.tmux = {
+    enable = true;
+    terminal = "screen-256color";
+    clock24 = true;
+    baseIndex = 1;
+    prefix = "C-a";
+    keyMode = "vi";
+    escapeTime = 10;
+    mouse = true;
+    historyLimit = 50000;
+
+    plugins = with pkgs.tmuxPlugins; [
+      {
+        plugin = pain-control;
+      }
+      {
+        plugin = resurrect;
+        extraConfig = ''
+          set -g @resurrect-strategy-vim 'session'
+          set -g @resurrect-strategy-nvim 'session'
+          set -g @resurrect-capture-pane-contents 'on'
+        '';
+      }
+      {
+        plugin = continuum;
+        extraConfig = ''
+          set -g @continuum-restore 'on'
+          set -g @continuum-boot 'on'
+          set -g @continuum-save-interval '5'
+        '';
+      }
+    ];
+
+    extraConfig = ''
+      # Status bar customization
+      set -g status off
+
+      # Set XTerm key bindings
+      setw -g xterm-keys on
+
+      set -g mode-style "fg=white,bg=color099"
+      set -g message-command-style "fg=white,bg=color099"
+      set -g message-style "fg=white,bg=color099"
+
+      set -g pane-border-style fg=black
+      set -g pane-active-border-style "bg=default fg=color099"
+
+    '';
   };
 
   programs.ranger = {
@@ -197,6 +255,7 @@
     enable = true;
     keybindings = {
       enter = "open";
+      dD = "delete";
     };
     previewer = {
       keybinding = "i";
