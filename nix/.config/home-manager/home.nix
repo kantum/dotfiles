@@ -84,6 +84,7 @@
     yt-dlp
     zstd # compression
     claude-code
+    catimg
   ];
 
   home.file = {
