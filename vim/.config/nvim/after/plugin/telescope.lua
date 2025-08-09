@@ -16,21 +16,6 @@ require("telescope").setup({
 				["<C-d>"] = false,
 			},
 		},
-		pickers = {
-			find_files = {
-				find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*", "-u" },
-			},
-		},
-		extensions = {
-			file_browser = {
-				initial_mode = "normal", -- TODO not working
-			},
-			fzf = {
-				fuzzy = true, -- false will only do exact matching
-				hidden = true, -- show hidden files
-			},
-			undo = {},
-		},
 		preview = {
 			filesize_limit = 10, -- Limit the size of files to preview
 			mime_hook = function(filepath, bufnr, opts)
@@ -60,6 +45,21 @@ require("telescope").setup({
 				end
 			end,
 		},
+	},
+	pickers = {
+		find_files = {
+			find_command = { "rg", "--ignore", "--files", "--hidden", "--glob", "!**/.git/*", "-u" },
+		},
+	},
+	extensions = {
+		file_browser = {
+			initial_mode = "normal", -- TODO not working
+		},
+		fzf = {
+			fuzzy = true, -- false will only do exact matching
+			hidden = true, -- show hidden files
+		},
+		undo = {},
 	},
 })
 
