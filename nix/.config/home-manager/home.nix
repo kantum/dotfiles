@@ -268,6 +268,9 @@
     ];
 
     extraConfig = ''
+      # fix ctrl-a not going to the start of the line
+      bind C-a send-prefix
+
       # Status bar customization
       set -g status off
 
