@@ -13,7 +13,6 @@
     builtins.elem (pkgs.lib.getName pkg) [
       "obsidian"
       "claude-code"
-      "notion-app"
     ];
 
   home.packages = with pkgs; [
@@ -87,7 +86,6 @@
     claude-code
     catimg
     affine
-    notion-app
   ];
 
   home.file = {
