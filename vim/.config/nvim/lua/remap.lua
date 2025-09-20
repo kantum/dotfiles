@@ -13,5 +13,5 @@ vim.cmd.nnoremap("<leader>c", ":set cursorline! cursorcolumn!<cr>")
 
 vim.cmd.nnoremap("<leader>gd", ":DiffviewOpen<cr>")
 vim.cmd.nnoremap("<leader>gh", ":DiffviewFileHistory %<cr>")
-vim.cmd.nnoremap("<leader>gc", ":Git commit<cr>")
+vim.cmd.nnoremap("<leader>gc", ":Git commit --verbose<cr>")
 vim.cmd.nnoremap("<leader>gb", ":Git blame<cr>")
