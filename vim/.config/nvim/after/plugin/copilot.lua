@@ -15,7 +15,7 @@ require("copilot").setup({
 		},
 	},
 	suggestion = {
-	enabled = true,
+		enabled = true,
 		auto_trigger = true,
 		debounce = 75,
 		keymap = {
@@ -31,7 +31,7 @@ require("copilot").setup({
 		yaml = true,
 		-- markdown = false,
 		-- help = false,
-		-- gitcommit = false,
+		gitcommit = true,
 		-- gitrebase = false,
 		-- hgcommit = false,
 		-- svn = false,
