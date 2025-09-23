@@ -212,6 +212,11 @@
       bindkey \^U backward-kill-line
       PATH=$HOME/go/bin:$PATH
       [ -f $HOME/.zshrc.local ] && source $HOME/.zshrc.local
+      if command -v tmux >/dev/null 2>&1; then
+        if [ -z "$TMUX" ]; then
+          exec tmux a || tmux
+        fi
+      fi
     '';
 
     history = {
