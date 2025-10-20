@@ -5,8 +5,9 @@ require("mason").setup()
 -- local vue_language_server_path = mason_registry.get_package("vue-language-server"):get_install_path()
 -- 	.. "/node_modules/@vue/language-server"
 
-local lspconfig = require("lspconfig")
-local util = require("lspconfig.util")
+local lspconfig = vim.lsp.config
+
+local util = lspconfig.util
 
 -- Function to get TypeScript server path
 local function get_typescript_server_path(root_dir)
@@ -25,12 +26,14 @@ local function get_typescript_server_path(root_dir)
 	end
 end
 
-lspconfig.pyright.setup({})
+vim.lsp.enable("pyright")
 
 -- TypeScript configuration
-lspconfig.ts_ls.setup({
+vim.lsp.config("ts_ls", {
 	filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact" },
-	root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json", "jsconfig.json", ".git"),
+	root_dir = function(bufnr, on_dir)
+		on_dir(vim.lsp.util.root_pattern("package.json", "tsconfig.json", "jsconfig.json", ".git")(buf_get_name(bufnr)))
+	end,
 	init_options = {
 		plugins = {
 			{
@@ -43,45 +46,34 @@ lspconfig.ts_ls.setup({
 		},
 	},
 })
+vim.lsp.enable("ts_ls")
 
-lspconfig.rust_analyzer.setup({
-	-- Server-specific settings. See `:help lspconfig-setup`
+vim.lsp.config("rust_analyzer", {
 	settings = {
 		["rust-analyzer"] = {},
 	},
 })
+vim.lsp.enable("rust_analyzer")
 
--- Volar configuration for Vue files
-lspconfig.volar.setup({
-	filetypes = { "vue" },
-	on_new_config = function(new_config, new_root_dir)
-		new_config.init_options.typescript.tsdk = get_typescript_server_path(new_root_dir)
-	end,
-	init_options = {
-		typescript = {
-			tsdk = vim.fn.expand(
-				"$HOME/.local/share/nvim/mason/packages/typescript-language-server/node_modules/typescript/lib"
-			),
-		},
-	},
-})
+vim.lsp.enable("vue_ls")
 
-lspconfig.gopls.setup({
+vim.lsp.config("gopls", {
 	settings = {
 		gopls = {
 			buildFlags = { "-tags=integration" },
 		},
 	},
 })
+vim.lsp.enable("gopls")
 
-lspconfig.sqlls.setup({})
-lspconfig.taplo.setup({})
-lspconfig.dockerls.setup({})
-lspconfig.yamlls.setup({})
-lspconfig.bashls.setup({})
+vim.lsp.enable("sqlls")
+vim.lsp.enable("taplo")
+vim.lsp.enable("dockerls")
+vim.lsp.enable("yamlls")
+vim.lsp.enable("bashls")
 
 -- ESLint configuration
-lspconfig.eslint.setup({
+vim.lsp.config("eslint", {
 	on_attach = function(client, bufnr)
 		vim.api.nvim_create_autocmd("BufWritePre", {
 			buffer = bufnr,
@@ -89,12 +81,14 @@ lspconfig.eslint.setup({
 		})
 	end,
 })
+vim.lsp.enable("eslint")
 
-lspconfig.html.setup({
+vim.lsp.config("html", {
 	filetypes = { "html", "heex" },
 })
+vim.lsp.enable("html")
 
-lspconfig.tailwindcss.setup({
+vim.lsp.config("tailwindcss", {
 	init_options = {
 		userLanguages = {
 			elixir = "html-eex",
@@ -103,8 +97,9 @@ lspconfig.tailwindcss.setup({
 		},
 	},
 })
+vim.lsp.enable("tailwindcss")
 
-lspconfig.jsonnet_ls.setup({
+vim.lsp.config("jsonnet_ls", {
 	settings = {
 		ext_vars = {
 			foo = "bar",
@@ -126,23 +121,29 @@ lspconfig.jsonnet_ls.setup({
 		},
 	},
 })
-lspconfig.golangci_lint_ls.setup({
+vim.lsp.enable("jsonnet_ls")
+
+vim.lsp.config("golangci_lint_ls", {
 	init_options = {
 		command = { "golangci-lint", "run", "--show-stats=false", "--output.json.path", "stdout" },
 	},
 })
-lspconfig.zls.setup({
+vim.lsp.enable("golangci_lint_ls")
+
+vim.lsp.config("zls", {
 	cmd = { "zls" },
 	filetypes = { "zig" },
-	root_dir = lspconfig.util.root_pattern("build.zig", ".git"),
 })
+vim.lsp.enable("zls")
 
-local configs = require("lspconfig.configs")
+local configs = vim.lsp.config._configs
 local lexical_config = {
 	filetypes = { "elixir", "eelixir", "heex" },
 	cmd = { "lexical" },
 	settings = {},
 }
+
+vim.lsp.enable("lexical")
 
 if not configs.lexical then
 	configs.lexical = {
@@ -157,17 +158,22 @@ if not configs.lexical then
 		},
 	}
 end
-
+--
 -- lspconfig.lexical.setup({})
 
-local util = require("lspconfig.util")
+local util = lspconfig.util
 
-lspconfig.vacuum.setup({
+-- lspconfig.vacuum.setup({
+vim.lsp.config("vacuum", {
 	cmd = { "vacuum", "language-server" },
 	filetypes = { "yaml.openapi", "json.openapi" },
-	root_dir = util.find_git_ancestor,
+	root_dir = function(bufnr, on_dir)
+		on_dir(vim.lsp.util.util.find_git_ancestor)(buf_get_name(bufnr))
+	end,
+
 	single_file_support = true,
 })
+vim.lsp.enable("vacuum")
 
 vim.filetype.add({
 	pattern = {
