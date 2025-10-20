@@ -15,5 +15,6 @@ conform.setup({
 		nix = { "alejandra" },
 		go = { "gofmt", "gofumpt" },
 		proto = { "buf" },
+		terraform = { "tofu_fmt" },
 	},
 })

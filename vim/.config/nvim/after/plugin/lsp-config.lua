@@ -128,8 +128,8 @@ lspconfig.jsonnet_ls.setup({
 })
 lspconfig.golangci_lint_ls.setup({
 	init_options = {
-      command = { 'golangci-lint', 'run', '--show-stats=false', '--output.json.path', 'stdout' },
-    },
+		command = { "golangci-lint", "run", "--show-stats=false", "--output.json.path", "stdout" },
+	},
 })
 lspconfig.zls.setup({
 	cmd = { "zls" },
@@ -189,13 +189,13 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagn
 })
 
 -- Disable diagnostics in .env files
-local group = vim.api.nvim_create_augroup("__env", {clear=true})
+local group = vim.api.nvim_create_augroup("__env", { clear = true })
 vim.api.nvim_create_autocmd("BufEnter", {
-  pattern = "*.env",
-  group = group,
-  callback = function(args)
-    vim.diagnostic.disable(args.buf)
-  end
+	pattern = "*.env",
+	group = group,
+	callback = function(args)
+		vim.diagnostic.disable(args.buf)
+	end,
 })
 
 -- Use LspAttach autocommand to only map the following keys
