@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  pkgs-old,
   ...
 }: {
   home.username = "kantum";
@@ -34,7 +35,7 @@
     dust # disk usage
     elixir_1_18
     fd
-    flyctl
+    # flyctl
     geany
     gh
     git
@@ -85,7 +86,7 @@
     zstd # compression
     claude-code
     catimg
-    affine
+    # affine # Electron is marked as insecure
   ];
 
   home.file = {
@@ -111,6 +112,8 @@
 
     # Enable iex history between sessions
     ERL_AFLAGS = "-kernel shell_history enabled";
+    FLYCTL_INSTALL = "/Users/kantum/.fly";
+    PATH = "$FLYCTL_INSTALL/bin:$PATH";
   };
 
   programs.direnv = {
@@ -157,6 +160,7 @@
 
   programs.gitui = {
     enable = true;
+    package = pkgs-old.gitui;
     keyConfig = ''
       (
       move_left: Some(( code: Char('h'), modifiers: "")),
