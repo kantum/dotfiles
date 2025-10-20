@@ -48,7 +48,16 @@ require("telescope").setup({
 	},
 	pickers = {
 		find_files = {
-			find_command = { "rg", "--ignore", "--files", "--hidden", "--glob", "!**/.git/*", "-u" },
+			find_command = {
+				"rg",
+				"--ignore",
+				"--files",
+				"--hidden",
+				"--glob",
+				"!**/.git/*",
+				"--glob",
+				"!**/.gitignore",
+			},
 		},
 	},
 	extensions = {
