@@ -105,6 +105,7 @@
   home.sessionVariables = {
     VISUAL = "nvim";
     EDITOR = "nvim";
+    SOPS_EDITOR = "nvim --clean";
 
     GPG_TTY = "$(tty)";
 
@@ -194,17 +195,7 @@
       gp = "git push";
       "gc!" = "git commit --verbose --amend";
     };
-    plugins = with pkgs; [
-      {
-        name = "zsh-syntax-highlighting";
-        src = fetchFromGitHub {
-          owner = "zsh-users";
-          repo = "zsh-syntax-highlighting";
-          rev = "0.8.0";
-          sha256 = "1yl8zdip1z9inp280sfa5byjbf2vqh2iazsycar987khjsi5d5w8";
-        };
-      }
-    ];
+    syntaxHighlighting.enable = false;
 
     initContent = ''
       zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
