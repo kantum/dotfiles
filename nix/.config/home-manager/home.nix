@@ -60,7 +60,6 @@
     monitorcontrol # Control your display's brightness & volume on your Mac as if it was a native Apple Display.
     ncdu # disk usage
     neofetch
-    # neovim
     nh # Nix helper
     nixos-shell
     nmap
@@ -142,10 +141,10 @@
     opts = {
       background = "dark";
       number = true;
-
       relativenumber = true;
       ignorecase = true;
       smartcase = true;
+      autoread = true;
       clipboard = "unnamedplus";
       colorcolumn = "80";
     };
@@ -199,6 +198,113 @@
         mode = "n";
         action = "<cmd>lua vim.diagnostic.setloclist()<CR>";
       }
+      {
+        mode = "n";
+        key = "<leader>gd";
+        action = "<cmd>DiffviewOpen<CR>";
+      }
+      {
+        mode = "n";
+        key = "<leader>gh";
+        action = "<cmd>DiffviewFileHistory %<CR>";
+      }
+      {
+        mode = "n";
+        key = "<leader>gc";
+        action = "<cmd>Git commit --verbose<CR>";
+      }
+      {
+        mode = "n";
+        key = "<leader>gb";
+        action = "<cmd>Git blame<CR>";
+      }
+      # lsp
+      {
+        mode = "n";
+        key = "gD";
+        action = "vim.lsp.buf.declaration";
+        lua = true;
+      }
+      {
+        mode = "n";
+        key = "gd";
+        action = "vim.lsp.buf.definition";
+        lua = true;
+      }
+      {
+        mode = "n";
+        key = "K";
+        action = "vim.lsp.buf.hover";
+        lua = true;
+      }
+      {
+        mode = "n";
+        key = "gi";
+        action = "vim.lsp.buf.implementation";
+        lua = true;
+      }
+      {
+        mode = "n";
+        key = "<C-k>";
+        action = "vim.lsp.buf.signature_help";
+        lua = true;
+      }
+      {
+        mode = "n";
+        key = "<leader>wa";
+        action = "vim.lsp.buf.add_workspace_folder";
+        lua = true;
+      }
+      {
+        mode = "n";
+        key = "<leader>wr";
+        action = "vim.lsp.buf.remove_workspace_folder";
+        lua = true;
+      }
+      {
+        mode = "n";
+        key = "<leader>wl";
+        action = ''
+          function()
+            print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+          end
+        '';
+        lua = true;
+      }
+      {
+        mode = "n";
+        key = "<leader>D";
+        action = "vim.lsp.buf.type_definition";
+        lua = true;
+      }
+      {
+        mode = "n";
+        key = "<leader>rn";
+        action = "vim.lsp.buf.rename";
+        lua = true;
+      }
+      {
+        mode = ["n" "v"];
+        key = "<leader>ca";
+        action = "vim.lsp.buf.code_action";
+        lua = true;
+      }
+      {
+        mode = "n";
+        key = "gr";
+        action = "vim.lsp.buf.references";
+        lua = true;
+      }
+      {
+        mode = "n";
+        key = "<leader>f";
+        action = ''
+          function()
+            vim.lsp.buf.format({ async = true })
+          end
+        '';
+        lua = true;
+      }
     ];
 
     colorschemes = {
@@ -212,7 +318,12 @@
       };
     };
 
+    plugins.opencode = {
+      enable = true;
+    };
+
     plugins = {
+      gitsigns.enable = true;
       snacks = {
         enable = true;
         settings.input.enabled = true;
@@ -289,6 +400,17 @@
         keymaps = {
           "<leader>ff" = "find_files";
           "<leader>fg" = "live_grep";
+          "<leader>fb" = "buffers";
+        };
+        settings = {
+          defaults = {
+            mappings = {
+              i = {
+                "<C-u>" = false;
+                "<C-d>" = false;
+              };
+            };
+          };
         };
       };
       treesitter = {
