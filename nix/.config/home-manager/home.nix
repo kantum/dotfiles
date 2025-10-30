@@ -2,8 +2,12 @@
   config,
   pkgs,
   pkgs-old,
+  nixvim,
   ...
 }: {
+  imports = [
+    nixvim.homeModules.nixvim
+  ];
   home.username = "kantum";
   home.homeDirectory = "/Users/kantum";
 
@@ -14,6 +18,9 @@
     builtins.elem (pkgs.lib.getName pkg) [
       "obsidian"
       "claude-code"
+      "languagetool"
+      "firefox-bin-unwrapped"
+      "firefox-bin"
     ];
 
   home.packages = with pkgs; [
@@ -21,7 +28,6 @@
     python312Packages.flask
     pipenv
     scrcpy
-    alejandra # Nix formatter
     awscli2
     ext4fuse
     bottom
@@ -54,7 +60,7 @@
     monitorcontrol # Control your display's brightness & volume on your Mac as if it was a native Apple Display.
     ncdu # disk usage
     neofetch
-    neovim
+    # neovim
     nh # Nix helper
     nixos-shell
     nmap
@@ -85,6 +91,7 @@
     yt-dlp
     zstd # compression
     claude-code
+    opencode
     catimg
     # affine # Electron is marked as insecure
   ];
@@ -122,6 +129,186 @@
     nix-direnv = {
       enable = true;
     };
+  };
+
+  programs.nixvim = {
+    enable = true;
+    # nixpkgs.useGlobalPackages = true;
+
+    defaultEditor = true;
+    vimdiffAlias = true;
+    globals.mapleader = " ";
+
+    opts = {
+      background = "dark";
+      number = true;
+
+      relativenumber = true;
+      ignorecase = true;
+      smartcase = true;
+      clipboard = "unnamedplus";
+      colorcolumn = "80";
+    };
+
+    keymaps = [
+      {
+        key = "-";
+        action = "<CMD>Oil<CR>";
+      }
+      {
+        key = "<leader>c";
+        action = ":set cursorline! cursorcolumn!<cr>";
+      }
+      {
+        mode = "n";
+        key = "<C-S>";
+        action = ":update<CR>";
+        options.silent = true;
+      }
+      {
+        mode = "v";
+        key = "<C-S>";
+        action = "<C-C>:update<CR>";
+        options.silent = true;
+      }
+      {
+        mode = "i";
+        key = "<C-S>";
+        action = "<Esc>:update<CR>";
+        options.silent = true;
+      }
+
+      # Lsp
+      {
+        key = "<leader>e";
+        mode = "n";
+        action = "<cmd>lua vim.diagnostic.open_float()<CR>";
+      }
+      {
+        key = "[d";
+        mode = "n";
+        action = "<cmd>lua vim.diagnostic.goto_prev()<CR>";
+      }
+      {
+        key = "]d";
+        mode = "n";
+        action = "<cmd>lua vim.diagnostic.goto_next()<CR>";
+      }
+      {
+        key = "<leader>q";
+        mode = "n";
+        action = "<cmd>lua vim.diagnostic.setloclist()<CR>";
+      }
+    ];
+
+    colorschemes = {
+      onedark = {
+        enable = true;
+        autoLoad = true;
+        settings = {
+          style = "dark";
+          transparent = true;
+        };
+      };
+    };
+
+    plugins = {
+      snacks = {
+        enable = true;
+        settings.input.enabled = true;
+      };
+      fugitive.enable = true;
+      lualine.enable = true;
+      oil = {
+        enable = true;
+        settings = {
+          default_file_explorer = true;
+        };
+      };
+
+      lsp = {
+        enable = true;
+        servers = {
+          lua_ls.enable = true;
+
+          elixirls = {
+            enable = true;
+            # settings = {
+            #   activate = true;
+            # };
+          };
+
+          # expert = {
+          #   enable = true;
+          # };
+        };
+      };
+
+      cmp = {
+        enable = true;
+        autoEnableSources = true;
+      };
+
+      conform-nvim = {
+        enable = true;
+        autoInstall.enable = true;
+        settings = {
+          formatters_by_ft = {
+            lua = ["stylua"];
+            rust = ["rustfmt"];
+            nix = ["alejandra"];
+            # elixir = ["mix"];
+            # heex = ["mix"];
+            javascript = ["prettier"];
+            typescript = ["prettier"];
+            json = ["prettier"];
+            mjs = ["prettier"];
+            go = ["gofmt" "gofumpt"];
+            proto = ["buf"];
+            terraform = ["tofu_fmt"];
+            bash = [
+              "shellcheck"
+              "shellharden"
+              "shfmt"
+            ];
+            "_" = [
+              "squeeze_blanks"
+              "trim_whitespace"
+              "trim_newlines"
+            ];
+          };
+          format_on_save = {
+            timeout_ms = 500;
+            lsp_format = "prefer";
+          };
+        };
+      };
+
+      telescope = {
+        enable = true;
+        keymaps = {
+          "<leader>ff" = "find_files";
+          "<leader>fg" = "live_grep";
+        };
+      };
+      treesitter = {
+        enable = true;
+        settings = {
+          highlight.enable = true;
+        };
+      };
+      mini = {
+        enable = true;
+        modules = {
+          icons.enable = true;
+          comment.enable = true;
+        };
+        mockDevIcons = true;
+      };
+    };
+    extraPlugins = with pkgs.vimPlugins; [
+      vim-nix
+    ];
   };
 
   # programs.ghostty = {
