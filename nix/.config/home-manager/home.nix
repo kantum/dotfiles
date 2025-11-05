@@ -7,6 +7,7 @@
 }: {
   imports = [
     nixvim.homeModules.nixvim
+    ./nixvim
   ];
   home.username = "kantum";
   home.homeDirectory = "/Users/kantum";
@@ -92,7 +93,7 @@
     claude-code
     opencode
     catimg
-    # affine # Electron is marked as insecure
+    affine
   ];
 
   home.file = {
@@ -130,326 +131,24 @@
     };
   };
 
-  programs.nixvim = {
+  programs.ghostty = {
     enable = true;
-    # nixpkgs.useGlobalPackages = true;
+    package = pkgs.ghostty-bin;
+    settings = {
+      font-size = 11;
+      font-family = "JetBrainsMono Nerd Font";
 
-    defaultEditor = true;
-    vimdiffAlias = true;
-    globals.mapleader = " ";
+      # Some macOS settings
+      window-theme = "dark";
+      macos-option-as-alt = true;
 
-    opts = {
-      background = "dark";
-      number = true;
-      relativenumber = true;
-      ignorecase = true;
-      smartcase = true;
-      autoread = true;
-      clipboard = "unnamedplus";
-      colorcolumn = "80";
+      # Disables ligatures
+      font-feature = ["-liga" "-dlig" "-calt"];
+
+      # cmd-s is ctr-s
+      keybind = "super+s=text:\\x13";
     };
-
-    keymaps = [
-      {
-        key = "-";
-        action = "<CMD>Oil<CR>";
-      }
-      {
-        key = "<leader>c";
-        action = ":set cursorline! cursorcolumn!<cr>";
-      }
-      {
-        mode = "n";
-        key = "<C-S>";
-        action = ":update<CR>";
-        options.silent = true;
-      }
-      {
-        mode = "v";
-        key = "<C-S>";
-        action = "<C-C>:update<CR>";
-        options.silent = true;
-      }
-      {
-        mode = "i";
-        key = "<C-S>";
-        action = "<Esc>:update<CR>";
-        options.silent = true;
-      }
-
-      # Lsp
-      {
-        key = "<leader>e";
-        mode = "n";
-        action = "<cmd>lua vim.diagnostic.open_float()<CR>";
-      }
-      {
-        key = "[d";
-        mode = "n";
-        action = "<cmd>lua vim.diagnostic.goto_prev()<CR>";
-      }
-      {
-        key = "]d";
-        mode = "n";
-        action = "<cmd>lua vim.diagnostic.goto_next()<CR>";
-      }
-      {
-        key = "<leader>q";
-        mode = "n";
-        action = "<cmd>lua vim.diagnostic.setloclist()<CR>";
-      }
-      {
-        mode = "n";
-        key = "<leader>gd";
-        action = "<cmd>DiffviewOpen<CR>";
-      }
-      {
-        mode = "n";
-        key = "<leader>gh";
-        action = "<cmd>DiffviewFileHistory %<CR>";
-      }
-      {
-        mode = "n";
-        key = "<leader>gc";
-        action = "<cmd>Git commit --verbose<CR>";
-      }
-      {
-        mode = "n";
-        key = "<leader>gb";
-        action = "<cmd>Git blame<CR>";
-      }
-      # lsp
-      {
-        mode = "n";
-        key = "gD";
-        action = "vim.lsp.buf.declaration";
-        lua = true;
-      }
-      {
-        mode = "n";
-        key = "gd";
-        action = "vim.lsp.buf.definition";
-        lua = true;
-      }
-      {
-        mode = "n";
-        key = "K";
-        action = "vim.lsp.buf.hover";
-        lua = true;
-      }
-      {
-        mode = "n";
-        key = "gi";
-        action = "vim.lsp.buf.implementation";
-        lua = true;
-      }
-      {
-        mode = "n";
-        key = "<C-k>";
-        action = "vim.lsp.buf.signature_help";
-        lua = true;
-      }
-      {
-        mode = "n";
-        key = "<leader>wa";
-        action = "vim.lsp.buf.add_workspace_folder";
-        lua = true;
-      }
-      {
-        mode = "n";
-        key = "<leader>wr";
-        action = "vim.lsp.buf.remove_workspace_folder";
-        lua = true;
-      }
-      {
-        mode = "n";
-        key = "<leader>wl";
-        action = ''
-          function()
-            print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-          end
-        '';
-        lua = true;
-      }
-      {
-        mode = "n";
-        key = "<leader>D";
-        action = "vim.lsp.buf.type_definition";
-        lua = true;
-      }
-      {
-        mode = "n";
-        key = "<leader>rn";
-        action = "vim.lsp.buf.rename";
-        lua = true;
-      }
-      {
-        mode = ["n" "v"];
-        key = "<leader>ca";
-        action = "vim.lsp.buf.code_action";
-        lua = true;
-      }
-      {
-        mode = "n";
-        key = "gr";
-        action = "vim.lsp.buf.references";
-        lua = true;
-      }
-      {
-        mode = "n";
-        key = "<leader>f";
-        action = ''
-          function()
-            vim.lsp.buf.format({ async = true })
-          end
-        '';
-        lua = true;
-      }
-    ];
-
-    colorschemes = {
-      onedark = {
-        enable = true;
-        autoLoad = true;
-        settings = {
-          style = "dark";
-          transparent = true;
-        };
-      };
-    };
-
-    plugins.opencode = {
-      enable = true;
-    };
-
-    plugins = {
-      gitsigns.enable = true;
-      snacks = {
-        enable = true;
-        settings.input.enabled = true;
-      };
-      fugitive.enable = true;
-      lualine.enable = true;
-      oil = {
-        enable = true;
-        settings = {
-          default_file_explorer = true;
-        };
-      };
-
-      lsp = {
-        enable = true;
-        servers = {
-          lua_ls.enable = true;
-
-          elixirls = {
-            enable = true;
-            # settings = {
-            #   activate = true;
-            # };
-          };
-
-          # expert = {
-          #   enable = true;
-          # };
-        };
-      };
-
-      cmp = {
-        enable = true;
-        autoEnableSources = true;
-      };
-
-      conform-nvim = {
-        enable = true;
-        autoInstall.enable = true;
-        settings = {
-          formatters_by_ft = {
-            lua = ["stylua"];
-            rust = ["rustfmt"];
-            nix = ["alejandra"];
-            # elixir = ["mix"];
-            # heex = ["mix"];
-            javascript = ["prettier"];
-            typescript = ["prettier"];
-            json = ["prettier"];
-            mjs = ["prettier"];
-            go = ["gofmt" "gofumpt"];
-            proto = ["buf"];
-            terraform = ["tofu_fmt"];
-            bash = [
-              "shellcheck"
-              "shellharden"
-              "shfmt"
-            ];
-            "_" = [
-              "squeeze_blanks"
-              "trim_whitespace"
-              "trim_newlines"
-            ];
-          };
-          format_on_save = {
-            timeout_ms = 500;
-            lsp_format = "prefer";
-          };
-        };
-      };
-
-      telescope = {
-        enable = true;
-        keymaps = {
-          "<leader>ff" = "find_files";
-          "<leader>fg" = "live_grep";
-          "<leader>fb" = "buffers";
-        };
-        settings = {
-          defaults = {
-            mappings = {
-              i = {
-                "<C-u>" = false;
-                "<C-d>" = false;
-              };
-            };
-          };
-        };
-      };
-      treesitter = {
-        enable = true;
-        settings = {
-          highlight.enable = true;
-        };
-      };
-      mini = {
-        enable = true;
-        modules = {
-          icons.enable = true;
-          comment.enable = true;
-        };
-        mockDevIcons = true;
-      };
-    };
-    extraPlugins = with pkgs.vimPlugins; [
-      vim-nix
-    ];
   };
-
-  # programs.ghostty = {
-  #   enable = true;
-  #   settings = {
-  #     font-size = 11;
-  #     font-family = "JetBrainsMono Nerd Font";
-  #
-  #     # Some macOS settings
-  #     window-theme = "dark";
-  #     macos-option-as-alt = true;
-  #
-  #     # Disables ligatures
-  #     font-feature = ["-liga" "-dlig" "-calt"];
-  #
-  #     # cmd-s is ctr-s
-  #     keybind = "super+s=text:\\x13";
-  #   };
-  # };
 
   programs.zathura = {
     enable = true;
@@ -518,7 +217,7 @@
       [ -f $HOME/.zshrc.local ] && source $HOME/.zshrc.local
       if command -v tmux >/dev/null 2>&1; then
         if [ -z "$TMUX" ]; then
-          exec tmux a || tmux
+          exec tmux a || tmux || printf "tmux failed to launch\n"
         fi
       fi
     '';
