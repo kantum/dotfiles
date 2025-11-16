@@ -187,7 +187,7 @@
         "<leader>ff" = "find_files";
         "<leader>fg" = "live_grep";
         "<leader>fb" = "buffers";
-        "<leader>fc" = "live_grep cwd=~/git/dotfiles/nix/.config/home-manager/nixvim";
+        "<leader>fc" = "live_grep cwd=~/git/dotfiles/nix/.config/nix-darwin/home-manager/nixvim";
       };
       settings = {
         defaults = {
