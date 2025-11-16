@@ -1,4 +1,8 @@
 {pkgs, ...}: {
+  imports = [
+    ./plugins.nix
+    ./keymaps.nix
+  ];
   programs.nixvim = {
     enable = true;
     highlight = {
@@ -7,6 +11,13 @@
       };
       Normal = {
         bg = "NONE";
+      };
+      CursoroLine = {
+        bg = "gray";
+        blend = 20;
+      };
+      ColorColumn = {
+        link = "CursorLine";
       };
     };
     # nixpkgs.useGlobalPackages = true;
@@ -23,13 +34,13 @@
       smartcase = true;
       autoread = true;
       clipboard = "unnamedplus";
-      colorcolumn = "80";
       swapfile = false;
       undofile = true;
       laststatus = 3;
+      scrolloff = 8;
+      foldlevel = 99;
+      foldlevelstart = 99;
     };
-
-    keymaps = import ./keymaps.nix;
 
     colorschemes = {
       onedark = {
@@ -38,11 +49,12 @@
         settings = {
           style = "dark";
           transparent = true;
+          lualine = {
+            transparent = true;
+          };
         };
       };
     };
-
-    plugins = import ./plugins.nix;
 
     extraPlugins = with pkgs.vimPlugins; [
       vim-nix

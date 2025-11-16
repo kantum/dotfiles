@@ -1,8 +1,8 @@
 {
   config,
   pkgs,
-  pkgs-old,
   nixvim,
+  pkgs-stable,
   ...
 }: {
   imports = [
@@ -13,16 +13,6 @@
   home.homeDirectory = "/Users/kantum";
 
   home.stateVersion = "24.11"; # Please read the comment before changing.
-
-  # Allows unfree packages
-  nixpkgs.config.allowUnfreePredicate = pkg:
-    builtins.elem (pkgs.lib.getName pkg) [
-      "obsidian"
-      "claude-code"
-      "languagetool"
-      "firefox-bin-unwrapped"
-      "firefox-bin"
-    ];
 
   home.packages = with pkgs; [
     android-tools
@@ -91,9 +81,12 @@
     yt-dlp
     zstd # compression
     claude-code
+    claude-code-router
     opencode
     catimg
     affine
+    github-copilot-cli
+    libreoffice-bin
   ];
 
   home.file = {
@@ -169,7 +162,7 @@
 
   programs.gitui = {
     enable = true;
-    package = pkgs-old.gitui;
+    package = pkgs-stable.gitui;
     keyConfig = ''
       (
       move_left: Some(( code: Char('h'), modifiers: "")),
@@ -217,7 +210,7 @@
       [ -f $HOME/.zshrc.local ] && source $HOME/.zshrc.local
       if command -v tmux >/dev/null 2>&1; then
         if [ -z "$TMUX" ]; then
-          exec tmux a || tmux || printf "tmux failed to launch\n"
+          tmux a || tmux || printf "tmux failed to launch\n"
         fi
       fi
     '';

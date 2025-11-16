@@ -3,13 +3,13 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs-stable.url = "nixpkgs/nixos-25.05";
     nix-darwin.url = "github:LnL7/nix-darwin/master";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    #home-config.url = "path:/Users/kantum/.config/home-manager";
-    nix-rosetta-builder = {
-      url = "github:cpick/nix-rosetta-builder";
+    nixvim = {
+      url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -18,30 +18,25 @@
     self,
     nix-darwin,
     nixpkgs,
+    nixpkgs-stable,
     home-manager,
-    nix-rosetta-builder,
+    nixvim,
   }: let
+    pkgs-stable = import nixpkgs-stable {
+      system = "aarch64-darwin";
+    };
     configuration = {pkgs, ...}: {
+      # Let nix-darwin manage nix.
+      nix.enable = false;
+
       # List packages installed in system profile. To search by name, run:
       # $ nix-env -qaP | grep wget
       environment.systemPackages = [
         pkgs.vim
+        pkgs.sox
       ];
 
-      nix.linux-builder = {
-        enable = true;
-        ephemeral = true;
-        maxJobs = 10;
-        config = {...}: {
-          virtualisation = {
-            darwin-builder = {
-              diskSize = 40 * 1024;
-              memorySize = 8 * 1024;
-            };
-            cores = 4;
-          };
-        };
-      };
+      users.users.kantum.home = "/Users/kantum";
 
       # Necessary for using flakes on this system.
       nix.settings.experimental-features = "nix-command flakes";
@@ -61,12 +56,51 @@
       # $ darwin-rebuild changelog
       system.stateVersion = 6;
 
+      system.primaryUser = "kantum";
+
       # The platform the configuration will be used on.
       nixpkgs.hostPlatform = "aarch64-darwin";
+
+      # Following line should allow us to avoid a logout/login cycle
+      system.activationScripts.activateSettings.text = ''
+        /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
+      '';
+
+      # Allows unfree packages
+      nixpkgs.config.allowUnfreePredicate = pkg:
+        builtins.elem (pkgs.lib.getName pkg) [
+          "obsidian"
+          "claude-code"
+          "languagetool"
+          "firefox-bin-unwrapped"
+          "firefox-bin"
+          "github-copilot-cli"
+        ];
+
+      # services.karabiner-elements.enable = true; # not working yet, need manual install. https://github.com/nix-darwin/nix-darwin/pull/1595
+      launchd = {
+        daemons = {
+          kanata = {
+            command = "${pkgs.kanata-with-cmd}/bin/kanata -c ${./kanata.lisp} --log-layer-changes";
+            path = [
+              "${pkgs.sox}/bin"
+            ];
+            serviceConfig = {
+              KeepAlive = true;
+              RunAtLoad = true;
+              StandardOutPath = "/tmp/kanata.out.log";
+              StandardErrorPath = "/tmp/kanata.err.log";
+            };
+          };
+        };
+      };
+      environment.etc."sudoers.d/kanata".source = pkgs.runCommand "sudoers-kanata" {} ''
+        cat <<EOF >"$out"
+        ALL ALL=(ALL) NOPASSWD: ${pkgs.kanata-with-cmd}/bin/kanata
+        EOF
+      '';
     };
   in {
-    # Build darwin flake using:
-    # $ darwin-rebuild build --flake .#kantums-MacBook-Air
     darwinConfigurations."kantums-MacBook-Air" = nix-darwin.lib.darwinSystem {
       modules = [
         configuration
@@ -74,22 +108,12 @@
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          #home-manager.users.kantum = import ./home.nix;
-          #home-manager.users.kantum = import inputs.home-config;
-
-          # Optionally, use home-manager.extraSpecialArgs to pass
-          # arguments to home.nix
-        }
-        # An existing Linux builder is needed to initially bootstrap `nix-rosetta-builder`.
-        # If one isn't already available: comment out the `nix-rosetta-builder` module below,
-        # uncomment this `linux-builder` module, and run `darwin-rebuild switch`:
-        # { nix.linux-builder.enable = true; }
-        # Then: uncomment `nix-rosetta-builder`, remove `linux-builder`, and `darwin-rebuild switch`
-        # a second time. Subsequently, `nix-rosetta-builder` can rebuild itself.
-        nix-rosetta-builder.darwinModules.default
-        {
-          # see available options in module.nix's `options.nix-rosetta-builder`
-          nix-rosetta-builder.onDemand = true;
+          home-manager = {
+            extraSpecialArgs = {
+              inherit nixvim pkgs-stable;
+            };
+            users.kantum = import ../home-manager/home.nix;
+          };
         }
       ];
     };
