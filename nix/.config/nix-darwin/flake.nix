@@ -112,7 +112,7 @@
             extraSpecialArgs = {
               inherit nixvim pkgs-stable;
             };
-            users.kantum = import ../home-manager/home.nix;
+            users.kantum = import ./home-manager/home.nix;
           };
         }
       ];
