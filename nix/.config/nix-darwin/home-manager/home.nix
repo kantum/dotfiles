@@ -129,10 +129,11 @@
     package = pkgs.ghostty-bin;
     settings = {
       font-size = 11;
-      font-family = "JetBrainsMono Nerd Font";
-
-      # Some macOS settings
-      window-theme = "dark";
+      font-family = "Hack Nerd Font";
+      theme = "dark:Catppuccin Mocha,light:Catppuccin Latte";
+      window-theme = "auto";
+      window-decoration = "none";
+      fullscreen = true;
       macos-option-as-alt = true;
 
       # Disables ligatures
