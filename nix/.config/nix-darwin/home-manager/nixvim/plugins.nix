@@ -270,5 +270,45 @@
         };
       };
     };
+    tmux-navigator = {
+      enable = true;
+      settings = {
+        no_mappings = 1;
+      };
+      keymaps = [
+        {
+          action = "left";
+          key = "<M-h>";
+          options = {
+            silent = true;
+            desc = "Navigate left";
+          };
+        }
+        {
+          action = "down";
+          key = "<M-j>";
+          options = {
+            silent = true;
+            desc = "Navigate down";
+          };
+        }
+        {
+          action = "up";
+          key = "<M-k>";
+          options = {
+            silent = true;
+            desc = "Navigate up";
+          };
+        }
+        {
+          action = "right";
+          key = "<M-l>";
+          options = {
+            silent = true;
+            desc = "Navigate right";
+          };
+        }
+      ];
+    };
   };
 }
