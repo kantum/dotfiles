@@ -19,6 +19,7 @@
   bas (layer-switch base)
   ret (tap-hold $tap-repress-timeout $hold-timeout ret (layer-while-held symbols))
   bspc (tap-hold $tap-repress-timeout $hold-timeout bspc (layer-while-held symbols))
+  cts  (layer-while-held controls)
 
   z   (tap-hold $tap-repress-timeout $hold-timeout z lsft)
   6   (tap-hold $tap-repress-timeout $hold-timeout 6 lsft)
@@ -36,16 +37,17 @@
 
   j   (tap-hold $tap-repress-timeout $hold-timeout j rsft)
 
-  k   (tap-hold $tap-repress-timeout $hold-timeout k rmet)
-  `   (tap-hold $tap-repress-timeout $hold-timeout ` rmet)
+  k   (tap-hold $tap-repress-timeout $hold-timeout k   rmet)
+  S-[ (tap-hold $tap-repress-timeout $hold-timeout S-[ rmet)
 
   l   (tap-hold $tap-repress-timeout $hold-timeout l   lalt)
-  [   (tap-hold $tap-repress-timeout $hold-timeout [ lalt)
+  S-] (tap-hold $tap-repress-timeout $hold-timeout S-] lalt)
 
   ;   (tap-hold $tap-repress-timeout $hold-timeout ; rctl)
-  ]   (tap-hold $tap-repress-timeout $hold-timeout ] rctl)
+  `   (tap-hold $tap-repress-timeout $hold-timeout ` rctl)
 
   /   (tap-hold $tap-repress-timeout $hold-timeout / lsft)
+  S-`   (tap-hold $tap-repress-timeout $hold-timeout S-` lsft)
 )
 
 ;; Emacs-style cursor movement
@@ -83,8 +85,8 @@
   @esc 🔅   🔆   @mc  @sls f5   f6   ◀◀   ▶⏸   ▶▶   🔇   🔉   🔊
   grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
   tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
-  lctrl a    s    d    f    g    h    j    k    l    ;    '    ret
-  lsft z    x    c    v    b    n    m    ,    .    /    rsft
+  lctrl @a    @s    @d    f    g    h    j    @k    @l    @;    '    ret
+  lsft  @z    x     c     v    b    n    m    ,    .      @/    rsft
   fn lctl lalt lmet           spc            rmet ralt
 )
 
@@ -93,25 +95,25 @@
   tab   q    w    e    r    t    y    u    i    o    p    esc    @err    @err
   lctrl @a   @s   @d   f    g    h    j    @k   @l   @;   '    @err @err
   lsft  @z   x    c    v    b    n    m    ,    .    @/   rsft @err
-  @err  @err @err @err @bspc spc @ret @err @err @err @err @err
-  fn    @err @err  @bspc          spc           @ret @err
+  @err  @err @err @cts @bspc spc @ret @err @err @err @err @err
+  fn    @err @cts  @bspc          spc           @ret @err
 )
 
 (deflayer symbols
   @esc  🔅   🔆   @mc  @sls f5   f6   ◀◀   ▶⏸   ▶▶   🔇   🔉   🔊
-  tab   S-1  S-2  S-3  S-4  S-5  S-6  S-7  S-8  S-9  S-0  @err    @err    @err
-  lctrl @1    @2    @3    4    5    -    =    @`    @[    @]    -    @err @err
-  lsft  @6    7    8    9    0    S--  S-=    -     -    - rsft @err
+  tab   1    2    3    4    5    6    7    8    9    0    @err @err    @err
+  lctrl _    _    _    _    _    -    =    @S-[ @S-] @`   @err @err @err
+  lsft  _    _    _    _    _    S--  S-=  [    ]    @S-`  rsft @err
   @err  @err @err @err @bspc spc @ret @err @err @err @err @err
   fn    @err @err  @bspc          spc            @ret @err
 )
 
-(deflayer arrows
+(deflayer controls
   @esc  🔅   🔆   @mc  @sls f5   f6   ◀◀   ▶⏸   ▶▶   🔇   🔉   🔊
   _    f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12  _
-  _    _    _    _    _    _    C-S-tab pgup up pgdn C-tab _  _    _
-  _    _    _    _    _    _    home left down rght end  _    _
-  _    _    _    _    _    _    _    _    C-w  _    _    _
+  _    _    _    _    _    _    left down up   rght _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _
   _    _    _              _              _    _    _
 )
 
