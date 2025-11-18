@@ -1,26 +1,51 @@
 (defcfg
-  process-unmapped-keys true
+  process-unmapped-keys false
   danger-enable-cmd yes
 )
 
 (defvar
   tap-repress-timeout 200
   hold-timeout 160
+
 )
 
 (defalias
   err (cmd "play" "-q" "/System/Library/Sounds/Basso.aiff" "trim" "0" "0.1")
 
-  z (tap-hold $tap-repress-timeout $hold-timeout z lsft)
-  a (tap-hold $tap-repress-timeout $hold-timeout a lctl)
-  s (tap-hold $tap-repress-timeout $hold-timeout s lalt)
-  d (tap-hold $tap-repress-timeout $hold-timeout d lmet)
-  f (tap-hold $tap-repress-timeout $hold-timeout f lsft)
-  j (tap-hold $tap-repress-timeout $hold-timeout j rsft)
-  k (tap-hold $tap-repress-timeout $hold-timeout k rmet)
-  l (tap-hold $tap-repress-timeout $hold-timeout l lalt)
-  ; (tap-hold $tap-repress-timeout $hold-timeout ; rctl)
-  / (tap-hold $tap-repress-timeout $hold-timeout / lsft)
+  mc  C-up ;; Mission Control
+  sls M-spc ;; Spotlight Search
+  esc (tap-hold 200 200 esc (layer-while-held layers))
+  ori (layer-switch original)
+  bas (layer-switch base)
+  ret (tap-hold $tap-repress-timeout $hold-timeout ret (layer-while-held symbols))
+  bspc (tap-hold $tap-repress-timeout $hold-timeout bspc (layer-while-held symbols))
+
+  z   (tap-hold $tap-repress-timeout $hold-timeout z lsft)
+  6   (tap-hold $tap-repress-timeout $hold-timeout 6 lsft)
+
+  a   (tap-hold $tap-repress-timeout $hold-timeout a lctl)
+  1   (tap-hold $tap-repress-timeout $hold-timeout 1 lctl)
+
+  s   (tap-hold $tap-repress-timeout $hold-timeout s lalt)
+  2   (tap-hold $tap-repress-timeout $hold-timeout 2 lalt)
+
+  d   (tap-hold $tap-repress-timeout $hold-timeout d lmet)
+  3   (tap-hold $tap-repress-timeout $hold-timeout 3 lmet)
+
+  f   (tap-hold $tap-repress-timeout $hold-timeout f lsft)
+
+  j   (tap-hold $tap-repress-timeout $hold-timeout j rsft)
+
+  k   (tap-hold $tap-repress-timeout $hold-timeout k rmet)
+  `   (tap-hold $tap-repress-timeout $hold-timeout ` rmet)
+
+  l   (tap-hold $tap-repress-timeout $hold-timeout l   lalt)
+  [   (tap-hold $tap-repress-timeout $hold-timeout [ lalt)
+
+  ;   (tap-hold $tap-repress-timeout $hold-timeout ; rctl)
+  ]   (tap-hold $tap-repress-timeout $hold-timeout ] rctl)
+
+  /   (tap-hold $tap-repress-timeout $hold-timeout / lsft)
 )
 
 ;; Emacs-style cursor movement
@@ -31,12 +56,12 @@
   (lctrl p) (up)
   (rctrl p) (up)
 
-  (lctrl m) (ret)
-  (rctrl m) (ret)
+  ;; (lctrl m) (ret)
+  ;; (rctrl m) (ret)
 
-  (lctrl h) (bspc)
-  (rctrl h) (bspc)
-  (lctrl [) (esc)
+  ;; (lctrl h) (bspc)
+  ;; (rctrl h) (bspc)
+  ;; (lctrl [) (esc)
 
   ;; does not work in terminal or conflict with vim
   ;; (lctrl d) (del)
@@ -46,6 +71,7 @@
 )
 
 (defsrc
+  esc   f1    f2    f3    f4    f5    f6    f7    f8    f9    f10   f11   f12
   grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
   tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
   caps a    s    d    f    g    h    j    k    l    ;    '    ret
@@ -53,10 +79,47 @@
   fn lctl lalt lmet           spc            rmet ralt
 )
 
+(deflayer original
+  @esc 🔅   🔆   @mc  @sls f5   f6   ◀◀   ▶⏸   ▶▶   🔇   🔉   🔊
+  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
+  lctrl a    s    d    f    g    h    j    k    l    ;    '    ret
+  lsft z    x    c    v    b    n    m    ,    .    /    rsft
+  fn lctl lalt lmet           spc            rmet ralt
+)
+
 (deflayer base
-  grv   1    2    3    4    5    6    7    8    9    0    -    =    bspc
-  tab   q    w    e    r    t    y    u    i    o    p    [    ]    \
-  lctrl @a   @s   @d   @f   g    h    @j   @k   @l   @;   '    ret
-  lsft  @z   x    c    v    b    n    m    ,    .    @/    rsft
-  fn    @err @err  bspc          spc            ret @err
+  @esc  🔅   🔆   @mc  @sls f5   f6   ◀◀   ▶⏸   ▶▶   🔇   🔉   🔊
+  tab   q    w    e    r    t    y    u    i    o    p    esc    @err    @err
+  lctrl @a   @s   @d   f    g    h    j    @k   @l   @;   '    @err @err
+  lsft  @z   x    c    v    b    n    m    ,    .    @/   rsft @err
+  @err  @err @err @err @bspc spc @ret @err @err @err @err @err
+  fn    @err @err  @bspc          spc           @ret @err
+)
+
+(deflayer symbols
+  @esc  🔅   🔆   @mc  @sls f5   f6   ◀◀   ▶⏸   ▶▶   🔇   🔉   🔊
+  tab   S-1  S-2  S-3  S-4  S-5  S-6  S-7  S-8  S-9  S-0  @err    @err    @err
+  lctrl @1    @2    @3    4    5    -    =    @`    @[    @]    -    @err @err
+  lsft  @6    7    8    9    0    S--  S-=    -     -    - rsft @err
+  @err  @err @err @err @bspc spc @ret @err @err @err @err @err
+  fn    @err @err  @bspc          spc            @ret @err
+)
+
+(deflayer arrows
+  @esc  🔅   🔆   @mc  @sls f5   f6   ◀◀   ▶⏸   ▶▶   🔇   🔉   🔊
+  _    f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12  _
+  _    _    _    _    _    _    C-S-tab pgup up pgdn C-tab _  _    _
+  _    _    _    _    _    _    home left down rght end  _    _
+  _    _    _    _    _    _    _    _    C-w  _    _    _
+  _    _    _              _              _    _    _
+)
+
+(deflayer layers
+  _     @bas  @ori  _     _     _     _     _     _     _     _     _     _
+  _     _     _     _     _     _     _     _     _     _     _     _     _  _
+  _     _     _     _     _     _     _     _     _     _     _     _     _  _
+  _     _     _     _     _     _     _     _     _     _     _     _     _
+  _     _     _     _     _     _     _     _     _     _     _     _
+  _     _     _     _                   _               _     _
 )
