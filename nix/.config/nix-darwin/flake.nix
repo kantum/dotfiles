@@ -71,7 +71,6 @@
         builtins.elem (pkgs.lib.getName pkg) [
           "obsidian"
           "claude-code"
-          "languagetool"
           "firefox-bin-unwrapped"
           "firefox-bin"
           "github-copilot-cli"
