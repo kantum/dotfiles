@@ -1,6 +1,9 @@
 (defcfg
   process-unmapped-keys false
   danger-enable-cmd yes
+    macos-dev-names-exclude (
+    "Corne"
+  )
 )
 
 (defvar
@@ -94,15 +97,15 @@
   @esc 🔅   🔆   @mc  @sls f5   f6   ◀◀   ▶⏸   ▶▶   🔇   🔉   🔊
   grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
   tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
-  lctrl @a    @s    @d    f    g    h    j    @k    @l    @;    '    ret
-  lsft  @z    x     c     v    b    n    m    ,    .      @/    rsft
+  lctrl a    s   d    f    g    h    j    k    l    ;    '    ret
+  lsft  z    x   c    v    b    n    m    ,    .     /   rsft
   fn lctl lalt lmet           spc            rmet ralt
 )
 
 (deflayer symbols
   @esc  🔅   🔆   @mc  @sls f5   f6   ◀◀   ▶⏸   ▶▶   🔇   🔉   🔊
   tab   1    2    3    4    5    6    7    8    9    0    @err @err    @err
-  lctrl _    _    _    _    _    -    =    @S-[ @S-] @`   @err @err @err
+  lctrl _    _    _    _    _    -    =    @S-[ @S-] @`   \    @err @err
   lsft  _    _    _    _    _    S--  S-=  [    ]    @S-`  rsft @err
   @err  @err @err @err @bspc spc @ret @err @err @err @err @err
   fn    @err @err  @bspc          spc            @ret @err
