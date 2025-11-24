@@ -264,6 +264,10 @@
       mode = "n";
       key = "<CR>";
       action = "za";
+      options = {
+        desc = "Toggle folds in current buffer";
+        buffer = true;
+      };
     }
   ];
 }

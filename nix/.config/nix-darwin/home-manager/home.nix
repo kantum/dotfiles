@@ -244,6 +244,7 @@
     escapeTime = 10;
     mouse = true;
     historyLimit = 50000;
+    focusEvents = true;
 
     plugins = with pkgs.tmuxPlugins; [
       {
