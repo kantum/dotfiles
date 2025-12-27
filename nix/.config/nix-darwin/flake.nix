@@ -8,6 +8,10 @@
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    nix-rosetta-builder = {
+      url = "github:cpick/nix-rosetta-builder";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nixvim = {
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -21,6 +25,7 @@
     nixpkgs-stable,
     home-manager,
     nixvim,
+    nix-rosetta-builder,
   }: let
     pkgs-stable = import nixpkgs-stable {
       system = "aarch64-darwin";
@@ -31,9 +36,11 @@
 
       # List packages installed in system profile. To search by name, run:
       # $ nix-env -qaP | grep wget
-      environment.systemPackages = [
-        pkgs.vim
-        pkgs.sox
+      environment.systemPackages = with pkgs; [
+        vim
+        sox
+        curl
+        utm
       ];
 
       users.users.kantum.home = "/Users/kantum";
@@ -74,6 +81,7 @@
           "firefox-bin-unwrapped"
           "firefox-bin"
           "github-copilot-cli"
+          "calibre"
         ];
 
       # services.karabiner-elements.enable = true; # not working yet, need manual install. https://github.com/nix-darwin/nix-darwin/pull/1595
@@ -113,7 +121,22 @@
             };
             users.kantum = import ./home-manager/home.nix;
           };
+          #home-manager.users.kantum = import inputs.home-config;
+
+          # Optionally, use home-manager.extraSpecialArgs to pass
+          # arguments to home.nix
         }
+        # An existing Linux builder is needed to initially bootstrap `nix-rosetta-builder`.
+        # If one isn't already available: comment out the `nix-rosetta-builder` module below,
+        # uncomment this `linux-builder` module, and run `darwin-rebuild switch`:
+        #{nix.linux-builder.enable = true;}
+        # Then: uncomment `nix-rosetta-builder`, remove `linux-builder`, and `darwin-rebuild switch`
+        # a second time. Subsequently, `nix-rosetta-builder` can rebuild itself.
+        # nix-rosetta-builder.darwinModules.default.
+        # {
+        #   # see available options in module.nix's `options.nix-rosetta-builder`
+        #   nix-rosetta-builder.onDemand = true;
+        # }
       ];
     };
   };

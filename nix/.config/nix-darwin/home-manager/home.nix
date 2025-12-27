@@ -87,6 +87,8 @@
     affine
     github-copilot-cli
     libreoffice-bin
+    libation
+    uv
   ];
 
   home.file = {
@@ -317,7 +319,14 @@
     enable = true;
     launchd.enable = true;
     userSettings = {
-      # default-root-container-layout = "accordion";
+      gaps = {
+        inner.horizontal = 4;
+        inner.vertical = 4;
+        outer.left = 4;
+        outer.bottom = 4;
+        outer.top = 4;
+        outer.right = 4;
+      };
       start-at-login = true;
       mode.main.binding = {
         cmd-alt-slash = "layout tiles horizontal vertical";
