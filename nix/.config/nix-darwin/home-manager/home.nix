@@ -212,7 +212,7 @@
       PATH=$HOME/go/bin:$PATH
       [ -f $HOME/.zshrc.local ] && source $HOME/.zshrc.local
       if command -v tmux >/dev/null 2>&1; then
-        if [ -z "$TMUX" ]; then
+        if [ -z "$TMUX" ] && [ "$TERM_PROGRAM" != "vscode" ]; then
           tmux a || tmux || printf "tmux failed to launch\n"
         fi
       fi
