@@ -1,5 +1,5 @@
 (defcfg
-  process-unmapped-keys false
+  process-unmapped-keys yes
   danger-enable-cmd yes
     macos-dev-names-exclude (
     "Corne"
@@ -9,7 +9,6 @@
 (defvar
   tap-repress-timeout 200
   hold-timeout 160
-
 )
 
 (defalias
@@ -84,15 +83,6 @@
   fn lctl lalt lmet           spc            rmet ralt
 )
 
-(deflayer base
-  @esc  🔅   🔆   @mc  @sls f5   f6   ◀◀   ▶⏸   ▶▶   🔇   🔉   🔊
-  tab   q    w    e    r    t    y    u    i    o    p    esc    @err    @err
-  lctrl @a   @s   @d   f    g    h    j    @k   @l   @;   '    @err @err
-  lsft  @z   x    c    v    b    n    m    ,    .    @/   rsft @err
-  @err  @err @err @cts @bspc spc @ret @err @err @err @err @err
-  fn    @err @cts  @bspc          spc           @ret @err
-)
-
 (deflayer original
   @esc  🔅   🔆   @mc  @sls f5   f6   ◀◀   ▶⏸   ▶▶   🔇   🔉   🔊
   grv   1    2    3    4    5    6    7    8    9    0    -    =    bspc
@@ -100,6 +90,15 @@
   lctrl @a   @s   @d   @f   g    h    @j   @k   @l   @;    '    ret
   lsft  z    x   c    v    b    n    m    ,    .     /   rsft
   fn lctl lalt lmet           spc            rmet ralt
+)
+
+(deflayer base
+  @esc  🔅   🔆   @mc  @sls f5   f6   ◀◀   ▶⏸   ▶▶   🔇   🔉   🔊
+  tab   q    w    e    r    t    y    u    i    o    p    esc    @err    @err
+  lctrl @a   @s   @d   f    g    h    j    @k   @l   @;   '    @err @err
+  lsft  @z   x    c    v    b    n    m    ,    .    @/   rsft @err
+  @err  @err @err @cts @bspc spc @ret @err @err @err @err @err
+  fn    @err @cts  @bspc          spc           @ret @err
 )
 
 (deflayer symbols
