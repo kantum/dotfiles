@@ -31,112 +31,95 @@
     {
       key = "<leader>e";
       mode = "n";
-      action = "vim.diagnostic.open_float";
-      lua = true;
+      action.__raw = "vim.diagnostic.open_float";
     }
     {
       key = "[d";
       mode = "n";
-      action = "vim.diagnostic.goto_prev";
-      lua = true;
+      action.__raw = "vim.diagnostic.goto_prev";
     }
     {
       key = "]d";
       mode = "n";
-      action = "vim.diagnostic.goto_next";
-      lua = true;
+      action.__raw = "vim.diagnostic.goto_next";
     }
     {
       key = "<leader>q";
       mode = "n";
-      action = "vim.diagnostic.setloclist";
-      lua = true;
+      action.__raw = "vim.diagnostic.setloclist";
     }
     {
       mode = "n";
       key = "gD";
-      action = "vim.lsp.buf.declaration";
-      lua = true;
+      action.__raw = "vim.lsp.buf.declaration";
     }
     {
       mode = "n";
       key = "gd";
-      action = "vim.lsp.buf.definition";
-      lua = true;
+      action.__raw = "vim.lsp.buf.definition";
     }
     {
       mode = "n";
       key = "K";
-      action = "vim.lsp.buf.hover";
-      lua = true;
+      action.__raw = "vim.lsp.buf.hover";
     }
     {
       mode = "n";
       key = "gi";
-      action = "vim.lsp.buf.implementation";
-      lua = true;
+      action.__raw = "vim.lsp.buf.implementation";
     }
     {
       mode = "n";
       key = "<C-k>";
-      action = "vim.lsp.buf.signature_help";
-      lua = true;
+      action.__raw = "vim.lsp.buf.signature_help";
     }
     {
       mode = "n";
       key = "<leader>wa";
-      action = "vim.lsp.buf.add_workspace_folder";
-      lua = true;
+      action.__raw = "vim.lsp.buf.add_workspace_folder";
     }
     {
       mode = "n";
       key = "<leader>wr";
-      action = "vim.lsp.buf.remove_workspace_folder";
-      lua = true;
+      action.__raw = "vim.lsp.buf.remove_workspace_folder";
     }
     {
       mode = "n";
       key = "<leader>wl";
-      action = ''
+      action.__raw = ''
         function()
           print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
         end
       '';
-      lua = true;
     }
     {
       mode = "n";
       key = "<leader>D";
-      action = "vim.lsp.buf.type_definition";
-      lua = true;
+      action.__raw = "vim.lsp.buf.type_definition";
     }
     {
       mode = "n";
       key = "<leader>rn";
-      action = "vim.lsp.buf.rename";
-      lua = true;
+      action.__raw = "vim.lsp.buf.rename";
     }
     {
       mode = ["n" "v"];
       key = "<leader>ca";
-      action = "vim.lsp.buf.code_action";
-      lua = true;
+      action.__raw = "vim.lsp.buf.code_action";
     }
     {
       mode = "n";
       key = "gr";
-      action = "vim.lsp.buf.references";
-      lua = true;
+      action.__raw = "vim.lsp.buf.references";
     }
     {
       mode = "n";
       key = "<leader>f";
-      action = ''
+      action.__raw = ''
         function()
           vim.lsp.buf.format({ async = true })
         end
       '';
-      lua = true;
     }
 
     # Git

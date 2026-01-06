@@ -3,6 +3,7 @@
   pkgs,
   nixvim,
   pkgs-stable,
+  opencode,
   ...
 }: {
   imports = [
@@ -14,82 +15,85 @@
 
   home.stateVersion = "24.11"; # Please read the comment before changing.
 
-  home.packages = with pkgs; [
-    android-tools
-    python312Packages.flask
-    pipenv
-    scrcpy
-    awscli2
-    ext4fuse
-    bottom
-    btop
-    cmatrix
-    convco # conventionnal commits
-    corepack
-    dbeaver-bin
-    dive # docker image explorer
-    duf # disk usage
-    dust # disk usage
-    elixir_1_18
-    fd
-    # flyctl
-    geany
-    gh
-    git
-    git-lfs
-    git-filter-repo
-    glab
-    gnupg
-    go
-    grpcurl
-    htop
-    imagemagick
-    jq
-    lexical
-    lua
-    luarocks
-    monitorcontrol # Control your display's brightness & volume on your Mac as if it was a native Apple Display.
-    ncdu # disk usage
-    neofetch
-    nh # Nix helper
-    nixos-shell
-    nmap
-    nodejs_24
-    obsidian
-    ocaml
-    ocamlPackages.batteries
-    ocamlPackages.findlib
-    ollama
-    openssl
-    pinentry-curses
-    pkg-config
-    platformio # https://github.com/NixOS/nixpkgs/pull/258358
-    portaudio
-    postgresql
-    qemu # Emulator
-    ripgrep
-    rustup
-    shellcheck
-    stow
-    texliveFull
-    tree
-    tui-journal
-    vlc-bin
-    watch
-    wget
-    xh # better curl (http command)
-    yt-dlp
-    zstd # compression
-    claude-code
-    claude-code-router
-    opencode
-    catimg
-    affine
-    github-copilot-cli
-    libreoffice-bin
-    libation
-    uv
-  ];
+  home.packages = with pkgs;
+    [
+      android-tools
+      python312Packages.flask
+      pipenv
+      scrcpy
+      awscli2
+      ext4fuse
+      bottom
+      btop
+      cmatrix
+      convco # conventionnal commits
+      dbeaver-bin
+      dive # docker image explorer
+      duf # disk usage
+      dust # disk usage
+      elixir_1_18
+      fd
+      # flyctl
+      geany
+      gh
+      git
+      git-lfs
+      git-filter-repo
+      glab
+      gnupg
+      go
+      grpcurl
+      htop
+      imagemagick
+      jq
+      lexical
+      lua
+      luarocks
+      monitorcontrol # Control your display's brightness & volume on your Mac as if it was a native Apple Display.
+      ncdu # disk usage
+      neofetch
+      nh # Nix helper
+      nixos-shell
+      nmap
+      nodejs_24
+      obsidian
+      ocaml
+      ocamlPackages.batteries
+      ocamlPackages.findlib
+      ollama
+      openssl
+      pinentry-curses
+      pkg-config
+      platformio # https://github.com/NixOS/nixpkgs/pull/258358
+      portaudio
+      postgresql
+      qemu # Emulator
+      ripgrep
+      rustup
+      shellcheck
+      stow
+      texliveFull
+      tree
+      tui-journal
+      vlc-bin
+      watch
+      wget
+      xh # better curl (http command)
+      yt-dlp
+      zstd # compression
+      claude-code
+      claude-code-router
+      # opencode
+      catimg
+      affine
+      github-copilot-cli
+      libreoffice-bin
+      uv
+      opencode.packages.${pkgs.system}.default
+    ]
+    ++ [
+      pkgs-stable.libation
+    ];
 
   home.file = {
     # # Building this configuration will create a copy of 'dotfiles/screenrc' in
@@ -318,7 +322,7 @@
   programs.aerospace = {
     enable = true;
     launchd.enable = true;
-    userSettings = {
+    settings = {
       gaps = {
         inner.horizontal = 4;
         inner.vertical = 4;

@@ -16,6 +16,7 @@
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    opencode.url = "github:anomalyco/opencode";
   };
 
   outputs = inputs @ {
@@ -25,6 +26,7 @@
     nixpkgs-stable,
     home-manager,
     nixvim,
+    opencode,
     nix-rosetta-builder,
   }: let
     pkgs-stable = import nixpkgs-stable {
@@ -117,7 +119,7 @@
           home-manager.useUserPackages = true;
           home-manager = {
             extraSpecialArgs = {
-              inherit nixvim pkgs-stable;
+              inherit nixvim pkgs-stable opencode;
             };
             users.kantum = import ./home-manager/home.nix;
           };
