@@ -13,10 +13,15 @@
 
 (defalias
   err (cmd "play" "-q" "/System/Library/Sounds/Basso.aiff" "trim" "0" "0.1")
+  warn-ret (multi ret @err)
+  warn-bspc (multi bspc @err)
+  warn-esc (multi esc @err)
+  warn-sft (multi lsft @err)
 
   mc  C-up ;; Mission Control
   sls M-spc ;; Spotlight Search
   esc (tap-hold 200 200 esc (layer-while-held layers))
+  sun (tap-hold 200 200 🔅 (layer-while-held layers))
   ori (layer-switch original)
   bas (layer-switch base)
   ret (tap-hold $tap-repress-timeout $hold-timeout ret (layer-while-held symbols))
@@ -60,12 +65,14 @@
   (lctrl p) (up)
   (rctrl p) (up)
 
-  ;; (lctrl m) (ret)
-  ;; (rctrl m) (ret)
+  (lctrl m) (ret)
+  (rctrl m) (ret)
 
-  ;; (lctrl h) (bspc)
-  ;; (rctrl h) (bspc)
-  ;; (lctrl [) (esc)
+  (lctrl [) (esc)
+  (rctrl [) (esc)
+
+  (lctrl h) (bspc)
+  (rctrl h) (bspc)
 
   ;; does not work in terminal or conflict with vim
   ;; (lctrl d) (del)
@@ -84,11 +91,11 @@
 )
 
 (deflayer original
-  @esc  🔅   🔆   @mc  @sls f5   f6   ◀◀   ▶⏸   ▶▶   🔇   🔉   🔊
-  grv   1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  @warn-esc  @sun 🔆   @mc  @sls f5   f6   ◀◀   ▶⏸   ▶▶   🔇   🔉   🔊
+  grv   1    2    3    4    5    6    7    8    9    0    -    =    @warn-bspc
   tab   q    w    e    r    t    y    u    i    o    p    [    ]    \
-  lctrl @a   @s   @d   @f   g    h    @j   @k   @l   @;    '    ret
-  lsft  z    x   c    v    b    n    m    ,    .     /   rsft
+  lctrl @a   @s   @d   @f   g    h    @j   @k   @l   @;    '    @warn-ret
+  @warn-sft  z    x   c    v    b    n    m    ,    .     /   @warn-sft
   fn lctl lalt lmet           spc            rmet ralt
 )
 
