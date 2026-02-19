@@ -69,6 +69,7 @@
       postgresql
       qemu # Emulator
       ripgrep
+      lnav
       rustup
       shellcheck
       stow
@@ -90,6 +91,7 @@
       libreoffice-bin
       uv
       opencode.packages.${pkgs.system}.default
+      # penpot-desktop
     ]
     ++ [
       pkgs-stable.libation
@@ -139,6 +141,7 @@
       theme = "dark:Catppuccin Mocha,light:Catppuccin Latte";
       window-theme = "auto";
       window-decoration = "none";
+      bell-features = "system,attention,audio,title";
       fullscreen = true;
       macos-option-as-alt = true;
 
@@ -183,6 +186,15 @@
       status_reset_item: Some(( code: Char('U'), modifiers: "SHIFT")),
       )
     '';
+  };
+
+  programs.git = {
+    enable = true;
+    extraConfig = {
+      diff.tool = "nvimdiff";
+      merge.tool = "nvimdiff";
+      difftool.prompt = false;
+    };
   };
 
   programs.zsh = {

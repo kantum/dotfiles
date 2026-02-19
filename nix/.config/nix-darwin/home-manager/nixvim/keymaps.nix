@@ -252,5 +252,11 @@
         buffer = true;
       };
     }
+    # Neotree
+    {
+      mode = "n";
+      key = "<leader>l";
+      action = "<CMD>Neotree toggle<CR>";
+    }
   ];
 }

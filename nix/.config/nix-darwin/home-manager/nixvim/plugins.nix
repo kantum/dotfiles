@@ -47,6 +47,7 @@
       };
     };
     oil-git-status.enable = true;
+    neo-tree.enable = true;
     copilot-lua = {
       enable = true;
       autoLoad = true;
