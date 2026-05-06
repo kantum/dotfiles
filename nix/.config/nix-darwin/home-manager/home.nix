@@ -92,6 +92,9 @@
       uv
       opencode.packages.${pkgs.system}.default
       # penpot-desktop
+      # nvim checkhealth
+      pngpaste
+      tree-sitter
     ]
     ++ [
       pkgs-stable.libation
