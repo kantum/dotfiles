@@ -9,19 +9,7 @@
       action = ":set cursorline! cursorcolumn!<cr>";
     }
     {
-      mode = "n";
-      key = "<C-S>";
-      action = ":update<CR>";
-      options.silent = true;
-    }
-    {
-      mode = "v";
-      key = "<C-S>";
-      action = "<C-C>:update<CR>";
-      options.silent = true;
-    }
-    {
-      mode = "i";
+      mode = ["n" "i" "v"];
       key = "<C-S>";
       action = "<Esc>:update<CR>";
       options.silent = true;
