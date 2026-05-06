@@ -203,7 +203,7 @@
 
   programs.git = {
     enable = true;
-    extraConfig = {
+    settings = {
       diff.tool = "nvimdiff";
       merge.tool = "nvimdiff";
       difftool.prompt = false;
