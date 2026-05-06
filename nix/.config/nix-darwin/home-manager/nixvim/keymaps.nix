@@ -15,26 +15,26 @@
       options.silent = true;
     }
     {
-      mode = ["n" "i" "v"];
+      mode = ["n" "v"];
       key = "<leader>+w";
       action = "<Esc>:tabc<CR>";
       options.silent = true;
     }
     {
-      mode = ["n" "i" "v"];
+      mode = ["n" "v"];
       key = "<leader>+t";
       action = "<Esc>:tabnew<CR>";
       options.silent = true;
     }
     {
-      mode = ["n" "i" "v"];
+      mode = ["n" "v"];
       key = "<leader>+{";
 
       action = "<Esc>:tabprevious<CR>";
       options.silent = true;
     }
     {
-      mode = ["n" "i" "v"];
+      mode = ["n" "v"];
       key = "<leader>+}";
       action = "<Esc>:tabnext<CR>";
       options.silent = true;
@@ -137,7 +137,12 @@
 
     # Git
     {
-      mode = "n";
+      mode = ["n" "v"];
+      key = "<leader>gs";
+      action = "<CMD>Git<CR>";
+    }
+    {
+      mode = ["n" "v"];
       key = "<leader>gd";
       action.__raw = ''
         function()

@@ -152,15 +152,10 @@
       font-feature = ["-liga" "-dlig" "-calt"];
 
       keybind = [
-        # cmd-s is ctr-s
-        "super+s=text:\\x13"
-        # cmd-w is space,+,w
+        "super+s=text:\\x13" # ctrl-s
         "super+w=text: +w"
-        # cmd-t is space,+,t
         "super+t=text: +t"
-        # cmd-{ is space,+,{
         "super+shift+[=text: +{"
-        # cmd-} is space,+,}
         "super+shift+]=text: +}"
       ];
     };
