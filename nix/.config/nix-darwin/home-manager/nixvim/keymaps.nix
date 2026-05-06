@@ -14,6 +14,31 @@
       action = "<Esc>:update<CR>";
       options.silent = true;
     }
+    {
+      mode = ["n" "i" "v"];
+      key = "<leader>+w";
+      action = "<Esc>:tabc<CR>";
+      options.silent = true;
+    }
+    {
+      mode = ["n" "i" "v"];
+      key = "<leader>+t";
+      action = "<Esc>:tabnew<CR>";
+      options.silent = true;
+    }
+    {
+      mode = ["n" "i" "v"];
+      key = "<leader>+{";
+
+      action = "<Esc>:tabprevious<CR>";
+      options.silent = true;
+    }
+    {
+      mode = ["n" "i" "v"];
+      key = "<leader>+}";
+      action = "<Esc>:tabnext<CR>";
+      options.silent = true;
+    }
 
     # Lsp
     {

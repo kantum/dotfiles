@@ -148,8 +148,18 @@
       # Disables ligatures
       font-feature = ["-liga" "-dlig" "-calt"];
 
-      # cmd-s is ctr-s
-      keybind = "super+s=text:\\x13";
+      keybind = [
+        # cmd-s is ctr-s
+        "super+s=text:\\x13"
+        # cmd-w is space,+,w
+        "super+w=text: +w"
+        # cmd-t is space,+,t
+        "super+t=text: +t"
+        # cmd-{ is space,+,{
+        "super+shift+[=text: +{"
+        # cmd-} is space,+,}
+        "super+shift+]=text: +}"
+      ];
     };
   };
 
