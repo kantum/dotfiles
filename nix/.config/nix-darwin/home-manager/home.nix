@@ -46,12 +46,11 @@
       htop
       imagemagick
       jq
-      lexical
       lua
       luarocks
       monitorcontrol # Control your display's brightness & volume on your Mac as if it was a native Apple Display.
       ncdu # disk usage
-      neofetch
+      fastfetch
       nh # Nix helper
       nixos-shell
       nmap
@@ -71,6 +70,7 @@
       ripgrep
       lnav
       rustup
+      beam28Packages.expert
       shellcheck
       stow
       texliveFull
@@ -154,7 +154,7 @@
   };
 
   programs.zathura = {
-    enable = true;
+    enable = false; # Not building anymore
     extraConfig = ''
       set recolor true
       set recolor-darkcolor "#dcdccc"

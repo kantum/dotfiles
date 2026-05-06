@@ -76,17 +76,10 @@
       enable = true;
       servers = {
         lua_ls.enable = true;
-
-        elixirls = {
+        expert = {
           enable = true;
-          settings = {
-            activate = true;
-          };
+          package = pkgs.beam28Packages.expert;
         };
-        # expert = {
-        #   enable = true;
-        #   package = ~/git/expert;
-        # };
       };
     };
 
