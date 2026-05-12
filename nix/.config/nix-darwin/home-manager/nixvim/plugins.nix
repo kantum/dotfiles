@@ -148,6 +148,7 @@
           lua = ["stylua"];
           rust = ["rustfmt"];
           nix = ["alejandra"];
+          tex = ["latexindent"];
           # elixir = ["mix"];
           # heex = ["mix"];
           javascript = ["prettier"];
