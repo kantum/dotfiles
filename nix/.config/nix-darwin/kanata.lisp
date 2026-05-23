@@ -21,9 +21,11 @@
   mc  C-up ;; Mission Control
   sls M-spc ;; Spotlight Search
   esc (tap-hold 200 200 esc (layer-while-held layers))
-  sun (tap-hold 200 200 🔅 (layer-while-held layers))
+  su1 (tap-hold 200 200 🔅 (layer-while-held layers))
+  su2 (tap-hold 200 200 🔆 (layer-while-held layers))
   ori (layer-switch original)
   bas (layer-switch base)
+  gam (layer-switch game)
   ret (tap-hold $tap-repress-timeout $hold-timeout ret (layer-while-held symbols))
   bspc (tap-hold $tap-repress-timeout $hold-timeout bspc (layer-while-held symbols))
   cts  (layer-while-held controls)
@@ -91,10 +93,19 @@
 )
 
 (deflayer original
-  @esc  @sun 🔆   @mc  @sls f5   f6   ◀◀   ▶⏸   ▶▶   🔇   🔉   🔊
+  @esc  🔅   🔆   @mc  @sls f5   f6   ◀◀   ▶⏸   ▶▶   🔇   🔉   🔊
   grv   1    2    3    4    5    6    7    8    9    0    -    =    @bspc
   tab   q    w    e    r    t    y    u    i    o    p    [    ]    \
   lctrl @a   @s   @d   @f   g    h    @j   @k   @l   @;    '    ret
+  lsft  z    x   c    v    b    n    m    ,    .     /   rsft
+  fn lctl lalt lmet           spc            rmet ralt
+)
+
+(deflayer game
+  @esc  🔅   🔆   @mc  @sls f5   f6   ◀◀   ▶⏸   ▶▶   🔇   🔉   🔊
+  grv   1    2    3    4    5    6    7    8    9    0    -    =    @bspc
+  tab   q    w    e    r    t    y    u    i    o    p    [    ]    \
+  lctrl  a    s    d    f   g    h     j    k    l    ;    '    ret
   lsft  z    x   c    v    b    n    m    ,    .     /   rsft
   fn lctl lalt lmet           spc            rmet ralt
 )
@@ -127,7 +138,7 @@
 )
 
 (deflayer layers
-  _     @bas  @ori  _     _     _     _     _     _     _     _     _     _
+  _     @bas  @ori  @gam _     _     _     _     _     _     _     _     _
   _     _     _     _     _     _     _     _     _     _     _     _     _  _
   _     _     _     _     _     _     _     _     _     _     _     _     _  _
   _     _     _     _     _     _     _     _     _     _     _     _     _
