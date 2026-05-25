@@ -2,6 +2,7 @@
   config,
   pkgs,
   nixvim,
+  lib,
   pkgs-stable,
   opencode,
   ...
@@ -20,11 +21,13 @@
       android-tools
       python312Packages.flask
       pipenv
+      scala
       scrcpy
       awscli2
       ext4fuse
       bottom
       btop
+
       cmatrix
       convco # conventionnal commits
       dbeaver-bin
@@ -77,6 +80,7 @@
       tree
       tui-journal
       vlc-bin
+      mpv
       watch
       wget
       xh # better curl (http command)
@@ -95,10 +99,18 @@
       # nvim checkhealth
       pngpaste
       tree-sitter
+      thunderbird
     ]
     ++ [
       pkgs-stable.libation
     ];
+
+  # Create a home activation script to apply duti settings
+  home.activation = {
+    setFileAssociation = lib.hm.dag.entryAfter ["writeBoundary"] ''
+      ${pkgs.duti}/bin/duti ~/.duti.conf
+    '';
+  };
 
   home.file = {
     # # Building this configuration will create a copy of 'dotfiles/screenrc' in
@@ -111,6 +123,10 @@
     #   org.gradle.console=verbose
     #   org.gradle.daemon.idletimeout=3600000
     # '';
+
+    ".duti.conf".text = ''
+      org.nixos.thunderbird mailto
+    '';
   };
 
   home.sessionVariables = {
