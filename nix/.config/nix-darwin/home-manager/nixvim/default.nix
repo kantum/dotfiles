@@ -27,7 +27,6 @@
     globals.mapleader = " ";
 
     opts = {
-      background = "dark";
       number = true;
       relativenumber = true;
       ignorecase = true;
