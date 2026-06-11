@@ -57,7 +57,6 @@
 
     extraPlugins = with pkgs.vimPlugins; [
       vim-nix
-      opencode-nvim
     ];
   };
 }

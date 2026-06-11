@@ -16,7 +16,11 @@
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    opencode.url = "github:anomalyco/opencode";
+    opencode = {
+      # url = "github:anomalyco/opencode";
+      url = "github:gigamonster256/opencode"; # Wait for https://github.com/anomalyco/opencode/pull/28479
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs @ {

@@ -276,5 +276,26 @@
       key = "<leader>l";
       action = "<CMD>Neotree toggle<CR>";
     }
+    # Opencode
+    {
+      mode = ["n" "t"];
+      key = "<M-.>";
+      action = "<cmd>lua require('opencode').toggle()<CR>";
+    }
+    {
+      mode = "n";
+      key = "<leader>ao";
+      action = "<cmd>lua require('opencode').ask()<CR>";
+      options = {
+        silent = true;
+        desc = "OpenCode Ask";
+      };
+    }
+    # CodeCompanion
+    {
+      mode = ["n" "v"];
+      key = "<leader>a";
+      action = "<CMD>CodeCompanionChat Toggle<CR>";
+    }
   ];
 }

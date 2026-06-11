@@ -27,7 +27,6 @@
       ext4fuse
       bottom
       btop
-
       cmatrix
       convco # conventionnal commits
       dbeaver-bin
@@ -88,18 +87,19 @@
       zstd # compression
       claude-code
       claude-code-router
-      # opencode
       catimg
       affine
       github-copilot-cli
       libreoffice-bin
       uv
-      opencode.packages.${pkgs.system}.default
-      # penpot-desktop
+      opencode.packages.${stdenv.hostPlatform.system}.default
       # nvim checkhealth
       pngpaste
       tree-sitter
       thunderbird
+      speedtest-cli
+      ghc
+      cabal-install
     ]
     ++ [
       pkgs-stable.libation
@@ -140,9 +140,13 @@
 
     # Enable iex history between sessions
     ERL_AFLAGS = "-kernel shell_history enabled";
-    FLYCTL_INSTALL = "/Users/kantum/.fly";
-    PATH = "$FLYCTL_INSTALL/bin:$PATH";
   };
+
+  home.sessionPath = map (path: "${config.home.homeDirectory}/${path}") [
+    ".fly/bin"
+    ".local/bin"
+    "go/bin"
+  ];
 
   programs.direnv = {
     enable = true;
@@ -249,7 +253,6 @@
       zle -N edit-command-line
       bindkey '^x^e' edit-command-line
       bindkey \^U backward-kill-line
-      PATH=$HOME/go/bin:$PATH
       [ -f $HOME/.zshrc.local ] && source $HOME/.zshrc.local
       if command -v tmux >/dev/null 2>&1; then
         if [ -z "$TMUX" ] && [ "$TERM_PROGRAM" != "vscode" ]; then

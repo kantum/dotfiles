@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  opencode,
+  ...
+}: {
   programs.nixvim.plugins = {
     # Git
     gitsigns = {
@@ -180,10 +184,60 @@
       enable = true;
       keymaps = {
         "<leader>ff" = "find_files";
-        "<leader>fg" = "live_grep";
+        "<leader>fg" = "live_multigrep";
         "<leader>fb" = "buffers";
-        "<leader>fc" = "live_grep cwd=~/git/dotfiles/nix/.config/nix-darwin/home-manager/nixvim";
+        "<leader>fc" = "live_grep cwd=~/git/dotfiles/nix/.config";
       };
+      luaConfig.post = ''
+        local pickers = require("telescope.pickers")
+        local finders = require("telescope.finders")
+        local make_entry = require("telescope.make_entry")
+        local conf = require("telescope.config").values
+
+        local live_multigrep = function(opts)
+          opts = opts or {}
+          opts.cwd = opts.cwd or vim.uv.cwd()
+
+          local finder = finders.new_async_job {
+            command_generator = function(prompt)
+              if not prompt or prompt == "" then
+                return nil
+              end
+
+              local pieces = vim.split(prompt, "  ")
+              local args = { "rg" }
+              if pieces[1] then
+                table.insert(args, "-e")
+                table.insert(args, pieces[1])
+              end
+
+              if pieces[2] then
+                table.insert(args, "-g")
+                table.insert(args, pieces[2])
+              end
+
+              ---@diagnostic disable-next-line: deprecated
+              return vim.tbl_flatten {
+                args,
+                { "--color=never", "--no-heading", "--with-filename", "--line-number", "--column", "--smart-case" },
+              }
+            end,
+            entry_maker = make_entry.gen_from_vimgrep(opts),
+            cwd = opts.cwd,
+          }
+
+          pickers.new(opts, {
+            debounce = 100,
+            prompt_title = "Multi Grep",
+            finder = finder,
+            previewer = conf.grep_previewer(opts),
+            sorter = require("telescope.sorters").empty(),
+          }):find()
+        end
+
+        -- Set the keymap locally inside telescope's lifecycle
+        vim.keymap.set("n", "<leader>fg", live_multigrep, { desc = "Telescope Live Multi-Grep" })
+      '';
       settings = {
         defaults = {
           mappings = {
@@ -218,32 +272,6 @@
       mockDevIcons = true;
     };
 
-    avante = {
-      enable = true;
-      settings = {
-        provider = "copilot";
-        insert_mode = false;
-        mappings = {
-          submit = {
-            normal = "<CR>";
-            insert = "<C-CR>";
-          };
-        };
-        windows = {
-          edit = {
-            start_insert = false;
-          };
-          ask = {
-            start_insert = false;
-          };
-        };
-        layout = {
-          files = {
-            position = "top";
-          };
-        };
-      };
-    };
     neotest = {
       enable = true;
       adapters = {
@@ -272,6 +300,7 @@
       };
       keymaps = [
         {
+          mode = ["n" "t"];
           action = "left";
           key = "<M-h>";
           options = {
@@ -280,6 +309,7 @@
           };
         }
         {
+          mode = ["n" "t"];
           action = "down";
           key = "<M-j>";
           options = {
@@ -288,6 +318,7 @@
           };
         }
         {
+          mode = ["n" "t"];
           action = "up";
           key = "<M-k>";
           options = {
@@ -296,6 +327,7 @@
           };
         }
         {
+          mode = ["n" "t"];
           action = "right";
           key = "<M-l>";
           options = {
@@ -304,6 +336,39 @@
           };
         }
       ];
+    };
+    snacks = {
+      enable = true;
+      settings = {
+        settings.input.enabled = true;
+      };
+    };
+
+    opencode = {
+      enable = true;
+      autoLoad = true;
+    };
+
+    codecompanion = {
+      enable = true;
+      settings = {
+        adapters = {
+          acp = {
+            opencode = {
+              __raw = ''
+                function()
+                  return require("codecompanion.adapters").extend("opencode", {})
+                  end
+              '';
+            };
+          };
+        };
+        strategies = {
+          chat = {
+            adapter = "opencode";
+          };
+        };
+      };
     };
   };
 }
