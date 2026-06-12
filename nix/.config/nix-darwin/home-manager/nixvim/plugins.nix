@@ -155,6 +155,7 @@
           tex = ["latexindent"];
           # elixir = ["mix"];
           # heex = ["mix"];
+          haskell = ["ormolu"];
           javascript = ["prettier"];
           typescript = ["prettier"];
           json = ["prettier"];
