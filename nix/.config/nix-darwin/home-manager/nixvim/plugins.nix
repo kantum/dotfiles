@@ -184,7 +184,6 @@
       enable = true;
       keymaps = {
         "<leader>ff" = "find_files";
-        "<leader>fg" = "live_multigrep";
         "<leader>fb" = "buffers";
         "<leader>fc" = "live_grep cwd=~/git/dotfiles/nix/.config";
       };
