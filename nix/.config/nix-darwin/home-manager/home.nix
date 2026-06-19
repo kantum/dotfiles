@@ -100,6 +100,8 @@
       speedtest-cli
       ghc
       cabal-install
+      podman
+      kind
     ]
     ++ [
       pkgs-stable.libation
@@ -242,6 +244,7 @@
       gc = "git commit --verbose";
       gp = "git push";
       "gc!" = "git commit --verbose --amend";
+      k = "kubectl";
     };
     syntaxHighlighting.enable = false;
 
