@@ -186,7 +186,7 @@
       keymaps = {
         "<leader>ff" = "find_files";
         "<leader>fb" = "buffers";
-        "<leader>fc" = "live_grep cwd=~/git/dotfiles/nix/.config";
+        "<leader>fc" = "live_grep cwd=~/git/dotfiles/";
       };
       luaConfig.post = ''
         local pickers = require("telescope.pickers")

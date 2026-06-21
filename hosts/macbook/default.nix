@@ -4,7 +4,7 @@
   ...
 }: {
   # Let nix-darwin manage nix.
-  nix.enable = false;
+  nix.enable = true;
 
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
@@ -44,17 +44,6 @@
   system.activationScripts.activateSettings.text = ''
     /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
   '';
-
-  # Allows unfree packages
-  nixpkgs.config.allowUnfreePredicate = pkg:
-    builtins.elem (pkgs.lib.getName pkg) [
-      "obsidian"
-      "claude-code"
-      "firefox-bin-unwrapped"
-      "firefox-bin"
-      "github-copilot-cli"
-      "calibre"
-    ];
 
   # services.karabiner-elements.enable = true; # not working yet, need manual install. https://github.com/nix-darwin/nix-darwin/pull/1595
   launchd = {
