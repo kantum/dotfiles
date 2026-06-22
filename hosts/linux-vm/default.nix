@@ -22,9 +22,11 @@
     writableStoreUseTmpfs = false;
     graphics = true;
     qemu.guestAgent.enable = true;
+    qemu.consoles = ["ttyAMA0"];
     qemu.options = [
       "-display cocoa"
       "-full-screen"
+      "-serial stdio"
     ];
   };
   nixpkgs.hostPlatform = "aarch64-linux";
