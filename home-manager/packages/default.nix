@@ -98,5 +98,7 @@
     ++ lib.optionals pkgs.stdenv.isLinux [
       vlc
       libreoffice
+      # firefox-bin-unwrapped
+      firefox-bin
     ];
 }

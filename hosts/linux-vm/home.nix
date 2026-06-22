@@ -1,7 +1,11 @@
 {pkgs, ...}: {
   programs.kitty.enable = true; # required for the default Hyprland config
   programs.rofi.enable = true;
-  programs.hyprpanel.enable = true;
+  services.wayle = {
+    enable = true;
+    autoInstallDependencies = true;
+  };
+
   wayland.windowManager.hyprland = {
     enable = true;
     systemd.enable = true;
@@ -18,9 +22,6 @@
       ];
 
       # Startup Apps
-      exec-once = [
-        "hyprpanel"
-      ];
 
       bindm = [
         # mouse movements
