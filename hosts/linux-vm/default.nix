@@ -27,6 +27,7 @@
       "-display cocoa"
       "-full-screen"
       "-serial stdio"
+      "-cpu host,pmu=off"
     ];
   };
   nixpkgs.hostPlatform = "aarch64-linux";
