@@ -49,7 +49,7 @@
   launchd = {
     daemons = {
       kanata = {
-        command = "${pkgs.kanata-with-cmd}/bin/kanata -c ${../../kanata.lisp} --log-layer-changes";
+        command = "${pkgs.kanata-with-cmd}/bin/kanata -c ${self}/kanata.lisp --log-layer-changes";
         path = [
           "${pkgs.sox}/bin"
         ];

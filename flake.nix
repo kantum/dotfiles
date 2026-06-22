@@ -55,7 +55,7 @@
           home-manager.useUserPackages = true;
           home-manager = {
             extraSpecialArgs = {
-              inherit nixvim opencode;
+              inherit self nixvim opencode;
               pkgs-stable = import nixpkgs-stable {system = "aarch64-darwin";};
             };
             users.kantum = {...}: {
@@ -96,7 +96,7 @@
 
           home-manager = {
             extraSpecialArgs = {
-              inherit nixvim opencode;
+              inherit self nixvim opencode;
               pkgs-stable = import nixpkgs-stable {system = "aarch64-linux";};
             };
             users.kantum = {...}: {
