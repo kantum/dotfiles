@@ -36,7 +36,6 @@
           "firefox-bin-unwrapped"
           "firefox-bin"
           "github-copilot-cli"
-          "calibre"
         ];
     };
   in {
