@@ -95,7 +95,7 @@
 
           home-manager = {
             extraSpecialArgs = {
-              inherit self nixvim;
+              inherit self nixvim opencode;
               pkgs-stable = import nixpkgs-stable {system = "aarch64-linux";};
             };
             users.kantum = {...}: {
