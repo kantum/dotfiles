@@ -2,7 +2,6 @@
   config,
   pkgs,
   pkgs-stable,
-  opencode,
   ...
 }: {
   home.packages = with pkgs;
@@ -78,7 +77,6 @@
       affine
       github-copilot-cli
       uv
-      opencode.packages.${stdenv.hostPlatform.system}.default
       # nvim checkhealth
       tree-sitter
       thunderbird

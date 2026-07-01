@@ -44,7 +44,7 @@
 
     darwinConfigurations."kantums-MacBook-Air" = nix-darwin.lib.darwinSystem {
       specialArgs = {
-        inherit self;
+        inherit self opencode;
       };
       modules = [
         ./hosts/macbook
@@ -96,7 +96,7 @@
 
           home-manager = {
             extraSpecialArgs = {
-              inherit self nixvim opencode;
+              inherit self nixvim;
               pkgs-stable = import nixpkgs-stable {system = "aarch64-linux";};
             };
             users.kantum = {...}: {

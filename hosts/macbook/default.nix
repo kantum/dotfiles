@@ -1,6 +1,8 @@
 {
   pkgs,
+  lib,
   self,
+  opencode,
   ...
 }: {
   # Let nix-darwin manage nix.
@@ -15,7 +17,25 @@
     utm
   ];
 
-  users.users.kantum.home = "/Users/kantum";
+  users.users.kantum = {
+    home = "/Users/kantum";
+  };
+
+  users.knownUsers = ["opencode"];
+  users.knownGroups = ["opencode"];
+  users.users.opencode = {
+    packages = [
+      opencode.packages.${pkgs.system}.default
+    ];
+    home = "/Users/opencode";
+    createHome = true;
+    uid = 510;
+    gid = 511;
+  };
+  users.groups.opencode = {
+    gid = 511;
+    members = ["opencode"];
+  };
 
   # Necessary for using flakes on this system.
   nix.settings.experimental-features = "nix-command flakes";
@@ -65,6 +85,12 @@
   environment.etc."sudoers.d/kanata".source = pkgs.runCommand "sudoers-kanata" {} ''
     cat <<EOF >"$out"
     ALL ALL=(ALL) NOPASSWD: ${pkgs.kanata-with-cmd}/bin/kanata
+    EOF
+  '';
+
+  environment.etc."sudoers.d/opencode".source = pkgs.runCommand "sudoers-opencode" {} ''
+    cat <<EOF >"$out"
+    kantum ALL=(opencode) NOPASSWD: ALL
     EOF
   '';
 }

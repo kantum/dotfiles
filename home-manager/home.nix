@@ -134,10 +134,12 @@
       gp = "git push";
       "gc!" = "git commit --verbose --amend";
       k = "kubectl";
+      opencode = "sudo -Hu opencode sh -c 'ulimit -n 65536 && exec ${opencode.packages.${pkgs.system}.default}/bin/opencode'";
     };
     syntaxHighlighting.enable = false;
 
     initContent = ''
+      umask 027
       zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
       PROMPT='%F{099}[%1~]%f '
       bindkey -e
@@ -159,6 +161,24 @@
       size = 1000000000;
     };
   };
+
+  home.packages = [
+    (pkgs.writeShellScriptBin "opencode-allow" ''
+      set -e
+      target=''${1:-.}
+      dir="$target"
+      while parent=$(dirname "$dir"); [ "$parent" != "$dir" ] && [ "$dir" != "$HOME" ]; do
+        sudo chmod +a "group:opencode allow search" "$parent"
+        dir="$parent"
+      done
+      sudo chmod -R +a "group:opencode allow read,write,search" "$target" && echo "done"
+    '')
+    (pkgs.writeShellScriptBin "opencode-deny" ''
+      set -e
+      dir=''${1:-.}
+      while sudo chmod -R -a "group:opencode allow read,write,search" "$dir" 2>/dev/null; do :; done
+    '')
+  ];
 
   # programs.atuin = {
   #   enable = true;
