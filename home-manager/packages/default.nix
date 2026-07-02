@@ -83,7 +83,6 @@
       speedtest-cli
       ghc
       cabal-install
-      podman
       kind
     ]
     ++ lib.optionals pkgs.stdenv.isDarwin [
