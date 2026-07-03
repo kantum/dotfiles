@@ -134,7 +134,7 @@
       gp = "git push";
       "gc!" = "git commit --verbose --amend";
       k = "kubectl";
-      opencode = "sudo -Hu opencode sh -c 'ulimit -n 65536 && exec ${opencode.packages.${pkgs.system}.default}/bin/opencode'";
+      opencode = "sudo -Hu opencode sh -c 'ulimit -n 65536 && exec ${opencode.packages.${pkgs.stdenv.hostPlatform.system}.default}/bin/opencode'";
     };
     syntaxHighlighting.enable = false;
 

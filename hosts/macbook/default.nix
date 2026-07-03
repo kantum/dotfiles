@@ -25,7 +25,7 @@
   users.knownGroups = ["opencode"];
   users.users.opencode = {
     packages = [
-      opencode.packages.${pkgs.system}.default
+      opencode.packages.${pkgs.stdenv.hostPlatform.system}.default
     ];
     home = "/Users/opencode";
     createHome = true;
