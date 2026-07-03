@@ -85,6 +85,7 @@
       cabal-install
       kind
       protonmail-desktop
+      freetube
     ]
     ++ lib.optionals pkgs.stdenv.isDarwin [
       monitorcontrol # Control your display's brightness & volume on your Mac as if it was a native Apple Display.
