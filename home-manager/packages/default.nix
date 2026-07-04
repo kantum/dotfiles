@@ -21,7 +21,7 @@
       dive # docker image explorer
       duf # disk usage
       dust # disk usage
-      elixir_1_18
+      beamPackages.elixir_1_18
       fd
       # flyctl
       geany
