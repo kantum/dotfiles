@@ -13,8 +13,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     opencode = {
-      # url = "github:anomalyco/opencode";
-      url = "github:gigamonster256/opencode"; # Wait for https://github.com/anomalyco/opencode/pull/28479
+      url = "github:anomalyco/opencode/dev";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
