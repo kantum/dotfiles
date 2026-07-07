@@ -84,7 +84,6 @@
       ghc
       cabal-install
       kind
-      protonmail-desktop
       freetube
     ]
     ++ lib.optionals pkgs.stdenv.isDarwin [
@@ -93,6 +92,7 @@
       pkgs-stable.libation
       vlc-bin
       libreoffice-bin
+      protonmail-desktop
     ]
     ++ lib.optionals pkgs.stdenv.isLinux [
       vlc
