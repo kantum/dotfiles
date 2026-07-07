@@ -43,7 +43,7 @@
       nh # Nix helper
       nixos-shell
       nmap
-      nodejs_24
+      nodejs_26
       obsidian
       ocaml
       ocamlPackages.batteries
