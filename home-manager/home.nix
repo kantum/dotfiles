@@ -165,7 +165,7 @@
   home.packages = [
     (pkgs.writeShellScriptBin "opencode-allow" ''
       set -e
-      target=''${1:-.}
+      target=$(realpath ''${1:-.})
       dir="$target"
       while parent=$(dirname "$dir"); [ "$parent" != "$dir" ] && [ "$dir" != "$HOME" ]; do
         sudo chmod +a "group:opencode allow search" "$parent"
@@ -175,7 +175,7 @@
     '')
     (pkgs.writeShellScriptBin "opencode-deny" ''
       set -e
-      dir=''${1:-.}
+      dir=$(realpath ''${1:-.})
       while sudo chmod -R -a "group:opencode allow read,write,search" "$dir" 2>/dev/null; do :; done
     '')
   ];
