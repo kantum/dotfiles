@@ -35,7 +35,6 @@
           "firefox-bin-unwrapped"
           "firefox-bin"
           "github-copilot-cli"
-          "protonmail-desktop"
         ];
     };
   in {

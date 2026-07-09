@@ -85,7 +85,9 @@
       cabal-install
       kind
       freetube
-      # bitwarden-desktop # https://github.com/NixOS/nixpkgs/issues/526914
+      element-desktop
+      pkgs-stable.logseq
+      pkgs-stable.bitwarden-desktop # https://github.com/NixOS/nixpkgs/issues/526914
     ]
     ++ lib.optionals pkgs.stdenv.isDarwin [
       monitorcontrol # Control your display's brightness & volume on your Mac as if it was a native Apple Display.
