@@ -26,6 +26,8 @@
     EDITOR = "nvim";
     SOPS_EDITOR = "nvim --clean";
 
+    WORDCHARS = "*?_[]~&!#$%^(){}<>";
+
     GPG_TTY = "$(tty)";
 
     AWS_DEFAULT_PROFILE = "";
