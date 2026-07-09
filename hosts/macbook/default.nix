@@ -64,7 +64,6 @@
   system.activationScripts.activateSettings.text = ''
     /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
   '';
-
   # services.karabiner-elements.enable = true; # not working yet, need manual install. https://github.com/nix-darwin/nix-darwin/pull/1595
   launchd = {
     daemons = {
