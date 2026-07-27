@@ -60,6 +60,7 @@
       bell-features = "system,attention,audio,title";
       fullscreen = true;
       macos-option-as-alt = true;
+      confirm-close-surface = false;
 
       # Disables ligatures
       font-feature = ["-liga" "-dlig" "-calt"];
