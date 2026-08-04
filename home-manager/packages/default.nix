@@ -79,7 +79,6 @@
       uv
       # nvim checkhealth
       tree-sitter
-      thunderbird
       speedtest-cli
       ghc
       cabal-install
@@ -88,6 +87,8 @@
       element-desktop
       pkgs-stable.logseq
       pkgs-stable.bitwarden-desktop # https://github.com/NixOS/nixpkgs/issues/526914
+      nuclei
+      nuclei-templates
     ]
     ++ lib.optionals pkgs.stdenv.isDarwin [
       monitorcontrol # Control your display's brightness & volume on your Mac as if it was a native Apple Display.
@@ -96,6 +97,8 @@
       vlc-bin
       libreoffice-bin
       protonmail-desktop
+      thunderbird
+      syncthing-macos
     ]
     ++ lib.optionals pkgs.stdenv.isLinux [
       vlc
