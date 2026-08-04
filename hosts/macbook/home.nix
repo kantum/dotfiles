@@ -104,7 +104,7 @@
   '';
   home.file = {
     ".duti.conf".text = ''
-      org.nixos.thunderbird mailto
+      ch.protonmail.desktop maito
     '';
   };
 }
