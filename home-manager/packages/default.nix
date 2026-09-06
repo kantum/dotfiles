@@ -89,6 +89,7 @@
       pkgs-stable.bitwarden-desktop # https://github.com/NixOS/nixpkgs/issues/526914
       nuclei
       nuclei-templates
+      keepassxc
     ]
     ++ lib.optionals pkgs.stdenv.isDarwin [
       monitorcontrol # Control your display's brightness & volume on your Mac as if it was a native Apple Display.
@@ -99,11 +100,13 @@
       protonmail-desktop
       thunderbird
       syncthing-macos
+      caffeine
     ]
     ++ lib.optionals pkgs.stdenv.isLinux [
       vlc
       libreoffice
       # firefox-bin-unwrapped
       firefox-bin
+      nerd-fonts.hack
     ];
 }
