@@ -91,6 +91,7 @@
       nuclei-templates
       keepassxc
       sops
+      age
     ]
     ++ lib.optionals pkgs.stdenv.isDarwin [
       monitorcontrol # Control your display's brightness & volume on your Mac as if it was a native Apple Display.
