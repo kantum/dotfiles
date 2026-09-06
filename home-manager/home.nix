@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  sops-nix,
   nixvim,
   lib,
   pkgs-stable,
