@@ -97,8 +97,6 @@
     ghostty.package = pkgs.ghostty-bin;
   };
 
-  services.podman.enable = true;
-
   home.activation.setFileAssociation = lib.hm.dag.entryAfter ["writeBoundary"] ''
     ${pkgs.duti}/bin/duti ~/.duti.conf
   '';
