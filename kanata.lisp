@@ -1,7 +1,7 @@
 (defcfg
   process-unmapped-keys yes
   danger-enable-cmd yes
-    macos-dev-names-exclude (
+  macos-dev-names-exclude (
     "Corne"
   )
 )
@@ -85,11 +85,11 @@
 
 (defsrc
   esc   f1    f2    f3    f4    f5    f6    f7    f8    f9    f10   f11   f12
-  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
-  tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
-  caps a    s    d    f    g    h    j    k    l    ;    '    ret
-  lsft z    x    c    v    b    n    m    ,    .    /    rsft
-  fn lctl lalt lmet           spc            rmet ralt
+  grv   1     2     3     4     5     6     7     8     9     0     -     =     bspc
+  tab   q     w     e     r     t     y     u     i     o     p     [     ]     \
+  caps  a     s     d     f     g     h     j     k     l     ;     '     ret
+  lsft  lsgt  z     x     c     v     b     n     m     ,     .     /     rsft
+  fn    lctl  lalt  lmet              spc              rmet  ralt
 )
 
 (deflayer original
@@ -97,7 +97,7 @@
   grv   1    2    3    4    5    6    7    8    9    0    -    =    @bspc
   tab   q    w    e    r    t    y    u    i    o    p    [    ]    \
   lctrl @a   @s   @d   @f   g    h    @j   @k   @l   @;    '    ret
-  lsft  z    x   c    v    b    n    m    ,    .     /   rsft
+  lsft  _    z    x    c    v    b    n    m    ,    .     /    rsft
   fn lctl lalt lmet           spc            rmet ralt
 )
 
@@ -105,43 +105,43 @@
   @esc  🔅   🔆   @mc  @sls f5   f6   ◀◀   ▶⏸   ▶▶   🔇   🔉   🔊
   grv   1    2    3    4    5    6    7    8    9    0    -    =    @bspc
   tab   q    w    e    r    t    y    u    i    o    p    [    ]    \
-  lctrl  a    s    d    f   g    h     j    k    l    ;    '    ret
-  lsft  z    x   c    v    b    n    m    ,    .     /   rsft
+  lctrl a    s    d    f    g    h    j    k    l    ;    '    ret
+  lsft  _    z    x    c    v    b    n    m    ,    .     /    rsft
   fn lctl lalt lmet           spc            rmet ralt
 )
 
 (deflayer base
   @esc  🔅   🔆   @mc  @sls f5   f6   ◀◀   ▶⏸   ▶▶   🔇   🔉   🔊
   tab   q    w    e    r    t    y    u    i    o    p    esc    @err    @err
-  lctrl @a   @s   @d   f    g    h    j    @k   @l   @;   '    @err @err
-  lsft  @z   x    c    v    b    n    m    ,    .    @/   rsft @err
+  lctrl @a   @s   @d   f    g    h    j    @k   @l   @;   '    @err   @err
+  lsft  _    @z   x    c    v    b    n    m    ,    .    @/   rsft  @err
   @err  @err @err @cts @bspc spc @ret @err @err @err @err @err
-  fn    @err @cts  @bspc          spc           @ret @err
+  fn    @err @cts @bspc          spc           @ret @err
 )
 
 (deflayer symbols
   @esc  🔅   🔆   @mc  @sls f5   f6   ◀◀   ▶⏸   ▶▶   🔇   🔉   🔊
-  tab   1    2    3    4    5    6    7    8    9    0    @err @err    @err
+  tab   1    2    3    4    5    6    7    8    9    0    @err @err @err
   lctrl _    _    _    _    _    -    =    @S-[ @S-] @`   \    @err @err
-  lsft  _    _    _    _    _    S--  S-=  [    ]    @S-`  rsft @err
+  lsft  _    _    _    _    _    _    S--  S-=  [    ]    @S-`  rsft @err
   @err  @err @err @err @bspc spc @ret @err @err @err @err @err
-  fn    @err @err  @bspc          spc            @ret @err
+  fn    @err @err @bspc          spc            @ret @err
 )
 
 (deflayer controls
   @esc  🔅   🔆   @mc  @sls f5   f6   ◀◀   ▶⏸   ▶▶   🔇   🔉   🔊
-  _    f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12  _
-  _    _    _    _    _    _    left down up   rght _    _    _    _
-  _    _    _    _    _    _    _    _    _    _    _    _    _
-  _    _    _    _    _    _    _    _    _    _    _    _
-  _    _    _              _              _    _    _
+  _     f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12  _
+  _     _    _    _    _    _    _    left down up   rght _    _    _
+  _     _    _    _    _    _    _    _    _    _    _    _    _
+  _     _    _    _    _    _    _    _    _    _    _    _
+  _     _    _    _              _              _    _    _
 )
 
 (deflayer layers
   _     @bas  @ori  @gam _     _     _     _     _     _     _     _     _
   _     _     _     _     _     _     _     _     _     _     _     _     _  _
+  _     _     _     _     _     _     _     _     _     _     _     _     _  _  _
   _     _     _     _     _     _     _     _     _     _     _     _     _  _
-  _     _     _     _     _     _     _     _     _     _     _     _     _
-  _     _     _     _     _     _     _     _     _     _     _     _
+  _     _     _     _     _     _     _     _     _     _     _
   _     _     _     _                   _               _     _
 )

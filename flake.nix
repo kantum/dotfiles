@@ -38,6 +38,27 @@
         ];
     };
   in {
+    homeConfigurations."bap" = home-manager.lib.homeManagerConfiguration {
+      pkgs = import nixpkgs {system = "x86_64-linux";};
+      xdg.configFile."kanata" = {
+        source = ./kanata.lisp;
+      };
+      modules = [
+        {
+          targets.genericLinux.enable = true;
+          home.username = "qdurot";
+          home.homeDirectory = "/home/qdurot";
+        }
+        ./modules/home/kanata.nix
+
+        sops-nix.homeManagerModules.sops
+        ./home-manager/home.nix
+      ];
+      extraSpecialArgs = {
+        inherit self nixvim opencode;
+        pkgs-stable = import nixpkgs-stable {system = "x86_64-linux";};
+      };
+    };
     vm = self.nixosConfigurations.linux-vm.config.system.build.vm;
 
     darwinConfigurations."kantums-MacBook-Air" = nix-darwin.lib.darwinSystem {
