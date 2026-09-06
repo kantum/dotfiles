@@ -13,11 +13,11 @@
     ./packages
   ];
 
-  home.username = "kantum";
+  home.username = lib.mkDefault "kantum";
   home.homeDirectory =
     if pkgs.stdenv.isDarwin
-    then "/Users/kantum"
-    else "/home/kantum";
+    then lib.mkDefault "/Users/kantum"
+    else lib.mkDefault "/home/kantum";
 
   home.stateVersion = "24.11"; # Please read the comment before changing.
 
