@@ -15,6 +15,9 @@
     sox
     curl
     utm
+    # After a kanata update, re-grant Input Monitoring and Accessibility by
+    # adding /run/current-system/sw/bin/kanata (⌘⇧G in the file picker).
+    kanata-with-cmd
   ];
 
   users.users.kantum = {
