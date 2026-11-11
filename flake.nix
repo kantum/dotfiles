@@ -12,10 +12,6 @@
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    opencode = {
-      url = "github:anomalyco/opencode/dev";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs = inputs @ {
@@ -25,7 +21,6 @@
     nixpkgs-stable,
     home-manager,
     nixvim,
-    opencode,
   }: let
     unfree = {pkgs, ...}: {
       nixpkgs.config.allowUnfreePredicate = pkg:
@@ -55,7 +50,7 @@
         ./home-manager/home.nix
       ];
       extraSpecialArgs = {
-        inherit self nixvim opencode;
+        inherit self nixvim;
         pkgs-stable = import nixpkgs-stable {system = "x86_64-linux";};
       };
     };
@@ -63,7 +58,7 @@
 
     darwinConfigurations."kantums-MacBook-Air" = nix-darwin.lib.darwinSystem {
       specialArgs = {
-        inherit self opencode;
+        inherit self;
       };
       modules = [
         ./hosts/macbook
@@ -74,7 +69,7 @@
           home-manager.useUserPackages = true;
           home-manager = {
             extraSpecialArgs = {
-              inherit self nixvim opencode;
+              inherit self nixvim;
               pkgs-stable = import nixpkgs-stable {system = "aarch64-darwin";};
             };
             users.kantum = {...}: {
@@ -115,7 +110,7 @@
 
           home-manager = {
             extraSpecialArgs = {
-              inherit self nixvim opencode;
+              inherit self nixvim;
               pkgs-stable = import nixpkgs-stable {system = "aarch64-linux";};
             };
             users.kantum = {...}: {

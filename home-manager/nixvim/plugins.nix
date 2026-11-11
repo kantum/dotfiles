@@ -1,8 +1,4 @@
-{
-  pkgs,
-  opencode,
-  ...
-}: {
+{pkgs, ...}: {
   programs.nixvim.plugins = {
     # Git
     gitsigns = {
@@ -344,31 +340,8 @@
       };
     };
 
-    opencode = {
-      enable = true;
-      autoLoad = true;
-    };
-
     codecompanion = {
       enable = true;
-      settings = {
-        adapters = {
-          acp = {
-            opencode = {
-              __raw = ''
-                function()
-                  return require("codecompanion.adapters").extend("opencode", {})
-                  end
-              '';
-            };
-          };
-        };
-        strategies = {
-          chat = {
-            adapter = "opencode";
-          };
-        };
-      };
     };
   };
 }
